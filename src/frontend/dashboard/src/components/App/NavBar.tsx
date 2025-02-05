@@ -23,8 +23,6 @@ export const AppNavBar: React.FC = () => {
     const [expanded, setExpanded] = useState<string | null>(null);
     const isOpen = isHovered || isLocked;
 
-    const hoverStyle = 'hover:bg-black bg-opacity-';
-
     const links: INavLink[] = [
         {
             name: t('dashboard'),

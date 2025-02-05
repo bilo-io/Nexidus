@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Table, Text, View } from '../components/Core'
+import { Text, View } from '../components/Core'
 
 type LandingProps = object
 
