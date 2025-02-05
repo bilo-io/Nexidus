@@ -13,7 +13,7 @@ export const themes = {
         errorBg: '#dc354533',
     },
     dark: {
-        primary: '#1a73e8',
+        primary: '#6621E5',
         text: '#fff',
         textLight: '#b0b0b0',
         background: '#121212',

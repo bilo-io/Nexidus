@@ -35,6 +35,7 @@ export const AppNavBar: React.FC = () => {
         {
             name: t('transactions'),
             icon: 'ListBullet',
+            path: '/transactions',
             children: [
                 { name: t('All'), path: '/transactions' },
                 { name: t('OOB'), path: '/transactions/oob' },
@@ -43,6 +44,7 @@ export const AppNavBar: React.FC = () => {
         {
             name: t('payins'),
             icon: 'ArrowLeftEndOnRectangle',
+            path: '/payins',
             children: [
                 { name: t('All'), path: '/payins' },
                 { name: t('Card'), path: '/payins/card' },
@@ -53,6 +55,7 @@ export const AppNavBar: React.FC = () => {
         {
             name: t('payouts'),
             icon: 'ArrowRightEndOnRectangle',
+            path: '/payouts',
             children: [
                 { name: t('All'), path: '/payouts' },
                 { name: t('Reporting'), path: '/payouts/reporting' },
@@ -61,6 +64,7 @@ export const AppNavBar: React.FC = () => {
         {
             name: t('refunds'),
             icon: 'ArrowPath',
+            path: '/refunds',
             children: [
                 { name: t('All'), path: '/refunds' },
                 { name: t('Card'), path: '/refunds/card' },
@@ -70,6 +74,7 @@ export const AppNavBar: React.FC = () => {
         {
             name: t('recon'),
             icon: 'ClipboardDocumentCheck',
+            path: '/recon',
             children: [
                 { name: t('Reconciliation'), path: '/recon' },
                 { name: t('Settlements'), path: '/recon/settlements' },
@@ -147,7 +152,10 @@ export const AppNavBar: React.FC = () => {
                     {links.map((item) => (
                         <div key={item.name} className="w-full">
                             <NavItem
-                                onClick={() => handleNavClick(item)}
+                                onClick={() => {
+                                    handleNavClick(item)
+                                    item?.path && navigate(item.path)
+                                }}
                                 item={{
                                     name: item.name,
                                     action: item.action,

@@ -60,7 +60,7 @@ const ThemePreview: React.FC<{ theme: string }> = ({ theme }) => {
 };
 
 const themes = [
-    'light', 'dark', 'stitch', 'ocean', 'custom',
+    'stitch', 'light', 'dark', 'ocean', 'custom',
     'solarized', 'cyberpunk', 'forest', 'midnight',
     'retro', 'lava', 'pastel', 'grayscale', 'aurora', 'highcontrast'
 ];

@@ -22,7 +22,10 @@ function App() {
         <Router>
           <View className="w-full flex flex-row">
             <AppNavBar />
-            <View style={{ boxShadow: '3px 5px 18px #0000005A'}}>
+            <View
+              className='grow'
+              // style={{ boxShadow: '3px 5px 18px #0000005A' }}
+            >
               <Routes>
                 {
                   routes.map((item: { path: string, element: React.ReactElement }) => (

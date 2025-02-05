@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useNexidusPage } from '../../hooks/useNexidusPage';
@@ -12,12 +12,17 @@ import { ITransaction } from '../../models/transaction';
 import { getFilterOptions } from '../../components/App/ContentFilters/filterOptions';
 import { payins as mockData } from '../../data/mockData'
 import { ColumnDef } from '@tanstack/react-table';
+import Icon from '../../components/Core/Icon';
+import { downloadCSV } from '../../utils/download';
+import { useTheme } from '../../context/ThemeContext';
+import Charts from '../misc/charts';
 
 type TransactionsProps = object
 
 export const Transactions: React.FC<TransactionsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
+    const { theme } = useTheme();
     const { globalFilters, contentFilters } = useNexidusPage<ITransaction>();
     const { loading, retry } = useNexidusApi<ITransaction>({
         path: '',
@@ -26,6 +31,9 @@ export const Transactions: React.FC<TransactionsProps> = () => {
         }
     });
     // #endregion
+
+    const [activeView, setActiveView] = useState<'table' | 'chart'>('table');
+    const [showFilters, setShowFilters] = useState<boolean>(false);
 
     // Define filter options dynamically based on ITransaction properties
     const filterOptions = getFilterOptions<ITransaction>(mockData[0]);
@@ -127,24 +135,62 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
     return (
         <View isPage className="w-full">
-            <View className='mb-10'>
-                <Text className="text-xl font-semibold">{t('Transactions')}</Text>
+            <View className='mb-10 w-full flex flex-row justify-between'>
+                <View>
+                    <Text className="text-xl font-semibold">{t('Transactions')}</Text>
+                </View>
+
+                <View flex flexRow className='gap-4 my-4'>
+                    <Icon name='MagnifyingGlass' className='size-6' />
+                    <Icon name='Plus' className='size-6' onClick={() => alert('Create new entry')} />
+                    <Icon name='AdjustmentsVertical' className='size-6' onClick={() => setShowFilters((prev) => !prev)} />
+                    <Icon name='ArrowDownTray' className='size-6' onClick={() => downloadCSV(mockData, `Transactions_${new Date().toISOString()}.csv`)} />
+                </View>
             </View>
 
-            <GlobalFilters value={globalFilters} />
+            <View className={`transition ${showFilters ? 'h-fit' : 'h-0 overflow-hidden'}`}>
+                <GlobalFilters value={globalFilters} />
 
-            <ContentFilters<ITransaction>
-                value={contentFilters}
-                options={filterOptions}
-                onChange={handleFilterChange}
-            />
+                <ContentFilters<ITransaction>
+                    value={contentFilters}
+                    options={filterOptions}
+                    onChange={handleFilterChange}
+                />
+            </View>
 
             <View className='my-12'>
                 <Async loading={loading} error={null} onRetry={retry}>
-                    <Table
-                        data={mockData}
-                        columns={columns}
-                    />
+                    <View flex flexRow className='gap-2'>
+                        <Icon
+                            name='TableCells'
+                            onClick={() => setActiveView('table')}
+                            className='size-8'
+                            style={{
+                                color: activeView === 'table' ? theme?.primary : theme?.text,
+                            }}
+                        />
+                        <Icon
+                            name='ChartBar'
+                            onClick={() => setActiveView('chart')}
+                            className='size-8'
+                            style={{
+                                color: activeView === 'chart' ? theme?.primary : theme?.text,
+                            }}
+                        />
+                    </View>
+                    {activeView === 'table' ? (
+                        <Table
+                            data={mockData}
+                            columns={columns}
+                        />
+                    ) : null}
+
+                    {activeView === 'chart' ? (
+                        <Charts
+                            // data={mockData}
+                            // columns={columns}
+                        />
+                    ) : null}
                 </Async>
             </View>
         </View>
