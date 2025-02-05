@@ -5,3 +5,4 @@ output/**/*.png
 .history
 .DS_Store
 dist
+.vercel

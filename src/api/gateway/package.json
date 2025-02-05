@@ -13,6 +13,7 @@
     "build:docker": "docker build -t nexidus-api-gateway:latest .",
     "ts.check": "npx tsc --project tsconfig.json",
     "add-build": "git add dist",
+    "vercel-build": "yarn build",
     "start": "node dist/index.js",
     "dev:old": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "test": "npx newman run ./tests/postman/API_TEST.postman_collection.json -e ./tests/postman/API_ENV_LOCAL.postman_environment.json",
