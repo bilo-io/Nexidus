@@ -1,0 +1,1 @@
+export { default as Accordion } from './core/Accordion/Accordion'

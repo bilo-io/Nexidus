@@ -1,0 +1,46 @@
+name: Vision API Tests
+
+on: push
+
+jobs:
+  newman-run:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Install Node.js and Yarn
+      - name: Setup Node.js and Yarn
+        uses: actions/setup-node@v2
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      # Install Yarn dependencies
+      - name: Install Yarn dependencies
+        run: yarn install
+
+        # Cache Yarn dependencies
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Check Working Directory and List Files
+        run: |
+          echo "Working directory:"
+          pwd
+          echo "Directory contents"
+          ls -la
+
+      - name: Newman
+        run: |
+          yarn test:ci

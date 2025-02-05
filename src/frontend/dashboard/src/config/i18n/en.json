@@ -1,0 +1,21 @@
+{
+    "cancel": "Cancel",
+    "charts": "Charts",
+    "currencies": "Currencies",
+    "dashboard": "Dashboard",
+    "greeting": "Hello, {{name}}!",
+    "name": "Name",
+    "portfolio": "Portfolio",
+    "payins": "Payins",
+    "payouts": "Payouts",
+    "recon": "Recon",
+    "reconciliation": "Reconciliation",
+    "refunds": "Refunds",
+    "settings": "Settings",
+    "settlements": "Settlements",
+    "submit": "Submit",
+    "trade": "Trade",
+    "transactions": "Transactions",
+    "unallocatedFunds": "Unallocated Funds",
+    "welcome": "Welcome to our application!"
+}

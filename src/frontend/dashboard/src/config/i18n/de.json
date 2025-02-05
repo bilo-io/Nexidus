@@ -1,0 +1,13 @@
+{
+    "cancel": "Abbrechen",
+    "currencies": "Währungen",
+    "dashboard": "Dashboard",
+    "greeting": "Hallo, {{name}}!",
+    "name": "Name",
+    "portfolio": "Portfolio",
+    "settings": "Einstellungen",
+    "submit": "Einreichen",
+    "trade": "Handel",
+    "transactions": "Transaktionen",
+    "welcome": "Willkommen in unserer Anwendung!"
+}

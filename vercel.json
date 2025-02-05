@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "rewrites": [
+        {
+            "source": "/api/(.*)",
+            "destination": "/gateway/$1"
+        },
+        {
+            "source": "/service-auth/(.*)",
+            "destination": "/services/auth/$1"
+        },
+        {
+            "source": "/service-rates/(.*)",
+            "destination": "/services/rates/$1"
+        },
+        {
+            "source": "/service-transactions/(.*)",
+            "destination": "/services/transactions/$1"
+        }
+    ]
+}

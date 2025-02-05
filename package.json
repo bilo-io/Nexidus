@@ -1,0 +1,16 @@
+{
+  "name": "nexidus",
+  "version": "1.0.0",
+  "description": "## Monorepo",
+  "main": "index.js",
+  "scripts": {
+    "dirs": "sh ./scripts/printDirs.sh",
+    "dev": "osascript ./scripts/dev.scpt",
+    "dev:ui": "echo 'Implement osascript to start up services'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

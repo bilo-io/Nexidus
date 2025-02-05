@@ -1,0 +1,2067 @@
+{
+	"info": {
+		"_postman_id": "82cf0a91-40c4-4353-bd70-7a12027a76d2",
+		"name": "VISION_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "810247"
+	},
+	"item": [
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "List Projects",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Projects exist\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var project = jsonData[1]",
+									"    pm.expect(project.id.length).to.greaterThan(0);",
+									"",
+									"    console.log(project.id)",
+									"",
+									"    pm.environment.set(\"ProjectId\", project.id);",
+									"});",
+									"",
+									"pm.test(\"Project has name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var project = jsonData[0]",
+									"    pm.expect(project.name.length).to.be.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Project has images\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var project = jsonData[2]",
+									"    pm.expect(Object.keys(project.images).length).to.be.greaterThan(0);",
+									"});",
+									"",
+									"pm.test(\"Project has executiveSummary\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var project = jsonData[2]",
+									"    pm.expect(project.executiveSummary.length).to.be.greaterThan(0);",
+									"}); ",
+									"",
+									"// pm.test(\"Response schema is valid\", function () {",
+									"//     var schema = {",
+									"//         \"type\": \"object\",",
+									"//         \"properties\": {",
+									"//             \"id\": {",
+									"//                 \"oneOf\": [",
+									"//                     {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     {",
+									"//                         \"type\": \"number\"",
+									"//                     }",
+									"//                 ]",
+									"//             },",
+									"//             \"name\": {",
+									"//                 \"type\": \"string\"",
+									"//             },",
+									"//             \"audio\": {",
+									"//                 \"type\": \"object\",",
+									"//                 \"properties\": {",
+									"//                     \"theme\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"action\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"epic\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"explore\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"idle\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"tactical\": {",
+									"//                         \"type\": \"string\"",
+									"//                     }",
+									"//                 }",
+									"//             },",
+									"//             \"images\": {",
+									"//                 \"type\": \"object\",",
+									"//                 \"properties\": {",
+									"//                     \"coverImage\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"thumbImage\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"titleImage\": {",
+									"//                         \"type\": \"string\"",
+									"//                     },",
+									"//                     \"slides\": {",
+									"//                         \"type\": \"array\",",
+									"//                         \"items\": {",
+									"//                             \"type\": \"string\"",
+									"//                         }",
+									"//                     },",
+									"//                     \"thumbAlign\": {",
+									"//                         \"type\": \"string\"",
+									"//                     }",
+									"//                 },",
+									"//                 \"required\": []",
+									"//             },",
+									"//             \"features\": {",
+									"//                 \"type\": \"array\",",
+									"//                 \"items\": {",
+									"//                     \"type\": \"string\"",
+									"//                 }",
+									"//             },",
+									"//             \"executiveSummary\": {",
+									"//                 \"type\": \"string\"",
+									"//             }",
+									"//         },",
+									"//         \"required\": [\"id\", \"name\"]",
+									"//     };",
+									"",
+									"",
+									"//     pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+									"// });"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/projects",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"projects"
+							]
+						},
+						"description": "This API endpoint makes an HTTP GET request to retrieve a list of projects. The URL for the request is `{{API_BASE_URL}}/projects`.\n\n### Request\n\nThe request does not require any parameters.\n\n### Response\n\nThe response will have a status code of 200 if the request is successful. The response body will be an array of project objects, where each object will have the following properties:\n\n- `id` (number): The unique identifier of the project.\n- `name` (string): The name of the project.\n- `image` (string): The URL of the project's image.\n- `executiveSummary` (string): A brief summary of the project.\n    \n\nHere is an example response:\n\n``` json\n[\n  {\n    \"id\": 0,\n    \"name\": \"\",\n    \"image\": \"\",\n    \"executiveSummary\": \"\"\n  }\n]\n\n ```\n\nPlease note that the values for `name`, `image`, and `executiveSummary` may be empty or contain actual values depending on the project."
+					},
+					"response": []
+				},
+				{
+					"name": "Find Project by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.id).to.exist;",
+									"    pm.expect(responseData.name).to.exist;",
+									"    pm.expect(responseData.images).to.exist;",
+									"    // pm.expect(responseData.executiveSummary).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"ID is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.id).to.be.a('string').and.to.satisfy((id) => id.length > 0, \"ID should be a non-negative integer\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Name is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Executive summary is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.executiveSummary).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"// Test for response schema",
+									"pm.test(\"Schema is valid\", function () {",
+									"  var schema = {",
+									"    type: \"object\",",
+									"    properties: {",
+									"      id: {",
+									"        type: \"string\"",
+									"      },",
+									"      name: {",
+									"        type: \"string\"",
+									"      },",
+									"      audio: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          theme: { type: \"string\" },",
+									"          idle: { type: \"string\" },",
+									"          action: { type: \"string\" },",
+									"          tactical: { type: \"string\" },",
+									"          epic: { type: \"string\" },",
+									"          explore: { type: \"string\" }",
+									"        }",
+									"      },",
+									"      images: {",
+									"        type: \"object\",",
+									"        properties: {",
+									"          thumbAlign: { type: \"string\" },",
+									"          coverImage: { type: \"string\" },",
+									"          titleImage: { type: \"string\" },",
+									"          thumbImage: { type: \"string\" },",
+									"          slides: { type: \"array\" }",
+									"        }",
+									"      },",
+									"      executiveSummary: { type: \"string\" },",
+									"      features: { type: \"array\" }",
+									"    },",
+									"    required: [\"id\", \"name\", \"audio\", \"images\", \"executiveSummary\", \"features\"]",
+									"  };",
+									"",
+									"  var response = pm.response.json();",
+									"  pm.expect(tv4.validate(response, schema)).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/projects/{{ProjectId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"projects",
+								"{{ProjectId}}"
+							]
+						},
+						"description": "\nThis HTTP GET request is used to retrieve information about a specific project. The request should be made to the endpoint `{{API_BASE_URL}}/projects/{{ProjectId}}`, where `{{ProjectId}}` is the unique identifier of the project.\n\nThe response to this request will contain the details of the project in JSON format. The response will have a status code of 200 if the request is successful. Here is an example of the response body:\n\n```json\n{\n  \"id\": 0,\n  \"name\": \"\",\n  \"image\": \"\",\n  \"executiveSummary\": \"\"\n}\n```\n\nThe `id` field represents the unique identifier of the project. The `name` field contains the name of the project. The `image` field contains the URL of the project's image. The `executiveSummary` field contains a brief summary of the project.\n\nPlease note that the actual values for `id`, `name`, `image`, and `executiveSummary` will vary based on the specific project being requested.\n\nTo retrieve information about a project, make a GET request to `{{API_BASE_URL}}/projects/{{ProjectId}}`, replacing `{{ProjectId}}` with the desired project's identifier.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Project has been created\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var project = jsonData",
+									"    pm.expect(project?.id?.toString?.()?.length).to.be.greaterThan(0);",
+									"",
+									"    pm.environment.set(\"ProjectId\", project.id);",
+									"});",
+									"pm.test(\"Response status code is 201\", function () {",
+									"  pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate the 'id' field is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.id).to.be.a('number');",
+									"    pm.expect(responseData.id).to.be.at.least(0, \"'id' should be a non-negative integer\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate the 'name' field is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate executiveSummary field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.executiveSummary).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the returned 'id' matches the value stored in the environment variable 'ProjectId'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    const projectId = pm.environment.get(\"ProjectId\");",
+									"    ",
+									"    pm.expect(responseData.id).to.equal(projectId);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectName\": \"PostmanTestProject 1\",\n    \"projectPrompt\": \"Create a document in markdown, about the french revolution\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/projects",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"projects"
+							]
+						},
+						"description": "\nThis API endpoint allows you to create a new project by sending an HTTP POST request to the specified URL. The request should include the necessary parameters in the request body.\n\n### Request Parameters\nThe request body should include the following parameters:\n- `name` (string): The name of the project.\n- `executiveSummary` (string): A summary of the project.\n\n### Response\nUpon successful creation of the project, the API will return a response with a status code of 201 (Created). The response body will include the following properties:\n- `id` (number): The unique identifier of the created project.\n- `name` (string): The name of the project.\n- `executiveSummary` (string): The summary of the project.\n\nPlease note that the values of `id`, `name`, and `executiveSummary` in the response example are placeholders and will be populated with actual data upon successful creation of the project.\n\n### Example\nRequest:\n```\nPOST {{API_BASE_URL}}/projects\nContent-Type: application/json\n\n{\n  \"name\": \"My Project\",\n  \"executiveSummary\": \"This is a summary of my project.\"\n}\n```\n\nResponse:\n```\nStatus: 201 Created\n{\n  \"id\": 123,\n  \"name\": \"My Project\",\n  \"executiveSummary\": \"This is a summary of my project.\"\n}\n```\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Description is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.description).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Project prompt is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.projectPrompt).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate that 'description' and 'projectPrompt' fields are present\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.description).to.exist.and.to.be.a('string');",
+									"    pm.expect(responseData.projectPrompt).to.exist.and.to.be.a('string');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within an acceptable range\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDateTime = new Date().toISOString()",
+									"pm.globals.set(\"currentDateTime\", currentDateTime.split('T').join(' - ').replace('Z', ''));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Updated from Postman\",\n    \"projectPrompt\": \"Updated projectPrompt ({{currentDateTime}})\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/projects/{{ProjectId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"projects",
+								"{{ProjectId}}"
+							]
+						},
+						"description": "This API endpoint is used to update a specific project by sending a PATCH request to the URL `{{API_BASE_URL}}/projects/{{ProjectId}}`. The `{{ProjectId}}` parameter in the URL should be replaced with the unique identifier of the project you want to update.\n\n### Request Parameters\n\nThis PATCH request does not require any request parameters. However, the request body should contain the updated information for the project.\n\n### Response\n\nUpon a successful request, the API will respond with a status code of 200 and a JSON object in the response body. The response object will contain the following properties:\n\n- `description`: This property represents the updated description of the project. If no changes were made to the description during the update, this property will be an empty string.\n- `projectPrompt`: This property represents the updated project prompt. If no changes were made to the project prompt during the update, this property will be an empty string.\n    \n\n### Example\n\nRequest:\n\n```\nPATCH {{API_BASE_URL}}/projects/123456789\nContent-Type: application/json\n{\n  \"description\": \"Updated project description\",\n  \"projectPrompt\": \"Updated project prompt\"\n}\n\n ```\n\nResponse:\n\n```\nStatus: 200\n{\n  \"description\": \"\",\n  \"projectPrompt\": \"\"\n}\n\n ```\n\nIn the example above, a PATCH request is made to update the project with the ID `123456789`. The request body contains the updated description and project prompt. The API responds with a status code of 200 and an empty response body, indicating that the update was successful."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Project",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/projects/{{ProjectId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"projects",
+								"{{ProjectId}}"
+							]
+						},
+						"description": "This API endpoint is used to delete a specific project by its ID.\n\nTo delete a project, send an HTTP DELETE request to `{{API_BASE_URL}}/projects/{{ProjectId}}`, where `{{ProjectId}}` is the ID of the project to be deleted.\n\n### Request Parameters\n\n- `ProjectId` (path parameter): The ID of the project to be deleted.\n    \n\n### Response\n\nThe API will respond with a status code 200 if the project is successfully deleted. The response body will be empty.\n\nPlease note that this action cannot be undone, and once a project is deleted, it cannot be recovered."
+					},
+					"response": []
+				}
+			],
+			"description": "**Projects** serve as a means for users to systematically organize their concepts into cohesive collections.\n\nWithin each project, users can curate a diverse range of documents, images, videos, and other media assets associated with a shared idea.\n\n> For instance, a singular project may encapsulate the conceptual elements of a video game, while another project could house materials such as previsualization data, scripts, and dialogues for a film."
+		},
+		{
+			"name": "Characters",
+			"item": [
+				{
+					"name": "List Characters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Character exist\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var character = jsonData[0]",
+									"    pm.expect(character.id.length).to.be.greaterThan(0);",
+									"",
+									"    pm.environment.set(\"CharacterId\", character.id);",
+									"});",
+									"",
+									"pm.test(\"Character has traits\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var project = jsonData[0]",
+									"    pm.expect(Array.isArray(project.traits.personality)).to.eq(true);",
+									"});",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"  pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each character in the response has an ID\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(character) {",
+									"        pm.expect(character.id).to.exist.and.to.be.a('string');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each character has a non-empty alias\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"  ",
+									"  responseData.forEach(function(character) {",
+									"    pm.expect(character.alias).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Alias should not be empty\");",
+									"  });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each character has a non-empty project ID\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(character) {",
+									"        pm.expect(character.projectId).to.exist.and.to.have.lengthOf.at.least(1, \"Project ID should not be empty\");",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/characters",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"characters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Character by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"The id should be a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Alias is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.alias).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Check that the projectId is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.projectId).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Images is an array and is not empty\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.images).to.be.an('array');",
+									"  pm.expect(responseData.images).to.have.lengthOf.at.least(1, \"Array should not be empty\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/characters/{{CharacterId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"characters",
+								"{{CharacterId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Character",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Project has been created\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var project = jsonData",
+									"    pm.expect(project?.id?.toString?.()?.length).to.be.greaterThan(0);",
+									"",
+									"    // pm.environment.set(\"ProjectId\", project.id);",
+									"});",
+									"pm.test(\"Response status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"The 'id' field is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.id).to.be.a('string');",
+									"    pm.expect(responseData.id).to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the projectId field is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.projectId).to.be.a('string', \"projectId should be a string\");",
+									"  pm.expect(responseData.projectId).to.have.lengthOf.at.least(1, \"projectId should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'name' field is an object\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.name).to.be.an('object');",
+									"});",
+									"",
+									"",
+									"// pm.test(\"Verify that the 'name' object contains the expected properties\", function () {",
+									"//     const responseData = pm.response.json();",
+									"    ",
+									"//     pm.expect(responseData.name).to.be.an('object');",
+									"//     pm.expect(responseData.name).to.have.property('firstName');",
+									"//     pm.expect(responseData.name).to.have.property('lastName');",
+									"//     pm.expect(responseData.name).to.have.property('middleName');",
+									"// });",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectName\": \"PostmanTestProject 1\",\n    \"projectPrompt\": \"Create a document in markdown, about the french revolution\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/characters",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"characters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Character",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has the required fields - description and projectPrompt\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.description).to.exist.and.to.be.a('string');",
+									"    pm.expect(responseData.projectPrompt).to.exist.and.to.be.a('string');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Description is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.description).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Description should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Project prompt is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.projectPrompt).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 1000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the response body is not empty\", function () {",
+									"  pm.expect(pm.response.text()).to.not.be.empty;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDateTime = new Date().toISOString()",
+									"pm.globals.set(\"currentDateTime\", currentDateTime.split('T').join(' - ').replace('Z', ''));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Updated from Postman\",\n    \"projectPrompt\": \"Updated projectPrompt ({{currentDateTime}})\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/characters/{{CharacterId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"characters",
+								"{{CharacterId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "List Documents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Documents exist\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var document = jsonData[0]",
+									"    pm.expect(document.id).to.greaterThan(-1);",
+									"",
+									"    pm.environment.set(\"DocumentId\", document.id);",
+									"});",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the response is an array with at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate the structure of each document object\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(document) {",
+									"        pm.expect(document).to.be.an('object');",
+									"        pm.expect(document.id).to.exist.and.to.be.a('number');",
+									"        pm.expect(document.name).to.exist.and.to.be.a('string');",
+									"        pm.expect(document.sectionCount).to.exist.and.to.be.a('number');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the id of each document is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('array');",
+									"",
+									"    // const doc = responseData?.[0]",
+									"",
+									"    responseData.forEach(function (doc) {",
+									"        console.log(doc.id)",
+									"        pm.expect(doc.id).to.be.a('number').and.to.be.at.least(0);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the name of each document is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+									"    responseData.forEach(function(document) {",
+									"        pm.expect(document.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/documents",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"documents"
+							]
+						},
+						"description": "\nThis API endpoint allows you to retrieve a list of documents. \n\nTo retrieve the list of documents, send a GET request to `{{API_BASE_URL}}/documents`.\n\n### Request Parameters\nThis endpoint does not require any request parameters.\n\n### Response\nThe response will be a JSON array containing the documents. Each document object will have the following properties:\n\n- `id` (number): The unique identifier of the document.\n- `name` (string): The name of the document.\n- `sectionCount` (number): The number of sections in the document.\n\n### Example\nRequest:\n```\nGET {{API_BASE_URL}}/documents\n```\n\nResponse:\n```\n[\n    {\n        \"id\": 0,\n        \"name\": \"\",\n        \"sectionCount\": 0\n    }\n]\n```\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Find Document by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has the required fields\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.id).to.exist.and.to.be.a('number');",
+									"  pm.expect(responseData.name).to.exist.and.to.be.a('string');",
+									"  pm.expect(responseData.projectId).to.exist.and.to.be.a('string');",
+									"  pm.expect(responseData.blocks).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Id is a non-negative integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.id).to.exist.and.to.be.a('number');",
+									"    pm.expect(responseData.id).to.be.at.least(0);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Name is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"ProjectId is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.projectId).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Verify that the 'blocks' array is present and contains at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.blocks).to.exist.and.to.be.an('array');",
+									"    pm.expect(responseData.blocks.length).to.be.at.least(0);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/documents/{{DocumentId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"documents",
+								"{{DocumentId}}"
+							]
+						},
+						"description": "\nThis API endpoint is used to retrieve a specific document by its ID. The ID of the document is passed as a path parameter in the URL.\n\nTo retrieve a document, make an HTTP GET request to the following endpoint:\n\n```\n{{API_BASE_URL}}/documents/{{DocumentId}}\n```\n\nReplace `{{DocumentId}}` with the ID of the document you want to retrieve.\n\nThe response to this request will have a status code of 200 if the document is found. The response body will contain the details of the document in JSON format. Here is an example of the response body:\n\n```json\n{\n  \"id\": 0,\n  \"name\": \"\",\n  \"projectId\": \"\",\n  \"sections\": [\n    {\n      \"name\": \"\",\n      \"type\": \"\",\n      \"data\": \"\",\n      \"displayOrder\": 0\n    }\n  ]\n}\n```\n\nPlease note that the values for the `id`, `name`, `projectId`, `sections.name`, `sections.type`, `sections.data`, and `sections.displayOrder` properties may vary depending on the specific document you are retrieving.\n\nTo add documentation for this API endpoint, please provide details about the expected request parameters, any required headers, and the structure of the response body.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Document has been created\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var document = jsonData",
+									"    pm.expect(document?.id?.toString?.()?.length).to.be.greaterThan(0);",
+									"",
+									"    // pm.environment.set(\"DocumentId\", document.id);",
+									"});",
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// pm.test(\"Document ID is a non-empty string\", function () {",
+									"//   const responseData = pm.response.json();",
+									"  ",
+									"//   pm.expect(responseData).to.be.an('object');",
+									"//   pm.expect(responseData.id).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"// });",
+									"",
+									"",
+									"pm.test(\"Blocks array is present in the response\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.blocks).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Blocks array is empty\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.blocks).to.be.an('array').that.is.empty;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Document ID is a unique identifier and is not null or undefined\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.id).to.exist.and.to.not.be.null;",
+									"  pm.expect(responseData.id).to.not.be.undefined;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has required fields - id and sections\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.id).to.exist.and.to.be.a('number');",
+									"    pm.expect(responseData.blocks).to.exist.and.to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Document ID is a positive integer\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.id).to.be.a('number');",
+									"    pm.expect(responseData.id).to.be.above(0);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Sections array is an array of objects\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.blocks).to.be.an('array');",
+									"    responseData.blocks.forEach(function(block) {",
+									"        pm.expect(block).to.be.an('object');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Sections array is empty\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.blocks).to.exist.and.to.be.an('array').that.is.empty;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Document ID is a unique identifier and is not null or undefined\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData.id).to.exist;",
+									"  pm.expect(responseData.id).to.be.a('number');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectName\": \"PostmanTestProject 1\",\n    \"projectPrompt\": \"Create a document in markdown, about the french revolution\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/documents",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"documents"
+							]
+						},
+						"description": "\nThis API endpoint allows you to add documents by making a POST request to the specified URL: `{{API_BASE_URL}}/documents`.\n\n### Request\nThe request should include the necessary parameters to create a new document. Please refer to the API documentation for the required request parameters.\n\n### Response\nUpon successful execution of the request, a response with a status code of 201 (Created) is returned. The response body will contain the newly created document's information in JSON format. The document will have an `id` field, which represents the unique identifier for the document, and a `sections` field, which is an array of sections within the document.\n\nExample response:\n```\n{\n  \"id\": 0,\n  \"sections\": []\n}\n```\n\nPlease note that the `id` field will have a value of 0 in the example response, but it will be a unique identifier for the actual document created.\n\n### Error Handling\nIf there are any errors during the execution of the request, an appropriate error response will be returned along with the corresponding status code. Please refer to the API documentation for more details on error handling.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Document",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has required fields\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.description).to.exist.and.to.be.a('string');",
+									"  pm.expect(responseData.projectPrompt).to.exist.and.to.be.a('string');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Description is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.description).to.be.a('string');",
+									"    pm.expect(responseData.description).to.have.lengthOf.at.least(1, \"Description should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"ProjectPrompt is a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.projectPrompt).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within acceptable range\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response body does not contain sensitive information\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.description).to.not.include(\"sensitive information\");",
+									"    pm.expect(responseData.projectPrompt).to.not.include(\"sensitive information\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const currentDateTime = new Date().toISOString()",
+									"pm.globals.set(\"currentDateTime\", currentDateTime.split('T').join(' - ').replace('Z', ''));",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Updated from Postman\",\n    \"projectPrompt\": \"Updated projectPrompt ({{currentDateTime}})\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/documents/{{ProjectId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"documents",
+								"{{ProjectId}}"
+							]
+						},
+						"description": "\nThis endpoint is used to update a specific document in a project. The document is identified by its unique ProjectId.\n\nTo update a document, send an HTTP PATCH request to the following URL:\n```\n{{API_BASE_URL}}/documents/{{ProjectId}}\n```\n\nThe request should include the necessary parameters and their values. The response will contain the updated document details.\n\n### Request Parameters\n- `ProjectId` (required): The unique identifier of the document's project.\n\n### Response\nThe response will have a status code of 200 if the update is successful. The body of the response will contain the updated document details, including the following properties:\n- `description`: The updated description of the document.\n- `projectPrompt`: The updated prompt for the document's project.\n\n### Example\nRequest:\n```\nPATCH {{API_BASE_URL}}/documents/12345\n```\n\nResponse:\n```\nStatus: 200\nBody:\n{\n  \"description\": \"\",\n  \"projectPrompt\": \"\"\n}\n```\n\nIn the above example, the document with the ProjectId `12345` was successfully updated. The `description` and `projectPrompt` properties in the response are empty, indicating that they were not changed during the update.\n\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blueprints",
+			"item": [
+				{
+					"name": "Blueprints",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Blueprint 0 exists\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var blueprint = jsonData[0]",
+									"    pm.expect(blueprint.id.length).to.greaterThan(0);",
+									"",
+									"    pm.environment.set(\"BlueprintId\", blueprint.id);",
+									"});",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate that the response is an array with at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each blueprint has a sections array with at least one element\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(blueprint) {",
+									"        pm.expect(blueprint.sections).to.exist.and.to.be.an('array').with.lengthOf.at.least(1);",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/blueprints",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"blueprints"
+							]
+						},
+						"description": "\nThis API endpoint allows you to retrieve a list of blueprints. \n\nTo retrieve the blueprints, send a GET request to `{{API_BASE_URL}}/blueprints`.\n\nThe response will be a JSON array containing blueprint objects. Each blueprint object will have the following properties:\n\n- `id`: The unique identifier of the blueprint.\n- `name`: The name of the blueprint.\n- `category`: The category of the blueprint.\n- `aesthetic`: The aesthetic of the blueprint.\n- `sections`: An array of section objects. Each section object will have the following properties:\n  - `name`: The name of the section.\n  - `content`: The content of the section.\n\nExample response:\n```json\n[\n  {\n    \"id\": \"\",\n    \"name\": \"\",\n    \"category\": \"\",\n    \"aesthetic\": \"\",\n    \"sections\": [\n      {\n        \"name\": \"\",\n        \"content\": \"\"\n      }\n    ]\n  }\n]\n```\n\nPlease note that the values for the properties `id`, `name`, `category`, `aesthetic`, `sections.name`, and `sections.content` will be specific to each blueprint and section, and may not be provided in the response.\n\nTo use this endpoint, you need to send a GET request to the specified URL. No request parameters are required.\n\nThe response will contain an array of blueprint objects, each representing a blueprint. Each blueprint object will have properties describing the blueprint's details, such as its ID, name, category, aesthetic, and sections.\n\nMake sure to handle the response appropriately based on the status code returned. A successful response will have a status code of 200.\n\nPlease refer to the API documentation for more details on how to use this endpoint.\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Blueprints by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate that the id field is a non-empty string\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"The name field should be a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate that the 'category' field is a non-empty string\", function() {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.category).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Validate aesthetic field\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.aesthetic).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/blueprints/{{BlueprintId}}",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"blueprints",
+								"{{BlueprintId}}"
+							]
+						},
+						"description": "\nThis API endpoint allows you to retrieve a specific blueprint by its ID. The ID of the blueprint should be provided in the URL path.\n\nTo make a request, send an HTTP GET request to:\n\n```\n{{API_BASE_URL}}/blueprints/{{BlueprintId}}\n```\n\nReplace `{{BlueprintId}}` with the actual ID of the blueprint you want to retrieve.\n\n### Request Parameters\n\nThis endpoint does not require any request parameters.\n\n### Response\n\nThe response to this request will be a JSON object with the following properties:\n\n- `id` (string): The ID of the blueprint.\n- `name` (string): The name of the blueprint.\n- `category` (string): The category of the blueprint.\n- `aesthetic` (string): The aesthetic of the blueprint.\n- `sections` (array): An array of sections within the blueprint. Each section has the following properties:\n  - `name` (string): The name of the section.\n  - `content` (string): The content of the section.\n\n### Example\n\nRequest:\n\n```\nGET {{API_BASE_URL}}/blueprints/12345\n```\n\nResponse:\n\n```json\n{\n  \"id\": \"12345\",\n  \"name\": \"Example Blueprint\",\n  \"category\": \"Example Category\",\n  \"aesthetic\": \"Example Aesthetic\",\n  \"sections\": [\n    {\n      \"name\": \"Section 1\",\n      \"content\": \"Lorem ipsum dolor sit amet.\"\n    },\n    {\n      \"name\": \"Section 2\",\n      \"content\": \"Consectetur adipiscing elit.\"\n    }\n  ]\n}\n```\n\nIn the example above, the request is made to retrieve the blueprint with ID \"12345\". The response includes the ID, name, category, aesthetic, and sections of the blueprint.\n\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Generators",
+			"item": [
+				{
+					"name": "Generators",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Generators exist\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var generator = jsonData[0]",
+									"    pm.expect(generator.id.length).to.greaterThan(0);",
+									"",
+									"    pm.environment.set(\"GeneratorId\", generator.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/generators",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"generators"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generators by Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Generator 0 exists\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var generator = jsonData[0]",
+									"    pm.expect(generator.id.length).to.greaterThan(0);",
+									"",
+									"    pm.environment.set(\"GeneratorId\", generator.id);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/generators?type=text",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"generators"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generators Test Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 201\", function () {",
+									"    pm.expect(pm.response.code).to.equal(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields - type, description, and data\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData).to.have.property('type');",
+									"  pm.expect(responseData).to.have.property('description');",
+									"  pm.expect(responseData).to.have.property('data');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Type and description must be non-empty strings\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.type).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Type should not be empty\");",
+									"  pm.expect(responseData.description).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Description should not be empty\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userPrompt\": \"This is a POSTMAN testCreate call to Api Generators\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/generators/test-create?type=Text",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"generators",
+								"test-create"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Text"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response is an array of strings (base64 img)\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(Array.isArray(jsonData)).to.eq(true);",
+									"});",
+									"// #region VISUALIZER",
+									"let template = `",
+									"<div style=\"display: flex; flex-direction: column; width: 80rem;\">",
+									"        <div style=\"display: flex; flex-direction: row; flex-wrap: wrap\">",
+									"            <div style=\"background-color: {{color}}; border-radius: 100%; margin: 0.5rem; display: flex; flex-direction: row\">",
+									"            {{#each response}}",
+									"                <div style=\"width: 50rem\">",
+									"                    <img",
+									"                        src=\"{{this}}\"",
+									"                        style=\"margin: auto; width: 50rem\"",
+									"                    />",
+									"                </div>",
+									"            {{/each}}",
+									"            </div>",
+									"        </div>",
+									"</div>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { response: pm.response.json() })",
+									"// #endregion"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userPrompt\": \"Man with medium-long black hair and sunglasses, wearing a black coat with collar, and formal suit with black tie underneath. He is holding a powerful cyber katana. Smoking and burning cyberpunk city skyline in the background. Stylized, neo-noir photorealistic, saturated, stable diffusion, hdr, highly detailed, mesmerizing, 4K, super HD, studio lighting\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/generators/test-create?type=Image",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"generators",
+								"test-create"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Image"
+								}
+							]
+						},
+						"description": "This API endpoint allows you generate new media of type \"Image\" by sending an HTTP POST request to the specified URL.\n\nTo generator a new item, you need to provide the required parameters in the request body. Additionally, you should include the query parameter \"type\" (with the value \"Image\" , \"Video\", \"Sound\", etc.) to specify the type of media you want to generate.\n\nOnce the request is successfully processed, the API will return a response with a status code of 201, indicating that the generator has been created. The response body will contain an empty array.\n\nPlease note that you may need to authenticate your request and include the necessary headers as per the API documentation.\n\nIf you have any further questions or need assistance, please refer to the API documentation or contact the API provider."
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Text",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// pm.test(\"Response is an array of strings (base64 img)\", function () {",
+									"//     var jsonData = pm.response.json();",
+									"//     pm.expect(Array.isArray(jsonData)).to.eq(true);",
+									"// });",
+									"// #region VISUALIZER",
+									"let template = `",
+									"<div style=\"display: flex; flex-direction: column; width: 80rem;\">",
+									"        <div style=\"display: flex; flex-direction: row; flex-wrap: wrap\">",
+									"            <div style=\"background-color: {{color}}; border-radius: 100%; margin: 0.5rem; display: flex; flex-direction: row\">",
+									"            {{#each response}}",
+									"                <div style=\"width: 50rem\">",
+									"                    <img",
+									"                        src=\"{{this}}\"",
+									"                        style=\"margin: auto; width: 50rem\"",
+									"                    />",
+									"                </div>",
+									"            {{/each}}",
+									"            </div>",
+									"        </div>",
+									"</div>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { response: pm.response.json() })",
+									"// #endregion"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userPrompt\": \"Man with medium-long black hair and sunglasses, wearing a black coat with collar, and formal suit with black tie underneath. He is holding a powerful cyber katana. Smoking and burning cyberpunk city skyline in the background. Stylized, neo-noir photorealistic, saturated, stable diffusion, hdr, highly detailed, mesmerizing, 4K, super HD, studio lighting\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/generators/test-create?type=Text",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"generators",
+								"test-create"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Text"
+								}
+							]
+						},
+						"description": "This API endpoint allows you generate new media of type \"Image\" by sending an HTTP POST request to the specified URL.\n\nTo generator a new item, you need to provide the required parameters in the request body. Additionally, you should include the query parameter \"type\" (with the value \"Image\" , \"Video\", \"Sound\", etc.) to specify the type of media you want to generate.\n\nOnce the request is successfully processed, the API will return a response with a status code of 201, indicating that the generator has been created. The response body will contain an empty array.\n\nPlease note that you may need to authenticate your request and include the necessary headers as per the API documentation.\n\nIf you have any further questions or need assistance, please refer to the API documentation or contact the API provider."
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Audio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// pm.test(\"Response is an array of strings (base64 img)\", function () {",
+									"//     var jsonData = pm.response.json();",
+									"//     pm.expect(Array.isArray(jsonData)).to.eq(true);",
+									"// });",
+									"// #region VISUALIZER",
+									"let template = `",
+									"<div style=\"display: flex; flex-direction: column; width: 80rem;\">",
+									"        <div style=\"display: flex; flex-direction: row; flex-wrap: wrap\">",
+									"            <div style=\"background-color: {{color}}; border-radius: 100%; margin: 0.5rem; display: flex; flex-direction: row\">",
+									"            {{#each response}}",
+									"                <div style=\"width: 50rem\">",
+									"                    <img",
+									"                        src=\"{{this}}\"",
+									"                        style=\"margin: auto; width: 50rem\"",
+									"                    />",
+									"                </div>",
+									"            {{/each}}",
+									"            </div>",
+									"        </div>",
+									"</div>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { response: pm.response.json() })",
+									"// #endregion"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userPrompt\": \"Man with medium-long black hair and sunglasses, wearing a black coat with collar, and formal suit with black tie underneath. He is holding a powerful cyber katana. Smoking and burning cyberpunk city skyline in the background. Stylized, neo-noir photorealistic, saturated, stable diffusion, hdr, highly detailed, mesmerizing, 4K, super HD, studio lighting\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/generators/test-create?type=Audio",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"generators",
+								"test-create"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Audio"
+								}
+							]
+						},
+						"description": "This API endpoint allows you generate new media of type \"Image\" by sending an HTTP POST request to the specified URL.\n\nTo generator a new item, you need to provide the required parameters in the request body. Additionally, you should include the query parameter \"type\" (with the value \"Image\" , \"Video\", \"Sound\", etc.) to specify the type of media you want to generate.\n\nOnce the request is successfully processed, the API will return a response with a status code of 201, indicating that the generator has been created. The response body will contain an empty array.\n\nPlease note that you may need to authenticate your request and include the necessary headers as per the API documentation.\n\nIf you have any further questions or need assistance, please refer to the API documentation or contact the API provider."
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Video",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"// pm.test(\"Response is an array of strings (base64 img)\", function () {",
+									"//     var jsonData = pm.response.json();",
+									"//     pm.expect(Array.isArray(jsonData)).to.eq(true);",
+									"// });",
+									"// #region VISUALIZER",
+									"let template = `",
+									"<div style=\"display: flex; flex-direction: column; width: 80rem;\">",
+									"        <div style=\"display: flex; flex-direction: row; flex-wrap: wrap\">",
+									"            <div style=\"background-color: {{color}}; border-radius: 100%; margin: 0.5rem; display: flex; flex-direction: row\">",
+									"            {{#each response}}",
+									"                <div style=\"width: 50rem\">",
+									"                    <img",
+									"                        src=\"{{this}}\"",
+									"                        style=\"margin: auto; width: 50rem\"",
+									"                    />",
+									"                </div>",
+									"            {{/each}}",
+									"            </div>",
+									"        </div>",
+									"</div>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { response: pm.response.json() })",
+									"// #endregion"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userPrompt\": \"Man with medium-long black hair and sunglasses, wearing a black coat with collar, and formal suit with black tie underneath. He is holding a powerful cyber katana. Smoking and burning cyberpunk city skyline in the background. Stylized, neo-noir photorealistic, saturated, stable diffusion, hdr, highly detailed, mesmerizing, 4K, super HD, studio lighting\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_BASE_URL}}/generators/test-create?type=Video",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"generators",
+								"test-create"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Video"
+								}
+							]
+						},
+						"description": "This API endpoint allows you generate new media of type \"Image\" by sending an HTTP POST request to the specified URL.\n\nTo generator a new item, you need to provide the required parameters in the request body. Additionally, you should include the query parameter \"type\" (with the value \"Image\" , \"Video\", \"Sound\", etc.) to specify the type of media you want to generate.\n\nOnce the request is successfully processed, the API will return a response with a status code of 201, indicating that the generator has been created. The response body will contain an empty array.\n\nPlease note that you may need to authenticate your request and include the necessary headers as per the API documentation.\n\nIf you have any further questions or need assistance, please refer to the API documentation or contact the API provider."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Galleries",
+			"item": [
+				{
+					"name": "All Galleries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Generator 0 exists\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var generator = jsonData[0]",
+									"    pm.expect(generator.id.length).to.greaterThan(0);",
+									"",
+									"    pm.environment.set(\"GeneratorId\", generator.id);",
+									"});",
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each generator has a non-empty ID\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(generator) {",
+									"        pm.expect(generator.id).to.exist.and.to.not.be.empty;",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each generator has a non-empty name\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    ",
+									"    responseData.forEach(function(generator) {",
+									"        pm.expect(generator.name).to.exist.and.to.not.be.empty;",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Each generator has a non-empty type\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(generator) {",
+									"        pm.expect(generator.type).to.exist.and.to.have.lengthOf.at.least(1, \"Type should not be empty\");",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/galleries",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"galleries"
+							]
+						},
+						"description": "\nThis API endpoint is used to retrieve a list of galleries. \n\nTo make a GET request to this endpoint, use the following URL: `{{API_BASE_URL}}/galleries`.\n\nThe response from the last execution of this request had a status code of 200 and returned an array of gallery objects. Each gallery object has the following properties:\n\n- `id` (string): The unique identifier of the gallery.\n- `name` (string): The name of the gallery.\n- `type` (string): The type of the gallery.\n- `projectId` (string): The unique identifier of the project associated with the gallery.\n- `media` (array): An array of media objects associated with the gallery. Each media object has the following properties:\n  - `id` (string): The unique identifier of the media.\n  - `projectId` (string): The unique identifier of the project associated with the media.\n  - `name` (string): The name of the media.\n  - `type` (string): The type of the media.\n  - `uri` (string): The URI or URL of the media.\n\nPlease note that the values for the `id`, `name`, `type`, `projectId`, `media.id`, `media.projectId`, `media.name`, `media.type`, and `media.uri` properties may vary in the actual response.\n\nMake sure to handle the response accordingly in your application.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Galleries: Image",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/galleries?type=image",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"galleries"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "image"
+								}
+							]
+						},
+						"description": "\nThis API endpoint allows you to retrieve galleries of type \"image\" from the server.\n\n## Request\n\n- Method: GET\n- URL: `{{API_BASE_URL}}/galleries?type=image`\n\n## Response\n\nThe API returns a JSON array of galleries. However, the last execution of this request returned an empty array as the response.\n\n### Response Example\n\n```json\n[]\n```\n\nPlease note that the response may vary depending on the availability of galleries on the server.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Galleries: Sound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has the required fields - type and images\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(gallery) {",
+									"        pm.expect(gallery).to.have.property('type').that.is.a('string');",
+									"        pm.expect(gallery).to.have.property('images').that.is.an('array');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Type is equal to 'image'\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(gallery) {",
+									"        pm.expect(gallery.type).to.equal('image');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"  pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response array is empty\", function () {",
+									"  const responseData = pm.response.json();",
+									"",
+									"  pm.expect(responseData).to.be.an('array').that.is.empty;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within an acceptable range\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/galleries?type=sound",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"galleries"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "sound"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Galleries: Video",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response is an array\", function () {",
+									"  pm.expect(pm.response.json()).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Array is empty\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    pm.expect(responseData).to.have.lengthOf(0);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/galleries?type=video",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"galleries"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "video"
+								}
+							]
+						},
+						"description": "\nThis API endpoint allows you to retrieve a list of galleries of type \"document\". \n\nTo make a request, send an HTTP GET request to `{{API_BASE_URL}}/galleries?type=document`.\n\nThe response will be a JSON array with a status code of 200. In the last execution, the response was an empty array: `[]`.\n\nPlease note that the response may vary depending on the available galleries of type \"document\" in the system.\n\n"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Pong!\");",
+							"});",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body is a string\", function () {",
+							"  pm.expect(pm.response.text()).to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body length is greater than 0\", function () {",
+							"    const responseData = pm.response.text();",
+							"",
+							"    pm.expect(responseData).to.have.lengthOf.at.least(1, \"Body length should be greater than 0\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body matches the expected string 'Pong!'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Pong!\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is within an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_BASE_URL}}/ping",
+					"host": [
+						"{{API_BASE_URL}}"
+					],
+					"path": [
+						"ping"
+					]
+				},
+				"description": "\nThis API endpoint is used to check the availability of the server by sending a GET request to the `/ping` route. \n\n### Request\n\nThe request does not require any parameters.\n\n### Response\n\nThe response will have a status code of 200 if the server is available. The response body will contain the message \"Pong!\" indicating that the server is up and running.\n\nExample Response:\n\n```\nStatus: 200\nPong!\n```\n\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Api Routes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{API_BASE_URL}}/routes",
+					"host": [
+						"{{API_BASE_URL}}"
+					],
+					"path": [
+						"routes"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

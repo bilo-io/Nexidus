@@ -1,0 +1,7 @@
+# Tiltfile to run frontend dashboard
+
+# Docker build setup (optional if you want to containerize the frontend)
+docker_build('frontend-dashboard', './src/frontend/dashboard')
+
+# Running the frontend dashboard service using yarn start
+local('cd src/frontend/dashboard && yarn install && yarn start')

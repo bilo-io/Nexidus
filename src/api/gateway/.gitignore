@@ -1,0 +1,7 @@
+node_modules/
+output/**/*.jpg
+output/**/*.png
+# output/**
+.history
+.DS_Store
+dist

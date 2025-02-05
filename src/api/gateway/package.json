@@ -1,0 +1,56 @@
+{
+  "name": "@nexidus/api",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "pre-commit": [
+    "build",
+    "version-json",
+    "add-build"
+  ],
+  "scripts": {
+    "build": "rimraf dist && npx tsc",
+    "build:docker": "docker build -t nexidus-api-gateway:latest .",
+    "ts.check": "npx tsc --project tsconfig.json",
+    "add-build": "git add dist",
+    "start": "node dist/index.js",
+    "dev:old": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "test": "npx newman run ./tests/postman/API_TEST.postman_collection.json -e ./tests/postman/API_ENV_LOCAL.postman_environment.json",
+    "test:ci": "npx newman run ./tests/postman/API_TEST.postman_collection.json -e ./tests/postman/API_ENV_DEV.postman_environment.json",
+    "test:prod": "npx newman run ./tests/postman/API_TEST.postman_collection.json -e ./tests/postman/API_ENV_PROD.postman_environment.json",
+    "test:watch": "nodemon --watch dist/ --exec 'yarn test'",
+    "tdd": "",
+    "sync-core": "yarn upgrade @vision/core",
+    "dev": "npx tsc --watch & nodemon -q dist/index.js",
+    "version-json": "node scripts/version.js"
+  },
+  "keywords": [],
+  "author": "Bilo Lwabona",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@vercel/node": "^5.1.0",
+    "@vision/core": "bilo-io/vision-core.git#0.1.17",
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^12.1.1",
+    "nodemailer": "^6.9.7",
+    "reflect-metadata": "^0.1.13",
+    "stable-diffusion-cjs": "^1.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/node": "^20.4.2",
+    "concurrently": "^8.2.0",
+    "detect-port": "^1.6.1",
+    "k6": "^0.0.0",
+    "nodemon": "^3.0.1",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^5.0.1"
+  }
+}

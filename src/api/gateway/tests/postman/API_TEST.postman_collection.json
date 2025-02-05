@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "ebe2fe66-2647-4e33-9fb1-e5b8e5785124",
+		"name": "API_TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "810247"
+	},
+	"item": [
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "List Movies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let template = `",
+									"<div style=\"display: flex; flex-direction: column; width: 80rem;\">",
+									"        <div style=\"display: flex; flex-direction: row; flex-wrap: wrap\">",
+									"            <div style=\"background-color: #FFF; border-radius: 50%; margin: 0.5rem; display: flex; flex-direction: row\">",
+									"            {{#each response}}",
+									"                <div style=\"width: fit-content\">",
+									"                    <img",
+									"                        src=\"{{imgPoster}}\"",
+									"                        style=\"margin: auto; height: 8rem; border-radius: 50%\"",
+									"                    />",
+									"                </div>",
+									"            {{/each}}",
+									"            </div>",
+									"        </div>",
+									"</div>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { response: pm.response.json().data })",
+									"// #endregion",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within an acceptable range\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData).to.have.property('data').that.is.an('array').and.not.empty;",
+									"    responseData.data.forEach(movie => {",
+									"        pm.expect(movie).to.have.property('id').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('name').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('releaseDate').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('ratingImdb').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('ratingRottenTomatoes').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('ratingAudience').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('imgPoster').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('imgBackground').that.is.a('string');",
+									"        pm.expect(movie).to.have.property('genres').that.is.an('array');",
+									"        pm.expect(movie).to.have.property('cast').that.is.an('array');",
+									"        movie.cast.forEach(actor => {",
+									"            pm.expect(actor).to.have.property('name').that.is.a('string');",
+									"            pm.expect(actor).to.have.property('actorId').that.is.a('string');",
+									"        });",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Meta object contains required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData.meta).to.exist;",
+									"    pm.expect(responseData.meta).to.have.property('limit');",
+									"    pm.expect(responseData.meta).to.have.property('page');",
+									"    pm.expect(responseData.meta).to.have.property('totalPages');",
+									"    pm.expect(responseData.meta).to.have.property('totalItems');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Genres array is present and contains expected number of elements\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"",
+									"    responseData.data.forEach(function(movie) {",
+									"        pm.expect(movie.genres).to.be.an('array');",
+									"        pm.expect(movie.genres).to.have.lengthOf.at.least(1, \"Genres array should not be empty\");",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/movies?page=1&limit=5&search=Avengers&releaseDateAfter=2000-01-01&releaseDateBefore=2020-01-01&ratingImdb=3&ratingRottenTomatoes=2&ratingAudience=2",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"movies"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "search",
+									"value": "Avengers"
+								},
+								{
+									"key": "releaseDateAfter",
+									"value": "2000-01-01"
+								},
+								{
+									"key": "releaseDateBefore",
+									"value": "2020-01-01"
+								},
+								{
+									"key": "ratingImdb",
+									"value": "3"
+								},
+								{
+									"key": "ratingRottenTomatoes",
+									"value": "2"
+								},
+								{
+									"key": "ratingAudience",
+									"value": "2"
+								}
+							]
+						},
+						"description": "### Get Movies\n\nThis endpoint retrieves a list of movies based on the provided criteria.\n\n#### Request Parameters\n\n- `page` (integer) - The page number for paginated results.\n    \n- `limit` (integer) - The maximum number of items to be returned per page.\n    \n- `search` (string) - The keyword to search for in movie names.\n    \n- `releaseDateAfter` (string) - The minimum release date for the movies.\n    \n- `releaseDateBefore` (string) - The maximum release date for the movies.\n    \n- `ratingImdb` (integer) - The minimum IMDb rating for the movies.\n    \n- `ratingRottenTomatoes` (integer) - The minimum Rotten Tomatoes rating for the movies.\n    \n- `ratingAudience` (integer) - The minimum audience rating for the movies.\n    \n\n#### Response\n\nThe response will be a JSON object with the following schema:\n\n``` json\n{\n    \"meta\": {\n        \"limit\": 0,\n        \"page\": 0,\n        \"totalPages\": 0,\n        \"totalItems\": 0\n    },\n    \"data\": [\n        {\n            \"id\": \"\",\n            \"name\": \"\",\n            \"releaseDate\": \"\",\n            \"ratingImdb\": \"\",\n            \"ratingRottenTomatoes\": \"\",\n            \"ratingAudience\": \"\",\n            \"imgPoster\": \"\",\n            \"imgBackground\": \"\",\n            \"genres\": [\"\"],\n            \"cast\": [\n                {\n                    \"name\": \"\",\n                    \"actorId\": \"\"\n                }\n            ]\n        }\n    ]\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actors",
+			"item": [
+				{
+					"name": "List Actors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let template = `",
+									"<div style=\"display: flex; flex-direction: column; width: 80rem;\">",
+									"        <div style=\"display: flex; flex-direction: row; flex-wrap: wrap\">",
+									"            <div style=\"background-color: #FFF; border-radius: 50%; margin: 0.5rem; display: flex; flex-direction: row\">",
+									"            {{#each response}}",
+									"                <div style=\"width: fit-content; display: flex; flex-direction: column; align-items: center; margin: 0.5rem\">",
+									"                    <img",
+									"                        src=\"{{img}}\"",
+									"                        style=\"margin: auto; height: 8rem; border-radius: 1rem\"",
+									"                    />",
+									"                    <div style=\"height: 3rem; font-size: 0.8rem; margin-top: 0.5rem; margin-bottom: 0.5rem\">{{name}}",
+									"                    </div>",
+									"                </div>",
+									"            {{/each}}",
+									"            </div>",
+									"        </div>",
+									"</div>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { response: pm.response.json().data })",
+									"// #endregion",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields - id, name, img, dateOfBirth, and gender\", function () {",
+									"    const responseData = pm.response.json().data[0];",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.id).to.exist;",
+									"    pm.expect(responseData.name).to.exist;",
+									"    pm.expect(responseData.img).to.exist;",
+									"    pm.expect(responseData.dateOfBirth).to.exist;",
+									"    pm.expect(responseData.gender).to.exist;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Date of birth is in a valid date format\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    responseData.data.forEach(function(actor) {",
+									"        pm.expect(actor.dateOfBirth).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Data array is present and contains the expected number of elements\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.exist.and.to.be.an('array')//.with.lengthOf(2);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 200ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/actors?page=1&limit=7&search=Chris&dateOfBirthAfter=1980-01-01&dateOfBirthBefore=2000-01-01",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"actors"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "7"
+								},
+								{
+									"key": "search",
+									"value": "Chris"
+								},
+								{
+									"key": "dateOfBirthAfter",
+									"value": "1980-01-01"
+								},
+								{
+									"key": "dateOfBirthBefore",
+									"value": "2000-01-01"
+								}
+							]
+						},
+						"description": "The endpoint retrieves a list of actors based on the provided query parameters. The response is in JSON format and adheres to the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"meta\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"limit\": {\n                    \"type\": \"integer\"\n                },\n                \"page\": {\n                    \"type\": \"integer\"\n                },\n                \"totalPages\": {\n                    \"type\": \"integer\"\n                },\n                \"totalItems\": {\n                    \"type\": \"integer\"\n                }\n            }\n        },\n        \"data\": {\n            \"type\": \"array\",\n            \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"id\": {\n                        \"type\": \"string\"\n                    },\n                    \"name\": {\n                        \"type\": \"string\"\n                    },\n                    \"img\": {\n                        \"type\": \"string\"\n                    },\n                    \"dateOfBirth\": {\n                        \"type\": \"string\"\n                    },\n                    \"gender\": {\n                        \"type\": \"string\"\n                    }\n                }\n            }\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Places",
+			"item": [
+				{
+					"name": "List Places",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let template = `",
+									"<div style=\"display: flex; flex-direction: column; width: 80rem;\">",
+									"        <div style=\"display: flex; flex-direction: row; flex-wrap: wrap\">",
+									"            <div style=\"background-color: #FFF; border-radius: 50%; margin: 0.5rem; display: flex; flex-direction: row\">",
+									"            {{#each response}}",
+									"                <div style=\"width: fit-content; display: flex; flex-direction: column; align-items: center; margin: 0.5rem\">",
+									"                    <img",
+									"                        src=\"{{img}}\"",
+									"                        style=\"margin: auto; height: 8rem; border-radius: 1rem\"",
+									"                    />",
+									"                    <div style=\"height: 3rem; font-size: 0.8rem; margin-top: 0.5rem; margin-bottom: 0.5rem\">{{name}}",
+									"                    </div>",
+									"                </div>",
+									"            {{/each}}",
+									"            </div>",
+									"        </div>",
+									"</div>",
+									"`",
+									"",
+									"pm.visualizer.set(template, { response: pm.response.json().data })",
+									"// #endregion",
+									"",
+									"pm.test(\"Response status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is within acceptable range\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data).to.be.an('array');",
+									"    ",
+									"    responseData.data.forEach(function(place) {",
+									"        pm.expect(place).to.have.property('id');",
+									"        pm.expect(place).to.have.property('name');",
+									"        pm.expect(place).to.have.property('description');",
+									"        pm.expect(place).to.have.property('category');",
+									"        pm.expect(place).to.have.property('companyId');",
+									"        pm.expect(place).to.have.property('address');",
+									"        pm.expect(place).to.have.property('coordinates');",
+									"    });",
+									"});",
+									"",
+									"",
+									"pm.test(\"Coordinates have valid lat and lon values\", function () {",
+									"    const responseData = pm.response.json();",
+									"",
+									"    pm.expect(responseData.data).to.be.an('array').that.is.not.empty;",
+									"    ",
+									"    responseData.data.forEach(function (place) {",
+									"        pm.expect(place.coordinates).to.exist;",
+									"        pm.expect(place.coordinates.lat).to.be.a('number').within(-90, 90);",
+									"        pm.expect(place.coordinates.lon).to.be.a('number').within(-180, 180);",
+									"    });",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/places?page=2&limit=3&category=hotel&address=germany",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"places"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								},
+								{
+									"key": "category",
+									"value": "hotel"
+								},
+								{
+									"key": "address",
+									"value": "germany"
+								}
+							]
+						},
+						"description": "# Get Places\n\nThis endpoint retrieves a list of places based on the provided query parameters.\n\n## Request\n\n### Endpoint\n\n`GET /places`\n\n### Query Parameters\n\n- `page` (number) - The page number for paginated results.\n    \n- `limit` (number) - The maximum number of items to be returned per page.\n    \n- `category` (string) - The category of the places to be retrieved.\n    \n- `address` (string) - The address of the places to be retrieved.\n    \n\n### Example\n\n```\n{{API_BASE_URL}}/places?page=2&limit=3&category=hotel&address=germany\n\n ```\n\n## Response\n\n### 200 OK\n\n#### Content-Type: application/json\n\n##### Body\n\n``` json\n{\n    \"meta\": {\n        \"limit\": 0,\n        \"page\": 0,\n        \"totalPages\": 0,\n        \"totalItems\": 0\n    },\n    \"data\": [\n        {\n            \"id\": \"\",\n            \"name\": \"\",\n            \"description\": \"\",\n            \"category\": \"\",\n            \"companyId\": \"\",\n            \"address\": \"\",\n            \"coordinates\": {\n                \"lat\": 0,\n                \"lon\": 0\n            }\n        }\n    ]\n}\n\n ```\n\nThe response includes metadata and an array of place objects with their details such as ID, name, description, category, company ID, address, and coordinates.\n\nThis endpoint retrieves a list of places based on the provided parameters.\n\n#### Request Parameters\n\n- `limit` (query parameter) - The maximum number of places to be returned. Default is 100.\n    \n- `category` (query parameter) - The category of the places to be retrieved.\n    \n- `address` (query parameter) - The address of the places to be retrieved.\n    \n\n#### Response Body\n\nThe response is in JSON format and includes the following fields:\n\n- `meta` (object) - Metadata about the response, including `limit`, `page`, `totalPages`, and `totalItems`.\n    \n- `data` (array) - An array of place objects, each containing the following fields:\n    \n    - `id` (string) - The unique identifier of the place.\n        \n    - `name` (string) - The name of the place.\n        \n    - `description` (string) - The description of the place.\n        \n    - `category` (string) - The category of the place.\n        \n    - `companyId` (string) - The identifier of the company associated with the place.\n        \n    - `address` (string) - The address of the place.\n        \n    - `coordinates` (object) - The geographical coordinates of the place, including `lat` and `lon`.\n        \n\n#### Example\n\n``` json\n{\n  \"meta\": {\n    \"limit\": 0,\n    \"page\": 0,\n    \"totalPages\": 0,\n    \"totalItems\": 0\n  },\n  \"data\": [\n    {\n      \"id\": \"\",\n      \"name\": \"\",\n      \"description\": \"\",\n      \"category\": \"\",\n      \"companyId\": \"\",\n      \"address\": \"\",\n      \"coordinates\": {\n        \"lat\": 0,\n        \"lon\": 0\n      }\n    }\n  ]\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Companies",
+			"item": [
+				{
+					"name": "List Companies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Updated response time test to 300ms",
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response time is less than 300ms\", function () {",
+									"  pm.expect(pm.response.responseTime).to.be.below(300);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response has the required fields - logoUrl and name\", function () {",
+									"    const responseData = pm.response.json().data;",
+									"    ",
+									"    pm.expect(responseData).to.be.an('array');",
+									"    responseData.forEach(function(company) {",
+									"        pm.expect(company).to.be.an('object');",
+									"        pm.expect(company.logoUrl).to.exist;",
+									"        pm.expect(company.name).to.exist;",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_BASE_URL}}/companies?limit=15",
+							"host": [
+								"{{API_BASE_URL}}"
+							],
+							"path": [
+								"companies"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
