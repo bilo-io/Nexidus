@@ -934,6 +934,26 @@ acorn@^8.14.0:
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.14.0.tgz"
   integrity sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==
 
+ag-charts-community@11.0.4:
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/ag-charts-community/-/ag-charts-community-11.0.4.tgz#7b33657ae1608e7519c82ef39f15d001875f3ba2"
+  integrity sha512-TFShWfZaA1yJ/hb3jwtNAqBG2Qy9VvoQ9mWLr29ilT6+2R2e30RSk2oH7FAQ2l5nS1367dRf137Td9tUTTuVLg==
+  dependencies:
+    ag-charts-locale "11.0.4"
+    ag-charts-types "11.0.4"
+
+ag-charts-enterprise@11.0.4:
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/ag-charts-enterprise/-/ag-charts-enterprise-11.0.4.tgz#a068b988be9392a9d798ac35acf027f32076d9bf"
+  integrity sha512-3jKKbzei4hzSSbPih0EFyIBJ/VvLDZAi+5QsbzxRHfsjfAuqQFYCNXx55FqOzOGg1KSa8sAwmpmTSGdLPxBfDw==
+  dependencies:
+    ag-charts-community "11.0.4"
+
+ag-charts-locale@11.0.4:
+  version "11.0.4"
+  resolved "https://registry.yarnpkg.com/ag-charts-locale/-/ag-charts-locale-11.0.4.tgz#5843a2090610672dcdc77cabf97f1859faa6e6df"
+  integrity sha512-xCQA8CtcUyqU4qYg7u9oUQ+SghIsWAQvY60Bu0ghJJ/bDeW8+ptEU0ogBapuDqfb9B9kqWKgASxbX6diqb+HVQ==
+
 ag-charts-types@11.0.4:
   version "11.0.4"
   resolved "https://registry.yarnpkg.com/ag-charts-types/-/ag-charts-types-11.0.4.tgz#6118b44bad65673111210783ef0fa07114a233c5"
@@ -945,6 +965,16 @@ ag-grid-community@33.0.4:
   integrity sha512-iBD8g8bNIl95w9CzCQpDid+eTdmOoT39204sPUOhE9eE50vfoDHIaF5U4fRYQHbLsT4bwbXfQYdsqBAOLJL24w==
   dependencies:
     ag-charts-types "11.0.4"
+
+ag-grid-enterprise@^33.0.4:
+  version "33.0.4"
+  resolved "https://registry.yarnpkg.com/ag-grid-enterprise/-/ag-grid-enterprise-33.0.4.tgz#479bc9909ad25fe6f3d79e4922207cbb78953a26"
+  integrity sha512-Ig4mBWanf2NAJWF1DDiRJAMwbxaxqhIf4rvr/ub5iFksHyvtk5GNrDHsT5PGGZX7xMjOqZoyFYBNJtK0OfUFWQ==
+  dependencies:
+    ag-grid-community "33.0.4"
+  optionalDependencies:
+    ag-charts-community "11.0.4"
+    ag-charts-enterprise "11.0.4"
 
 ag-grid-react@^33.0.4:
   version "33.0.4"

@@ -3,19 +3,11 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/gateway/$1"
+            "destination": "/api/gateway/dist/index.js"
         },
         {
-            "source": "/service-auth/(.*)",
-            "destination": "/services/auth/$1"
-        },
-        {
-            "source": "/service-rates/(.*)",
-            "destination": "/services/rates/$1"
-        },
-        {
-            "source": "/service-transactions/(.*)",
-            "destination": "/services/transactions/$1"
+            "source": "/api/transactions/(.*)",
+            "destination": "/services/transactions/dist/index.js"
         }
     ]
 }

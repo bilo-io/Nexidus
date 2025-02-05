@@ -10,7 +10,6 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from '@tanstack/react-table'
-import Select from '../Forms/Select'
 import Button from '../Forms/Button'
 import Input from '../Forms/Input'
 import { paginationOptions } from '../../../utils/constants'

@@ -20,6 +20,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@tailwindcss/vite": "^4.0.3",
     "@tanstack/react-table": "^8.20.6",
+    "ag-grid-enterprise": "^33.0.4",
     "ag-grid-react": "^33.0.4",
     "axios": "^1.7.9",
     "chart.js": "^4.4.7",

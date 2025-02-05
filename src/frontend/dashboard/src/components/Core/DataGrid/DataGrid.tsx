@@ -53,7 +53,7 @@ export const DataGrid = <T extends object>({
         masterDetail: true, // Enables master-detail feature
         detailRowHeight: 200, // Adjust the height of the expanded row
         
-        onStateUpdated: (event) => {
+        onStateUpdated: ( ) => {
             // console.log('onStateUpdated', { event })
             // localStorage.setItem(`${gridKey}-grid-state`, JSON.stringify(event.state))
             onSaveColumns();

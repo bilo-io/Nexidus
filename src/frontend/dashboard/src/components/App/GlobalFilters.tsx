@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DateRangePicker, Dropdown, Select } from "../Core";
+import { DateRangePicker, Dropdown } from "../Core";
 
 interface GlobalFiltersProps {
     value: Record<string, any>;
@@ -27,9 +27,9 @@ const currencyOptions = [
     }
 ]
 
-export const GlobalFilters = ({ value }: GlobalFiltersProps) => {
+export const GlobalFilters = ({  }: GlobalFiltersProps) => {
     const [currency, setCurrency] = useState<IFiatCurrency>('ZAR')
-    const [dateRange, setDateRange] = useState <IDateRange>({
+    const [, setDateRange] = useState <IDateRange>({
         startDate: '',
         endDate: '',
     })

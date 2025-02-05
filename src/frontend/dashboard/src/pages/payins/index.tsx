@@ -18,17 +18,16 @@ type PayinsProps = object
 export const Payins: React.FC<PayinsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
-    const { globalFilters, contentFilters, columnDef } = useNexidusPage<ITransaction>();
-    console.log({
-        columnDef
-    })
-    const { loading, error, retry } = useNexidusApi<ITransaction>({
+    
+    const { globalFilters, contentFilters } = useNexidusPage<ITransaction>();
+
+    const { loading, retry } = useNexidusApi<ITransaction>({
         path: '',
         params: {
             ...contentFilters
         }
     });
-    const data = mockData;
+
     const columns: ColumnDef<ITransaction>[] = [
         {
             accessorKey: 'id',

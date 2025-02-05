@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
-import logoSvg from '../../assets/portfolio-case.svg';
 import { useTranslation } from 'react-i18next';
 import Icon from '../Core/Icon';
 import { useHover } from '../../hooks/useHover';
@@ -214,7 +213,7 @@ const NavItem = ({
             onMouseEnter={onHoverStart}
             onMouseLeave={onHoverEnd}
             className={`flex flex-row items-center w-full cursor-pointer`}
-            onClick={item.action}
+            onClick={item.action || onClick}
             style={{
                 color: '#FFF',
                 backgroundColor: isHovered ?  theme?.warning : 'transparent'
