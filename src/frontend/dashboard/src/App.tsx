@@ -22,13 +22,15 @@ function App() {
         <Router>
           <View className="w-full flex flex-row">
             <AppNavBar />
-            <Routes>
-              {
-                routes.map((item: { path: string, element: React.ReactElement }) => (
-                  <Route key={item.path} path={item.path} element={item.element} />
-                ))
-              }
-            </Routes>
+            <View style={{ boxShadow: '3px 5px 18px #0000005A'}}>
+              <Routes>
+                {
+                  routes.map((item: { path: string, element: React.ReactElement }) => (
+                    <Route key={item.path} path={item.path} element={item.element} />
+                  ))
+                }
+              </Routes>
+            </View>
           </View>
         </Router>
       </ThemeProvider>

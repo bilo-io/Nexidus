@@ -7,7 +7,9 @@
     "dev": "osascript ./scripts/dev.scpt",
     "dev:ui": "echo 'Implement osascript to start up services'",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dirs": "sh ./scripts/printDirs.sh"
+    "dirs": "sh ./scripts/printDirs.sh",
+    "deploy:services": "bash ./scripts/deploy/services.sh",
+    "deploy:api": "bash ./scripts/deploy/api.sh"
   },
   "keywords": [],
   "author": "",

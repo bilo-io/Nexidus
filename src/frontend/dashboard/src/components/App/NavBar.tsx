@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import Icon from '../Core/Icon';
 import { useHover } from '../../hooks/useHover';
+import nexidusIcon from '../../assets/nexidus.svg'
 
 interface INavLink {
     name: string;
@@ -25,6 +26,12 @@ export const AppNavBar: React.FC = () => {
     const hoverStyle = 'hover:bg-black bg-opacity-';
 
     const links: INavLink[] = [
+        {
+            name: t('dashboard'),
+            icon: 'SquaresPlus',
+            path: '/',
+            // action: () => navigate('/')
+        },
         {
             name: t('transactions'),
             icon: 'ListBullet',
@@ -125,44 +132,56 @@ export const AppNavBar: React.FC = () => {
             style={{
                 height: '100vh',
                 backgroundColor: theme.primary,
-                boxShadow: "3px 5px 18px #0000005A",
+                // boxShadow: "3px 5px 18px #0000005A",
             }}
         >
             {/* Header */}
-            <div className={`flex flex-row items-center w-full mb-12 ${hoverStyle}`} onClick={() => navigate('/')} style={{ color: '#FFF' }}>
-                {/* <img src={logoSvg} width="24" className="m-4 cursor-pointer" alt="Logo" /> */}
-                <Icon name={'SquaresPlus'} className='size-6 m-4' />
-                {isOpen ? t('dashboard') : ''}
+            <div className={`flex flex-row items-center w-full mb-12`} onClick={() => navigate('/')} style={{ color: '#FFF' }}>
+                <img src={nexidusIcon} className='size-8 mx-4 my-2' />
+                {isOpen ? <div className='grow font-bold'>Nexidus</div> : null}
             </div>
 
             <div className='flex flex-col justify-between items-start h-full w-full'>
                 {/* Main Content */}
-                <div className="flex flex-col justify-between items-start w-full">
+                <div className="flex flex-col justify-between items-start w-full z-10">
                     {links.map((item) => (
                         <div key={item.name} className="w-full">
-                            <div
+                            <NavItem
                                 onClick={() => handleNavClick(item)}
-                                className={`flex flex-row items-center w-full cursor-pointer ${hoverStyle}`}
-                                style={{ color: '#FFF' }}
+                                item={{
+                                    name: item.name,
+                                    action: item.action,
+                                }}
+                                // icon={item.icon}
+                                // className={`flex flex-row items-center w-full cursor-pointer ${hoverStyle}`}
+                                // style={{ color: '#FFF' }}
                             >
                                 <Icon name={item.icon as string} className='size-6 m-4' />
                                 {isOpen ? item.name : ''}
-                            </div>
+                            </NavItem>
+                            
                             {item.children && (
                                 <div
-                                    className={`ml-8 flex flex-col transition-all duration-300 ease-in-out ${isOpen && expanded === item.name ? 'h-auto opacity-100' : 'h-0 opacity-20 overflow-hidden'
+                                    className={`pl-8 flex flex-col transition-all duration-300 ease-in-out ${isOpen && expanded === item.name ? 'h-auto opacity-100' : 'h-0 opacity-20 overflow-hidden'
                                         }`}
                                 >
                                     {item.children.map((child) => (
-                                        <div
+                                        <NavItem
                                             key={child.path}
                                             onClick={() => navigate(child.path!)}
-                                            className={`flex flex-row items-center w-11/12 rounded-lg cursor-pointer ${hoverStyle} mr-2`}
-                                            style={{ color: '#FFF' }}
+                                            isRoundedLeft
+                                            // className={`flex flex-row items-center w-11/12 rounded-lg cursor-pointer ${hoverStyle} mr-2`}
+                                            // style={{ color: '#FFF' }}
+                                            item={{
+                                                name: child.name,
+                                                action: child.action
+                                                    ? child.action
+                                                    : () => navigate(child.path as string)
+                                            }}
                                         >
-                                            <Icon name="StopCircle" className='ml-4 size-4' />
+                                            <Icon name={child.icon ?? 'StopCircle' as string} className={child?.icon ? 'size-6 m-4' : 'size-4 ml-4'} />
                                             <div className='m-2 ml-4'>{child.name}</div>
-                                        </div>
+                                        </NavItem>
                                     ))}
                                 </div>
                             )}
@@ -182,7 +201,7 @@ export const AppNavBar: React.FC = () => {
                                 action: item.action
                             }}
                         >
-                            <Icon name={item.icon as string} className='size-6 m-4' />
+                            <Icon name={item.icon ?? 'StopCircle' as string} className={item?.icon ? 'size-6 m-4' : 'size-4 ml-4'} />
                             {isOpen ? item.name : ''}
                         </NavItem>
                     ))}
@@ -196,14 +215,16 @@ const NavItem = ({
     item,
     children,
     onClick,
+    isRoundedLeft,
 }: {
     children: React.ReactElement | React.ReactElement[] | undefined | any[],
     onClick?: () => void,
     item: {
         name: string,
         action?: () => void,
-    }
-    }) => {
+    },
+    isRoundedLeft?: boolean,
+}) => {
     const { isHovered, onHoverStart, onHoverEnd } = useHover();
     const { theme } = useTheme();
 
@@ -212,11 +233,12 @@ const NavItem = ({
             key={item.name}
             onMouseEnter={onHoverStart}
             onMouseLeave={onHoverEnd}
-            className={`flex flex-row items-center w-full cursor-pointer`}
+            className={`flex flex-row items-center w-full cursor-pointer z-10 ${isRoundedLeft ? 'rounded-l-full' : ''}`}
             onClick={item.action || onClick}
             style={{
-                color: '#FFF',
-                backgroundColor: isHovered ?  theme?.warning : 'transparent'
+                color: isHovered ? theme?.primary : '#FFF' ,
+                backgroundColor: isHovered ? theme?.background : 'transparent',
+                // boxShadow: isHovered ? '3px 5px 18px #0000005A' : undefined
             }}
         >
             {children}

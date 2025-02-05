@@ -62,7 +62,7 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                         </tr>
                     ))}
                 </thead>
-                <tbody className='overflow-hidden overflow-y-auto' style={{ maxHeight: 'calc(50vh - 20rem)'}}>
+                <tbody className='overflow-hidden overflow-y-auto' style={{ maxHeight: 'calc(50vh - 20rem)' }}>
                     {table.getRowModel().rows.map(row => (
                         <tr key={row.id} className='h-6'>
                             {row.getVisibleCells().map(cell => (
@@ -126,14 +126,15 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
 
                     <span className="flex items-center gap-1">
                         <div>Page</div>
-                        <strong>
-                            {table.getState().pagination.pageIndex + 1} of{' '}
-                            {table.getPageCount()}
-                        </strong>
+
+                        <div className='font-bold'>{table.getState().pagination.pageIndex + 1}{' '}</div>
+                        <div>of</div>
+                        <div className='font-bold'>{table.getPageCount()}</div>
+
                     </span>
-                    <span className="flex items-center gap-1">
-                        | Go to page:
-                        <Input
+                    <div className="flex items-center gap-1">
+                        <div className='min-w-32'>| Go to page:</div>
+                        <div><Input
                             type="number"
                             min="1"
                             max={table.getPageCount()}
@@ -144,7 +145,8 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                             }}
                             className="border p-1 rounded w-16"
                         />
-                    </span>
+                        </div>
+                    </div>
                     <Dropdown
                         // value={''}
                         options={paginationOptions}
@@ -152,10 +154,10 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                             table.setPageSize(Number(value as string))
                         }}
                         value={table.getState().pagination.pageSize.toString()}
-                        // options={paginationOptions}
-                        // onChange={(e: { target: { value: any } }) => {
-                        //     table.setPageSize(Number(e.target.value))
-                        // }}
+                    // options={paginationOptions}
+                    // onChange={(e: { target: { value: any } }) => {
+                    //     table.setPageSize(Number(e.target.value))
+                    // }}
                     />
                 </div>
             </div>
