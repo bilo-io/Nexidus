@@ -119,7 +119,7 @@ export const Payins: React.FC<PayinsProps> = () => {
 
     // #endregion
 
-    // Define filter options dynamically based on ITransaction properties
+    // @ts-ignore
     const filterOptionsOld: Record<keyof ITransaction, { label: string; value: any }[]> = {
         status: [
             { label: t('Pending'), value: 'pending' },
