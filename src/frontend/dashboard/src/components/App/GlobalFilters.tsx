@@ -36,7 +36,7 @@ export const GlobalFilters = ({  }: GlobalFiltersProps) => {
 
     return (
         <div className="filters space-4">
-            <div className='flex flex-row items-center gap-x-2'>
+            <div className='flex flex-row items-center gap-x-4'>
                 <div className='w-full md:w-1/4 lg:w-1/6'>
                     <Dropdown
                         options={currencyOptions}

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNexidusPage } from '../../hooks/useNexidusPage';
 import { useNexidusApi } from '../../hooks/useNexidusApi';
 import { GlobalFilters } from '../../components/App/GlobalFilters';
-import { ContentFilters } from '../../components/App/ContentFilters';
+import { ContentFilters } from '../../components/App/ContentFilters/ContentFilters';
 import { Text, View } from '../../components/Core'
 import { Async } from '../../components/Core/Async';
 import { Table } from '../../components/Core/Table';

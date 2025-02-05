@@ -64,7 +64,7 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                 </thead>
                 <tbody className='overflow-hidden overflow-y-auto' style={{ maxHeight: 'calc(50vh - 20rem)'}}>
                     {table.getRowModel().rows.map(row => (
-                        <tr key={row.id} className='h-10'>
+                        <tr key={row.id} className='h-6'>
                             {row.getVisibleCells().map(cell => (
                                 <td key={cell.id}>
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

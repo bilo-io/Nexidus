@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNexidusPage } from '../../hooks/useNexidusPage';
 import { useNexidusApi } from '../../hooks/useNexidusApi';
 import { GlobalFilters } from '../../components/App/GlobalFilters';
-import { ContentFilters } from '../../components/App/ContentFilters';
+import { ContentFilters } from '../../components/App/ContentFilters/ContentFilters';
 import { Text, View } from '../../components/Core'
 import { Async } from '../../components/Core/Async';
 import { Table } from '../../components/Core/Table';
@@ -12,13 +12,14 @@ import { ITransaction } from '../../models/transaction';
 
 import { payins as mockData } from '../../data/mockData'
 import { ColumnDef } from '@tanstack/react-table';
+import { getFilterOptions } from '../../components/App/ContentFilters/filterOptions';
 
 type PayinsProps = object
 
 export const Payins: React.FC<PayinsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
-    
+
     const { globalFilters, contentFilters } = useNexidusPage<ITransaction>();
 
     const { loading, retry } = useNexidusApi<ITransaction>({
@@ -119,7 +120,7 @@ export const Payins: React.FC<PayinsProps> = () => {
     // #endregion
 
     // Define filter options dynamically based on ITransaction properties
-    const filterOptions: Record<keyof ITransaction, { label: string; value: any }[]> = {
+    const filterOptionsOld: Record<keyof ITransaction, { label: string; value: any }[]> = {
         status: [
             { label: t('Pending'), value: 'pending' },
             { label: t('Success'), value: 'success' },
@@ -168,6 +169,9 @@ export const Payins: React.FC<PayinsProps> = () => {
         bank: [],  // Optionally can be extended to filter by bank/wallet used
     };
 
+    const filterOptions = getFilterOptions<ITransaction>(mockData[0]);
+
+    // console.log('filterOptions', filterOptions)
 
     const handleFilterChange = (key: keyof ITransaction, value: any) => {
         console.log(`Filter changed: ${key} = ${value}`);
@@ -176,7 +180,9 @@ export const Payins: React.FC<PayinsProps> = () => {
 
     return (
         <View isPage className="w-full">
-            <Text className="text-xl font-semibold">{t('Payins')}</Text>
+            <View className='mb-10'>
+                <Text className="text-xl font-semibold">{t('Payins')}</Text>
+            </View>
 
             <GlobalFilters value={globalFilters} />
 

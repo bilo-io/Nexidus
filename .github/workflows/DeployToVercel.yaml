@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: Deploy Nexidus
 
 on:
   push:
@@ -6,57 +6,50 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy-frontend:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Install Vercel CLI
         run: npm install -g vercel
-
-      - name: Deploy Frontend
+      - name: Deploy Dashboard
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID_FRONTEND: ${{ secrets.VERCEL_PROJECT_ID_FRONTEND }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           cd src/frontend/dashboard
-          vercel --prod --token=$VERCEL_TOKEN --scope $VERCEL_ORG_ID
+          npm install
+          npm run build
+          vercel deploy --prod --token=$VERCEL_TOKEN
 
+  deploy-gateway:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Vercel CLI
+        run: npm install -g vercel
       - name: Deploy API Gateway
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID_GATEWAY: ${{ secrets.VERCEL_PROJECT_ID_GATEWAY }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          cd src/backend/api/gateway
-          vercel --prod --token=$VERCEL_TOKEN --scope $VERCEL_ORG_ID
+          cd src/api/gateway
+          npm install
+          npm run build
+          vercel deploy --prod --token=$VERCEL_TOKEN
 
-      # - name: Deploy Auth Service
-      #   env:
-      #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      #     VERCEL_PROJECT_ID_AUTH: ${{ secrets.VERCEL_PROJECT_ID_AUTH }}
-      #     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      #   run: |
-      #     cd src/services/auth
-      #     vercel --prod --token=$VERCEL_TOKEN --scope $VERCEL_ORG_ID
-
+  deploy-transactions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Vercel CLI
+        run: npm install -g vercel
       - name: Deploy Transactions Service
         env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID_TRANSACTIONS: ${{ secrets.VERCEL_PROJECT_ID_TRANSACTIONS }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           cd src/services/transactions
-          vercel --prod --token=$VERCEL_TOKEN --scope $VERCEL_ORG_ID
-
-      # - name: Deploy Rates Service
-      #   env:
-      #     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      #     VERCEL_PROJECT_ID_RATES: ${{ secrets.VERCEL_PROJECT_ID_RATES }}
-      #     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      #   run: |
-      #     cd src/services/rates
-      #     vercel --prod --token=$VERCEL_TOKEN --scope $VERCEL_ORG_ID
+          npm install
+          npm run build
+          vercel deploy --prod --token=$VERCEL_TOKEN

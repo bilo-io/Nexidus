@@ -7,10 +7,18 @@ export const fiatCurrencyOptions: ISelectOption[] = [
 ]
 
 export const paginationOptions: ISelectOption[] = [
-    // {
-    //     label: '10',
-    //     value: 10
-    // },
+    {
+        label: '10',
+        value: 10
+    },
+    {
+        label: '15',
+        value: 15
+    },
+    {
+        label: '20',
+        value: 20
+    },
     {
         label: '25',
         value: 25
@@ -18,6 +26,14 @@ export const paginationOptions: ISelectOption[] = [
     {
         label: '35',
         value: 35
+    },
+    {
+        label: '40',
+        value: 40
+    },
+    {
+        label: '45',
+        value: 45
     },
     {
         label: '50',
