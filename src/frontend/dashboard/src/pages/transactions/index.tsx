@@ -5,7 +5,7 @@ import { useNexidusPage } from '../../hooks/useNexidusPage';
 import { useNexidusApi } from '../../hooks/useNexidusApi';
 import { GlobalFilters } from '../../components/App/GlobalFilters';
 import { ContentFilters, DataViewType } from '../../components/App/ContentFilters/ContentFilters';
-import { Modal, Text, View } from '../../components/Core'
+import { BoxWhiskerPlot, Modal, Text, View } from '../../components/Core'
 import { Async } from '../../components/Core/Async';
 import { Table } from '../../components/Core/Table';
 import { ITransaction } from '../../models/transaction';
@@ -18,6 +18,8 @@ import BarChart from '../../components/Core/Charts/recharts/BarChart';
 import PieChart, { getPieData, palette } from '../../components/Core/Charts/recharts/PieChart';
 import { Card } from '../../components/Core';
 import AppTopBar from '../../components/App/TopBar';
+import { getStats } from '../../utils/stats';
+import Icon from '../../components/Core/Icon';
 // import Charts from '../misc/charts';
 // import BarChart from '../../components/Core/Charts/react-chartjs-2/BarChart';
 
@@ -39,6 +41,10 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     const [activeView, setActiveView] = useState<DataViewType>('table');
     const [showModal, setShowModal] = useState<boolean>(false);
     const filterOptions = getFilterOptions<ITransaction>(mockData[0]);
+
+    const stats = getStats<ITransaction>(mockData, 'amount')
+
+    console.log({ stats })
 
     // #region TABLE
     const columns: ColumnDef<ITransaction>[] = [
@@ -170,7 +176,69 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                         ) : null}
 
                         {activeView === 'charts' ? (
-                            <View className='flex flex-col'>
+                            <View className='flex flex-col w-full'>
+                                <View className='mb-4 w-full'>
+                                    <Card className='flex flex-row w-full'>
+                                        <View flex flexCol className='w-full'>
+                                            <View flex flexRow className='mb-4 gap-4 w-full'>
+                                                <View className='w-full md:w-1/3'>
+                                                    <Text className='text-3xl'>
+                                                        <Text className='font-bold mr-2'>{t('Total')}</Text>
+                                                        <br />
+                                                        <br />
+                                                        {stats.total?.toString()}
+                                                    </Text>
+                                                </View>
+
+                                                <View className='w-full md:w-1/3'>
+                                                    <View flex flexRow className='my-6'>
+                                                        <Icon name='ChevronDoubleUp' className='mr-2 size-8' color={theme.success} />
+                                                        <Text className='text-xl'><strong>Max</strong>: {stats.max?.toFixed(2)}</Text>
+                                                    </View>
+                                                    <View flex flexRow>
+                                                        <Icon name='ChevronDoubleDown' className='mr-2 size-8' color={theme.error} />
+                                                        <Text className='text-xl'><strong>Min</strong>: {stats.min?.toFixed(2)}</Text>
+                                                    </View>
+                                                </View>
+
+                                                <View className='w-full md:w-1/3'>
+                                                    <View flex flexRow className='mb-2'>
+                                                        <Text><strong>Average</strong>: {stats.avg?.toFixed(2)}</Text>
+                                                    </View>
+
+                                                    <View flex flexRow className='my-2'>
+                                                        <Text><strong>Median</strong>: {stats.median?.toFixed(2)}</Text>
+                                                    </View>
+
+                                                    <View flex flexRow className='my-2'>
+                                                        <Text><strong>Std. Deviation</strong>: {stats.min?.toFixed(2)}</Text>
+                                                    </View>
+
+                                                    <View flex flexRow className='mt-2'>
+                                                        <Text><strong>Variance</strong>: {stats.sampleVariance?.toFixed(2)}</Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </View>
+
+                                        <View className='w-full md:w-1/4'>
+
+                                            <BoxWhiskerPlot
+                                                stats={{
+                                                    min: stats.min as number,
+                                                    max: stats.max as number,
+                                                    lowerQuartile: stats.lowerQuartile as number,
+                                                    upperQuartile: stats.upperQuartile as number,
+                                                    interquartileRange: stats.interquartileRange as number,
+                                                    median: stats.median as number,
+                                                    lowerWhisker: stats.lowerWhisker as number,
+                                                    upperWhisker: stats.upperWhisker as number,
+                                                }}
+                                            />
+                                        </View>
+                                    </Card>
+                                </View>
+
                                 <Card>
                                     <BarChart
                                         data={mockData?.map((item: ITransaction) => ({

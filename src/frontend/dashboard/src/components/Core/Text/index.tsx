@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '../../../context/ThemeContext';
 
 interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
-    children: string | React.ReactElement | React.ReactElement[] | null;
+    children: string | React.ReactElement | (string | React.ReactElement)[] | null;
     color?: string; // Optional prop to override the theme text color
 }
 

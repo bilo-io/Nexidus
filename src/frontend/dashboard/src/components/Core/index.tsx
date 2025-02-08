@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 
 export * from './Async'
+export * from './BoxWhiskerPlot'
 export * from './Card'
 export * from './DataGrid'
 export * from './DateRangePicker'

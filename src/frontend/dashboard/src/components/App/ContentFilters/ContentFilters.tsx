@@ -33,8 +33,6 @@ export const ContentFilters = <T,>({
     const [isShowingFilters, setIsShowingFilters] = useState<boolean>(isDefaultShowFilters)
     const keys = Object.keys(options);
 
-    console.log(keys, options)
-
     return (
         <Card className='w-full my-4'>
             <View flex flexCol className=''>
