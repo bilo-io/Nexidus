@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useNexidusPage } from '../../hooks/useNexidusPage';
 import { useNexidusApi } from '../../hooks/useNexidusApi';
 import { GlobalFilters } from '../../components/App/GlobalFilters';
-import { ContentFilters } from '../../components/App/ContentFilters/ContentFilters';
-import { Text, View } from '../../components/Core'
+import { ContentFilters, DataViewType } from '../../components/App/ContentFilters/ContentFilters';
+import { Modal, Text, View } from '../../components/Core'
 import { Async } from '../../components/Core/Async';
 import { Table } from '../../components/Core/Table';
 import { ITransaction } from '../../models/transaction';
@@ -15,7 +15,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import Icon from '../../components/Core/Icon';
 import { downloadCSV } from '../../utils/download';
 import { useTheme } from '../../context/ThemeContext';
+import BarChart from '../../components/Core/Charts/recharts/BarChart';
+import PieChart, { getPieData, palette } from '../../components/Core/Charts/recharts/PieChart';
 import Charts from '../misc/charts';
+import { Card } from '../../components/Core';
+import AppTopBar from '../../components/App/TopBar';
+// import Charts from '../misc/charts';
+// import BarChart from '../../components/Core/Charts/react-chartjs-2/BarChart';
 
 type TransactionsProps = object
 
@@ -32,8 +38,9 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     });
     // #endregion
 
-    const [activeView, setActiveView] = useState<'table' | 'chart'>('table');
-    const [showFilters, setShowFilters] = useState<boolean>(false);
+    const [activeView, setActiveView] = useState<DataViewType>('table');
+    const [showFilters, setShowFilters] = useState<boolean>(true);
+    const [showModal, setShowModal] = useState<boolean>(false)
 
     // Define filter options dynamically based on ITransaction properties
     const filterOptions = getFilterOptions<ITransaction>(mockData[0]);
@@ -135,63 +142,112 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
     return (
         <View isPage className="w-full">
-            <View className='mb-10 w-full flex flex-row justify-between'>
-                <View>
-                    <Text className="text-xl font-semibold">{t('Transactions')}</Text>
-                </View>
+            <AppTopBar
+                title={t('Transactions')}
+                hasBreadcrumbs
+            />
 
-                <View flex flexRow className='gap-4 my-4'>
-                    <Icon name='MagnifyingGlass' className='size-6' />
-                    <Icon name='Plus' className='size-6' onClick={() => alert('Create new entry')} />
-                    <Icon name='AdjustmentsVertical' className='size-6' onClick={() => setShowFilters((prev) => !prev)} />
-                    <Icon name='ArrowDownTray' className='size-6' onClick={() => downloadCSV(mockData, `Transactions_${new Date().toISOString()}.csv`)} />
-                </View>
-            </View>
 
-            <View className={`transition ${showFilters ? 'h-fit' : 'h-0 overflow-hidden'}`}>
+            <View isPadded className='mt-12'>
+                
                 <GlobalFilters value={globalFilters} />
 
                 <ContentFilters<ITransaction>
                     value={contentFilters}
                     options={filterOptions}
                     onChange={handleFilterChange}
+                    onDownload={() => downloadCSV(mockData, `Transactions_${new Date().toISOString()}.csv`)}
+                    onAdd={() => alert('TODO: show modal')}
+                    onActiveView={(view: DataViewType) => setActiveView(view)}
+                    activeView={activeView}
                 />
-            </View>
 
-            <View className='my-12'>
-                <Async loading={loading} error={null} onRetry={retry}>
-                    <View flex flexRow className='gap-2'>
-                        <Icon
-                            name='TableCells'
-                            onClick={() => setActiveView('table')}
-                            className='size-8'
-                            style={{
-                                color: activeView === 'table' ? theme?.primary : theme?.text,
-                            }}
-                        />
-                        <Icon
-                            name='ChartBar'
-                            onClick={() => setActiveView('chart')}
-                            className='size-8'
-                            style={{
-                                color: activeView === 'chart' ? theme?.primary : theme?.text,
-                            }}
-                        />
+
+                <View className='my-12'>
+                    <Async loading={loading} error={null} onRetry={retry}>
+                        {activeView === 'table' ? (
+                            <Card>
+                                <Table
+                                    data={mockData}
+                                    columns={columns}
+                                />
+                            </Card>
+                        ) : null}
+
+                        {activeView === 'chart-bar' ? (
+                            <Card>
+
+                                <BarChart
+                                    data={mockData?.map((item: ITransaction) => ({
+                                        name: item?.date,
+                                        x: item?.date,
+                                        y: item?.amount,
+                                        ...item
+                                    }))}
+                                    bars={[
+                                        { key: 'amount', color: theme?.primary }, // Red
+                                        // { key: 'revenue', color: '#008000' }, // Green
+                                    ]}
+                                    xAxisKey="date"
+                                />
+                            </Card>
+                        ) : null}
+
+                        {activeView === 'chart-pie' ? (
+                            <>
+                                <View className='flex flex-row'>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <View>
+                                            <Text className='text-lg font-bold'>Bank</Text>
+                                        </View>
+                                        <PieChart
+                                            data={getPieData(mockData, 'bank')}
+                                            colors={palette}
+                                            className='card'
+                                        />
+                                    </Card>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <Text className='text-lg font-bold'>Status</Text>
+                                        <PieChart
+                                            data={getPieData(mockData, 'status')}
+                                            colors={palette}
+                                        />
+                                    </Card>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <View>
+                                            <Text className='text-lg font-bold'>Type</Text>
+                                        </View>
+                                        <PieChart
+                                            data={getPieData(mockData, 'type')}
+                                            colors={palette}
+                                        />
+                                    </Card>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <View>
+                                            <Text className='text-lg font-bold'>PaymentType</Text>
+                                        </View>
+                                        <PieChart
+                                            data={getPieData(mockData, 'paymentType')}
+                                            colors={palette}
+                                        />
+                                    </Card>
+                                </View>
+                            </>
+                        ) : null}
+
+                        {/* <Charts /> */}
+                    </Async>
+                </View>
+
+                <Modal
+                    isOpen={showModal}
+                    onClose={() => setShowModal(false)}
+                    isCloseButtonInverted
+                >
+                    <View className="w-11/12 md:w-fit md:min-w-44 lg:min-w-56">
+                        <Text className='text-lg'>Modal demo</Text>
                     </View>
-                    {activeView === 'table' ? (
-                        <Table
-                            data={mockData}
-                            columns={columns}
-                        />
-                    ) : null}
-
-                    {activeView === 'chart' ? (
-                        <Charts
-                            // data={mockData}
-                            // columns={columns}
-                        />
-                    ) : null}
-                </Async>
+                </Modal>
             </View>
         </View>
     );

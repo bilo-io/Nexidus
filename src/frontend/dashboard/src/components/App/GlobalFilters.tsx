@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DateRangePicker, Dropdown } from "../Core";
+import { Card, DateRangePicker, Dropdown } from "../Core";
 
 interface GlobalFiltersProps {
     value: Record<string, any>;
@@ -27,29 +27,29 @@ const currencyOptions = [
     }
 ]
 
-export const GlobalFilters = ({  }: GlobalFiltersProps) => {
+export const GlobalFilters = ({ }: GlobalFiltersProps) => {
     const [currency, setCurrency] = useState<IFiatCurrency>('ZAR')
-    const [, setDateRange] = useState <IDateRange>({
+    const [, setDateRange] = useState<IDateRange>({
         startDate: '',
         endDate: '',
     })
 
     return (
-        <div className="filters space-4">
-            <div className='flex flex-row items-center gap-x-4'>
-                <div className='w-full md:w-1/4 lg:w-1/6'>
-                    <Dropdown
-                        options={currencyOptions}
-                        onChange={(e) => setCurrency(e as IFiatCurrency)}
-                        value={currency}
-                    />
-                </div>
-                <div className='w-full md:w-1/4 lg:w-1/6'>
-                    <DateRangePicker
-                        onChange={(range: IDateRange): void => setDateRange(range)}
-                    />
-                </div>
+
+        <Card className='w-full flex flex-row items-center gap-x-4'>
+            <div className='w-full md:w-1/4 lg:w-1/6'>
+                <Dropdown
+                    options={currencyOptions}
+                    onChange={(e) => setCurrency(e as IFiatCurrency)}
+                    value={currency}
+                />
             </div>
-        </div>
+            <div className='w-full md:w-1/4 lg:w-1/6'>
+                <DateRangePicker
+                    onChange={(range: IDateRange): void => setDateRange(range)}
+                />
+            </div>
+        </Card>
+
     );
 };

@@ -150,8 +150,9 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                     <Dropdown
                         // value={''}
                         options={paginationOptions}
-                        onChange={(value: string) => {
-                            table.setPageSize(Number(value as string))
+                        onChange={(value: { value: string }) => {
+                            console.log(value.value)
+                            table.setPageSize(Number(value.value))
                         }}
                         value={table.getState().pagination.pageSize.toString()}
                     // options={paginationOptions}

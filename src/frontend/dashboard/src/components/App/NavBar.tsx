@@ -28,7 +28,6 @@ export const AppNavBar: React.FC = () => {
             name: t('dashboard'),
             icon: 'SquaresPlus',
             path: '/',
-            // action: () => navigate('/')
         },
         {
             name: t('transactions'),
@@ -92,16 +91,16 @@ export const AppNavBar: React.FC = () => {
             name: 'Settings',
             action: () => navigate('/settings'),
         },
-        // {
-        //     icon: 'QuestionMarkCircle',
-        //     name: 'Support',
-        //     action: () => navigate('/support'),
-        // },
-        // {
-        //     icon: 'User',
-        //     name: 'Account Management',
-        //     action: () => navigate('/account'),
-        // },
+        {
+            icon: 'QuestionMarkCircle',
+            name: 'Support',
+            action: () => navigate('/support'),
+        },
+        {
+            icon: 'User',
+            name: 'Account Management',
+            action: () => navigate('/account'),
+        },
         {
             icon: 'QueueList',
             name: 'Switch Tenant',

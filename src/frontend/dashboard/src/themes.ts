@@ -30,7 +30,7 @@ export const themes = {
         text: '#000',
         textLight: '#6c757d',
         background: '#fff',
-        panel: '#f8f9fa',
+        panel: '#e7e8e8',
         success: '#1ca55c',
         successBg: '#1ca55c33',
         warning: '#e3a008',

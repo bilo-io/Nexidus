@@ -1,11 +1,13 @@
 import { useTheme } from '../../../context/ThemeContext';
 import React from 'react';
 import Select, { ActionMeta, StylesConfig } from 'react-select';
-import { ISelectOption } from '../Forms/Select';
 
 interface DropdownProps {
     isMulti?: boolean;
-    options: ISelectOption[];
+    options: {
+        value: string;
+        label: any;
+    }[];
     value: any;
     onChange: (newValue: any, actionMeta: ActionMeta<any>) => void;
     style?: React.CSSProperties;

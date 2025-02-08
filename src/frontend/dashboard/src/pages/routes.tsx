@@ -87,11 +87,11 @@ export const routes = [
     // { path: '/logout', element: <Logout /> },
 
     // Misc
-    // { path: '/misc/currencies', element: <Currencies /> },
-    // { path: '/misc/trade', element: <Trade /> },
-    // { path: '/misc/settings', element: <Settings /> },
-    // { path: '/misc/charts', element: <Charts /> },
-    // { path: '/misc/data-grid', element: <DataGrid /> },
+    { path: '/misc/currencies', element: <Currencies /> },
+    { path: '/misc/trade', element: <Trade /> },
+    { path: '/misc/settings', element: <Settings /> },
+    { path: '/misc/charts', element: <Charts /> },
+    { path: '/misc/data-grid', element: <DataGrid /> },
 
     // Catch-all route
     { path: '*', element: <NotFound /> },

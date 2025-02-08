@@ -69,7 +69,7 @@ const App = () => (
         <BarChart<SalesData>
             data={data}
             bars={[
-                { key: 'sales', color: '#FF0000' }, // Red
+                { key: 'sales', color: '#00aedd' }, // Red
                 { key: 'revenue', color: '#008000' }, // Green
             ]}
             xAxisKey="name"

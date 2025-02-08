@@ -15,7 +15,7 @@ export const payins: ITransaction[] = [
         receiver: "Jack Doe",
         transactionFee: 7.50,
         merchantId: "M123456",
-        bank: "Bank A",
+        bank: "FNB",
     },
     {
         id: "2",
@@ -31,7 +31,7 @@ export const payins: ITransaction[] = [
         receiver: "Jane Doe",
         transactionFee: 5.50,
         merchantId: "M123456",
-        bank: "Bank A",
+        bank: "FNB",
     },
     {
         id: "3",
@@ -47,7 +47,7 @@ export const payins: ITransaction[] = [
         receiver: "Alice Smith",
         transactionFee: 15.00,
         merchantId: "M123457",
-        bank: "Bank B",
+        bank: "FNB",
     },
     {
         id: "4",
@@ -63,7 +63,7 @@ export const payins: ITransaction[] = [
         receiver: "Beta Corp.",
         transactionFee: 3.00,
         merchantId: "M123458",
-        bank: "Bank C",
+        bank: "FNB",
     },
     {
         id: "5",
@@ -79,7 +79,7 @@ export const payins: ITransaction[] = [
         receiver: "SuperShop Ltd.",
         transactionFee: 10.00,
         merchantId: "M123459",
-        bank: "Bank D",
+        bank: "FNB",
     },
     {
         id: "6",
@@ -95,7 +95,7 @@ export const payins: ITransaction[] = [
         receiver: "TechCorp Inc.",
         transactionFee: 7.50,
         merchantId: "M123460",
-        bank: "Bank E",
+        bank: "ABSA",
     },
     {
         id: "7",
@@ -111,7 +111,7 @@ export const payins: ITransaction[] = [
         receiver: "Global Goods Ltd.",
         transactionFee: 25.00,
         merchantId: "M123461",
-        bank: "Bank F",
+        bank: "ABSA",
     },
     {
         id: "8",
@@ -127,7 +127,7 @@ export const payins: ITransaction[] = [
         receiver: "Startup Inc.",
         transactionFee: 5.00,
         merchantId: "M123462",
-        bank: "Bank G",
+        bank: "ABSA",
     },
     {
         id: "9",
@@ -143,7 +143,7 @@ export const payins: ITransaction[] = [
         receiver: "Storefront LLC",
         transactionFee: 4.00,
         merchantId: "M123463",
-        bank: "Bank H",
+        bank: "ABSA",
     },
     {
         id: "10",
@@ -159,7 +159,7 @@ export const payins: ITransaction[] = [
         receiver: "DigitalTech Ltd.",
         transactionFee: 20.00,
         merchantId: "M123464",
-        bank: "Bank I",
+        bank: "ABSA",
     },
     {
         id: "11",
@@ -175,7 +175,7 @@ export const payins: ITransaction[] = [
         receiver: "EcomWorld Inc.",
         transactionFee: 8.00,
         merchantId: "M123465",
-        bank: "Bank J",
+        bank: "Standard Bank",
     },
     {
         id: "12",
@@ -191,7 +191,7 @@ export const payins: ITransaction[] = [
         receiver: "RetailX Ltd.",
         transactionFee: 6.00,
         merchantId: "M123466",
-        bank: "Bank K",
+        bank: "Standard Bank",
     },
     {
         id: "13",
@@ -207,7 +207,7 @@ export const payins: ITransaction[] = [
         receiver: "NextGen Corp.",
         transactionFee: 15.00,
         merchantId: "M123467",
-        bank: "Bank L",
+        bank: "FNB",
     },
     {
         id: "14",
@@ -223,7 +223,7 @@ export const payins: ITransaction[] = [
         receiver: "TechStore Inc.",
         transactionFee: 35.00,
         merchantId: "M123468",
-        bank: "Bank M",
+        bank: "FNB",
     },
     {
         id: "15",
@@ -239,7 +239,7 @@ export const payins: ITransaction[] = [
         receiver: "SmartWorks Ltd.",
         transactionFee: 25.00,
         merchantId: "M123469",
-        bank: "Bank N",
+        bank: "Standard Bank",
     },
     {
         id: "16",
@@ -255,7 +255,7 @@ export const payins: ITransaction[] = [
         receiver: "FitnessPro Inc.",
         transactionFee: 18.00,
         merchantId: "M123470",
-        bank: "Bank O",
+        bank: "FNB",
     },
     {
         id: "17",
@@ -271,7 +271,7 @@ export const payins: ITransaction[] = [
         receiver: "ShopEasy Ltd.",
         transactionFee: 21.00,
         merchantId: "M123471",
-        bank: "Bank P",
+        bank: "FNB",
     },
     {
         id: "18",
@@ -287,7 +287,7 @@ export const payins: ITransaction[] = [
         receiver: "InnoTech Ltd.",
         transactionFee: 22.00,
         merchantId: "M123472",
-        bank: "Bank Q",
+        bank: "FNB",
     },
     {
         id: "19",
@@ -303,7 +303,7 @@ export const payins: ITransaction[] = [
         receiver: "GlobalStore Inc.",
         transactionFee: 45.00,
         merchantId: "M123473",
-        bank: "Bank R",
+        bank: "FNB",
     },
     {
         id: "20",
@@ -319,7 +319,7 @@ export const payins: ITransaction[] = [
         receiver: "RetailWorld Ltd.",
         transactionFee: 7.00,
         merchantId: "M123474",
-        bank: "Bank S",
+        bank: "Standard Bank",
     },
     {
         id: "21",
@@ -335,7 +335,7 @@ export const payins: ITransaction[] = [
         receiver: "GigaCorp Inc.",
         transactionFee: 8.00,
         merchantId: "M123475",
-        bank: "Bank T",
+        bank: "FNB",
     },
     {
         id: "22",
@@ -351,7 +351,7 @@ export const payins: ITransaction[] = [
         receiver: "FutureTech Ltd.",
         transactionFee: 12.00,
         merchantId: "M123476",
-        bank: "Bank U",
+        bank: "FNB",
     },
     {
         id: "23",
@@ -367,7 +367,7 @@ export const payins: ITransaction[] = [
         receiver: "Vanguard Inc.",
         transactionFee: 15.00,
         merchantId: "M123477",
-        bank: "Bank V",
+        bank: "FNB",
     },
     {
         id: "24",
@@ -383,7 +383,7 @@ export const payins: ITransaction[] = [
         receiver: "TechLab Ltd.",
         transactionFee: 18.00,
         merchantId: "M123478",
-        bank: "Bank W",
+        bank: "FNB",
     },
     {
         id: "25",
@@ -399,7 +399,7 @@ export const payins: ITransaction[] = [
         receiver: "MarketPlace Ltd.",
         transactionFee: 22.00,
         merchantId: "M123479",
-        bank: "Bank X",
+        bank: "FNB",
     },
     {
         id: "26",
@@ -415,7 +415,7 @@ export const payins: ITransaction[] = [
         receiver: "SupplyChain Inc.",
         transactionFee: 30.00,
         merchantId: "M123480",
-        bank: "Bank Y",
+        bank: "FNB",
     },
     {
         id: "27",
@@ -431,7 +431,7 @@ export const payins: ITransaction[] = [
         receiver: "InnovateTech Ltd.",
         transactionFee: 20.00,
         merchantId: "M123481",
-        bank: "Bank Z",
+        bank: "FNB",
     },
     {
         id: "28",
@@ -447,7 +447,7 @@ export const payins: ITransaction[] = [
         receiver: "GadgetWorld Inc.",
         transactionFee: 12.00,
         merchantId: "M123482",
-        bank: "Bank AA",
+        bank: "FNB",
     },
     {
         id: "29",
@@ -463,7 +463,7 @@ export const payins: ITransaction[] = [
         receiver: "RoboticsLab Ltd.",
         transactionFee: 10.00,
         merchantId: "M123483",
-        bank: "Bank AB",
+        bank: "Standard Bank",
     },
     {
         id: "30",
@@ -479,7 +479,7 @@ export const payins: ITransaction[] = [
         receiver: "AppCorp Inc.",
         transactionFee: 15.00,
         merchantId: "M123484",
-        bank: "Bank AC",
+        bank: "ABSA",
     },
     {
         id: "31",
@@ -495,7 +495,7 @@ export const payins: ITransaction[] = [
         receiver: "AutoWorld Inc.",
         transactionFee: 18.00,
         merchantId: "M123485",
-        bank: "Bank AD",
+        bank: "ABSA",
     },
     {
         id: "32",
@@ -511,7 +511,7 @@ export const payins: ITransaction[] = [
         receiver: "SmartTech Ltd.",
         transactionFee: 14.00,
         merchantId: "M123486",
-        bank: "Bank AE",
+        bank: "ABSA",
     },
     {
         id: "33",
@@ -527,7 +527,7 @@ export const payins: ITransaction[] = [
         receiver: "GlobalTrade Inc.",
         transactionFee: 25.00,
         merchantId: "M123487",
-        bank: "Bank AF",
+        bank: "Discovery",
     },
     {
         id: "34",
@@ -543,7 +543,7 @@ export const payins: ITransaction[] = [
         receiver: "TechLabs Ltd.",
         transactionFee: 20.00,
         merchantId: "M123488",
-        bank: "Bank AG",
+        bank: "Discovery",
     },
     {
         id: "35",
@@ -559,7 +559,7 @@ export const payins: ITransaction[] = [
         receiver: "RetailCorp Ltd.",
         transactionFee: 7.00,
         merchantId: "M123489",
-        bank: "Bank AH",
+        bank: "Discovery",
     },
     {
         id: "36",
@@ -575,7 +575,7 @@ export const payins: ITransaction[] = [
         receiver: "StreamTech Inc.",
         transactionFee: 30.00,
         merchantId: "M123490",
-        bank: "Bank AI",
+        bank: "Discovery",
     },
     {
         id: "37",
@@ -591,7 +591,7 @@ export const payins: ITransaction[] = [
         receiver: "FoodMarket Ltd.",
         transactionFee: 12.00,
         merchantId: "M123491",
-        bank: "Bank AJ",
+        bank: "Discovery",
     },
     {
         id: "38",
@@ -607,7 +607,7 @@ export const payins: ITransaction[] = [
         receiver: "EcomWorld Inc.",
         transactionFee: 9.00,
         merchantId: "M123492",
-        bank: "Bank AK",
+        bank: "Discovery",
     },
     {
         id: "39",
@@ -623,7 +623,7 @@ export const payins: ITransaction[] = [
         receiver: "HealthLabs Ltd.",
         transactionFee: 16.00,
         merchantId: "M123493",
-        bank: "Bank AL",
+        bank: "Discovery",
     },
     {
         id: "40",
@@ -639,7 +639,7 @@ export const payins: ITransaction[] = [
         receiver: "FinTech Ltd.",
         transactionFee: 20.00,
         merchantId: "M123494",
-        bank: "Bank AM",
+        bank: "Discovery",
     },
     {
         id: "41",
@@ -655,7 +655,7 @@ export const payins: ITransaction[] = [
         receiver: "MarketingPro Ltd.",
         transactionFee: 22.00,
         merchantId: "M123495",
-        bank: "Bank AN",
+        bank: "ABSA",
     },
     {
         id: "42",
@@ -671,7 +671,7 @@ export const payins: ITransaction[] = [
         receiver: "TechWorld Ltd.",
         transactionFee: 18.00,
         merchantId: "M123496",
-        bank: "Bank AO",
+        bank: "ABSA",
     },
     {
         id: "43",
@@ -687,7 +687,7 @@ export const payins: ITransaction[] = [
         receiver: "HealthWorld Ltd.",
         transactionFee: 14.00,
         merchantId: "M123497",
-        bank: "Bank AP",
+        bank: "ABSA",
     },
     {
         id: "44",
@@ -703,7 +703,7 @@ export const payins: ITransaction[] = [
         receiver: "TradeWorks Ltd.",
         transactionFee: 10.00,
         merchantId: "M123498",
-        bank: "Bank AQ",
+        bank: "FNB",
     },
     {
         id: "45",
@@ -719,7 +719,7 @@ export const payins: ITransaction[] = [
         receiver: "AutoTech Ltd.",
         transactionFee: 25.00,
         merchantId: "M123499",
-        bank: "Bank AR",
+        bank: "FNB",
     },
     {
         id: "46",
@@ -735,7 +735,7 @@ export const payins: ITransaction[] = [
         receiver: "SecureTrade Inc.",
         transactionFee: 8.00,
         merchantId: "M123500",
-        bank: "Bank AS",
+        bank: "ABSA",
     },
     {
         id: "47",
@@ -751,7 +751,7 @@ export const payins: ITransaction[] = [
         receiver: "WebStore Ltd.",
         transactionFee: 13.00,
         merchantId: "M123501",
-        bank: "Bank AT",
+        bank: "FNB",
     },
     {
         id: "48",
@@ -767,7 +767,7 @@ export const payins: ITransaction[] = [
         receiver: "InnovationTech Ltd.",
         transactionFee: 17.00,
         merchantId: "M123502",
-        bank: "Bank AU",
+        bank: "FNB",
     },
     {
         id: "49",
@@ -783,7 +783,7 @@ export const payins: ITransaction[] = [
         receiver: "GreenTech Ltd.",
         transactionFee: 14.00,
         merchantId: "M123503",
-        bank: "Bank AV",
+        bank: "Standard Bank",
     },
     {
         id: "50",
@@ -799,7 +799,7 @@ export const payins: ITransaction[] = [
         receiver: "EduTech Ltd.",
         transactionFee: 18.00,
         merchantId: "M123504",
-        bank: "Bank AW",
+        bank: "Standard Bank",
     },
 ];
 

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNexidusPage } from '../../hooks/useNexidusPage';
 import { useNexidusApi } from '../../hooks/useNexidusApi';
 import { GlobalFilters } from '../../components/App/GlobalFilters';
-import { ContentFilters } from '../../components/App/ContentFilters/ContentFilters';
+import { ContentFilters, DataViewType } from '../../components/App/ContentFilters/ContentFilters';
 import { Text, View } from '../../components/Core'
 import { Async } from '../../components/Core/Async';
 import { Table } from '../../components/Core/Table';
@@ -32,92 +32,92 @@ export const PayinsCard: React.FC<PayinsCardProps> = () => {
 
     // #region TABLE
     const columns: ColumnDef<ITransaction>[] = [
-            {
-                accessorKey: 'id',
-                header: t('Transaction ID'),
+        {
+            accessorKey: 'id',
+            header: t('Transaction ID'),
+        },
+        {
+            accessorKey: 'date',
+            header: t('Date'),
+            // You can add custom formatting for date, if needed, like:
+            // cell: ({ row: { original } }) => formatDate(original.date)
+        },
+        {
+            accessorKey: 'amount',
+            header: t('Amount'),
+            // You can also format the amount (e.g., adding currency symbol)
+            cell: ({ row: { original } }) => `$${original.amount.toFixed(2)}`,
+        },
+        {
+            accessorKey: 'status',
+            header: t('Status'),
+            // You can also add conditional formatting for status
+            cell: ({ row: { original } }) => {
+                switch (original.status) {
+                    case 'pending':
+                        return t('Pending');
+                    case 'success':
+                        return t('Success');
+                    case 'failed':
+                        return t('Failed');
+                    default:
+                        return t('Unknown');
+                }
             },
-            {
-                accessorKey: 'date',
-                header: t('Date'),
-                // You can add custom formatting for date, if needed, like:
-                // cell: ({ row: { original } }) => formatDate(original.date)
-            },
-            {
-                accessorKey: 'amount',
-                header: t('Amount'),
-                // You can also format the amount (e.g., adding currency symbol)
-                cell: ({ row: { original } }) => `$${original.amount.toFixed(2)}`,
-            },
-            {
-                accessorKey: 'status',
-                header: t('Status'),
-                // You can also add conditional formatting for status
-                cell: ({ row: { original } }) => {
-                    switch (original.status) {
-                        case 'pending':
-                            return t('Pending');
-                        case 'success':
-                            return t('Success');
-                        case 'failed':
-                            return t('Failed');
-                        default:
-                            return t('Unknown');
-                    }
-                },
-            },
-            {
-                accessorKey: 'type',
-                header: t('Type'),
-                // If needed, you can add custom formatting for type
-                cell: ({ row: { original } }) => t(original.type.charAt(0).toUpperCase() + original.type.slice(1)),
-            },
-            {
-                accessorKey: 'currency',
-                header: t('Currency'),
-                cell: ({ row: { original } }) => original.currency.toUpperCase(),
-            },
-            {
-                accessorKey: 'paymentType',
-                header: t('Payment Type'),
-                cell: ({ row: { original } }) => t(original.paymentType),
-            },
-            {
-                accessorKey: 'externalRef',
-                header: t('External Reference'),
-                cell: ({ row: { original } }) => original.externalRef ?? t('N/A'),
-            },
-            {
-                accessorKey: 'rrn',
-                header: t('RRN'),
-                cell: ({ row: { original } }) => original.rrn ?? t('N/A'),
-            },
-            {
-                accessorKey: 'sender',
-                header: t('Sender'),
-                cell: ({ row: { original } }) => original.sender ?? t('Unknown'),
-            },
-            {
-                accessorKey: 'receiver',
-                header: t('Receiver'),
-                cell: ({ row: { original } }) => original.receiver ?? t('Unknown'),
-            },
-            {
-                accessorKey: 'transactionFee',
-                header: t('Transaction Fee'),
-                // @ts-ignore
-                cell: ({ row: { original } }) => `$${original.transactionFee.toFixed(2)}`,
-            },
-            {
-                accessorKey: 'merchantId',
-                header: t('Merchant ID'),
-                cell: ({ row: { original } }) => original.merchantId ?? t('N/A'),
-            },
-            {
-                accessorKey: 'bank',
-                header: t('Bank'),
-                cell: ({ row: { original } }) => original.bank ?? t('N/A'),
-            },
-        ];
+        },
+        {
+            accessorKey: 'type',
+            header: t('Type'),
+            // If needed, you can add custom formatting for type
+            cell: ({ row: { original } }) => t(original.type.charAt(0).toUpperCase() + original.type.slice(1)),
+        },
+        {
+            accessorKey: 'currency',
+            header: t('Currency'),
+            cell: ({ row: { original } }) => original.currency.toUpperCase(),
+        },
+        {
+            accessorKey: 'paymentType',
+            header: t('Payment Type'),
+            cell: ({ row: { original } }) => t(original.paymentType),
+        },
+        {
+            accessorKey: 'externalRef',
+            header: t('External Reference'),
+            cell: ({ row: { original } }) => original.externalRef ?? t('N/A'),
+        },
+        {
+            accessorKey: 'rrn',
+            header: t('RRN'),
+            cell: ({ row: { original } }) => original.rrn ?? t('N/A'),
+        },
+        {
+            accessorKey: 'sender',
+            header: t('Sender'),
+            cell: ({ row: { original } }) => original.sender ?? t('Unknown'),
+        },
+        {
+            accessorKey: 'receiver',
+            header: t('Receiver'),
+            cell: ({ row: { original } }) => original.receiver ?? t('Unknown'),
+        },
+        {
+            accessorKey: 'transactionFee',
+            header: t('Transaction Fee'),
+            // @ts-ignore
+            cell: ({ row: { original } }) => `$${original.transactionFee.toFixed(2)}`,
+        },
+        {
+            accessorKey: 'merchantId',
+            header: t('Merchant ID'),
+            cell: ({ row: { original } }) => original.merchantId ?? t('N/A'),
+        },
+        {
+            accessorKey: 'bank',
+            header: t('Bank'),
+            cell: ({ row: { original } }) => original.bank ?? t('N/A'),
+        },
+    ];
     //#endregion
 
     const handleFilterChange = (key: keyof ITransaction, value: any) => {
@@ -127,7 +127,9 @@ export const PayinsCard: React.FC<PayinsCardProps> = () => {
 
     return (
         <View isPage className="w-full">
-            <Text className="text-xl font-semibold">{t('PayinsCard')}</Text>
+            <View className='mb-10'>
+                <Text className="text-xl font-semibold">{t('PayinsCard')}</Text>
+            </View>
 
             <GlobalFilters value={globalFilters} />
 
@@ -135,6 +137,10 @@ export const PayinsCard: React.FC<PayinsCardProps> = () => {
                 value={contentFilters}
                 options={filterOptions}
                 onChange={handleFilterChange}
+                activeView={'table'}
+                onActiveView={function (view: DataViewType): void {
+                    throw new Error('Function not implemented.');
+                }}
             />
 
             <View className='my-12'>

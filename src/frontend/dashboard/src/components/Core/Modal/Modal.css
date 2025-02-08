@@ -1,0 +1,19 @@
+.modal {
+    border-color: #00000000;
+    border-radius: 1rem;
+    width: fit-content;
+    max-width: calc(100% - 4rem);
+    align-items: stretch;
+}
+
+.modal::backdrop {
+    background-color: #000000AA;
+    backdrop-filter: blur(2px);
+}
+
+.modal.close-button {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    color: #000;
+}
