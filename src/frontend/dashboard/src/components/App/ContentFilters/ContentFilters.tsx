@@ -4,7 +4,7 @@ import { Card, Dropdown, View } from "../../Core";
 import Icon from "../../Core/Icon";
 import { useTheme } from "../../../context/ThemeContext";
 
-export type DataViewType = 'table' | 'chart-pie' | 'chart-bar';
+export type DataViewType = 'table' | 'chart-pie' | 'chart-bar' | 'charts';
 
 interface ContentFiltersProps<T> {
     value: Record<keyof T, any>;
@@ -12,6 +12,7 @@ interface ContentFiltersProps<T> {
     onChange: (key: keyof T, value: any) => void;
     onAdd?: () => void;
     onDownload?: () => void;
+    onReload?: () => void;
     activeView: DataViewType;
     onActiveView: (view: DataViewType) => void;
     isDefaultShowFilters?: boolean;
@@ -23,6 +24,7 @@ export const ContentFilters = <T,>({
     onChange,
     onAdd,
     onDownload,
+    onReload,
     activeView,
     onActiveView,
     isDefaultShowFilters = true
@@ -34,18 +36,10 @@ export const ContentFilters = <T,>({
     console.log(keys, options)
 
     return (
-        <Card className='w-full'>
+        <Card className='w-full my-4'>
             <View flex flexCol className=''>
-                <View flex flexRow justify='between' className='gap-4 my-2'>
-                    <View flex flexRow className='gap-4 my-2'>
-                        <Icon
-                            name='ChartBar'
-                            onClick={() => onActiveView('chart-bar')}
-                            className='size-8'
-                            style={{
-                                color: activeView === 'chart-bar' ? theme?.primary : theme?.text,
-                            }}
-                        />
+                <View flex flexRow justify='between' className='gap-4 mt-0'>
+                    <View flex flexRow className='gap-4'>
                         <Icon
                             name='TableCells'
                             onClick={() => onActiveView('table')}
@@ -56,10 +50,10 @@ export const ContentFilters = <T,>({
                         />
                         <Icon
                             name='ChartPie'
-                            onClick={() => onActiveView('chart-pie')}
+                            onClick={() => onActiveView('charts')}
                             className='size-8'
                             style={{
-                                color: activeView === 'chart-pie' ? theme?.primary : theme?.text,
+                                color: activeView === 'charts' ? theme?.primary : theme?.text,
                             }}
                         />
                     </View>
@@ -68,9 +62,10 @@ export const ContentFilters = <T,>({
                         {onAdd && <Icon name='Plus' className='size-6' onClick={onAdd} />}
                         <Icon name='AdjustmentsVertical' className='size-6' onClick={() => setIsShowingFilters((prev) => !prev)} />
                         {onDownload && <Icon name='ArrowDownTray' className='size-6' onClick={onDownload} />}
+                        <Icon name='ArrowPath' className='size-6' onClick={onReload} />
                     </View>
                 </View>
-                <div className="flex flex-row items-center gap-x-4  w-full">
+                <div className={`flex flex-row items-center gap-x-4 ${isShowingFilters ? 'mt-4' : 'mt-0'} w-full`}>
                     {isShowingFilters && keys.map((key) => (
                         // <div key={key} className="w-full md:w-1/4 lg:w-1/6">
                         <div key={key} className="">

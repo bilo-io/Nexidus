@@ -1,27 +1,25 @@
 import React from 'react';
 import { View, Text, Dropdown } from '../Core';
-import Icon from '../Core/Icon';
 import { ActionMeta } from 'react-select';
 import { useTheme } from '../../context/ThemeContext';
 
 interface AppTopBarProps {
     title?: string,
     hasBreadcrumbs?: boolean,
-    onDownload?: () => void
 }
 
 export const AppTopBar: React.FC<AppTopBarProps> = ({
     title,
-    hasBreadcrumbs,
-    onDownload
+    // hasBreadcrumbs,
 }) => {
     const { theme } = useTheme();
-    
+
     return (
         <View className='fixed w-full z-10'>
             <View className='h-16 absolute w-full flex flex-row items-center justify-between px-4 pr-20 border-b shadow-lg z-100'
                 style={{
-                backgroundColor: theme.background
+                    backgroundColor: theme.background,
+                    borderColor: theme.panel
             }}>
                 <View>
                     <Text className='font-bold text-lg'>{title as string}</Text>
@@ -29,7 +27,7 @@ export const AppTopBar: React.FC<AppTopBarProps> = ({
                 <Dropdown
                     options={[]}
                     value={undefined}
-                    onChange={function (newValue: any, actionMeta: ActionMeta<any>): void {
+                    onChange={function (_newValue: any, _actionMeta: ActionMeta<any>): void {
                         throw new Error('Function not implemented.');
                     }}
                 />

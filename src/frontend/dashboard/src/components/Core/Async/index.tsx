@@ -14,8 +14,8 @@ export const Async = ({ loading, error, children, onRetry, errorMessage }: Async
     const { theme } = useTheme();
 
     if (loading) return (
-        <p className='w-fit mx-auto'>
-            <Loader color={theme?.primary} size='size-20' />
+        <p className='w-fit m-auto my-8'>
+            <Loader color={theme?.primary} size='size-16' />
         </p>
     );
 

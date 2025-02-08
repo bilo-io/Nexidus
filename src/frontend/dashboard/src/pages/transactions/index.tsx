@@ -12,12 +12,10 @@ import { ITransaction } from '../../models/transaction';
 import { getFilterOptions } from '../../components/App/ContentFilters/filterOptions';
 import { payins as mockData } from '../../data/mockData'
 import { ColumnDef } from '@tanstack/react-table';
-import Icon from '../../components/Core/Icon';
 import { downloadCSV } from '../../utils/download';
 import { useTheme } from '../../context/ThemeContext';
 import BarChart from '../../components/Core/Charts/recharts/BarChart';
 import PieChart, { getPieData, palette } from '../../components/Core/Charts/recharts/PieChart';
-import Charts from '../misc/charts';
 import { Card } from '../../components/Core';
 import AppTopBar from '../../components/App/TopBar';
 // import Charts from '../misc/charts';
@@ -39,10 +37,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     // #endregion
 
     const [activeView, setActiveView] = useState<DataViewType>('table');
-    const [showFilters, setShowFilters] = useState<boolean>(true);
-    const [showModal, setShowModal] = useState<boolean>(false)
-
-    // Define filter options dynamically based on ITransaction properties
+    const [showModal, setShowModal] = useState<boolean>(false);
     const filterOptions = getFilterOptions<ITransaction>(mockData[0]);
 
     // #region TABLE
@@ -149,21 +144,21 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
 
             <View isPadded className='mt-12'>
-                
+
                 <GlobalFilters value={globalFilters} />
 
                 <ContentFilters<ITransaction>
                     value={contentFilters}
                     options={filterOptions}
                     onChange={handleFilterChange}
+                    onReload={retry}
                     onDownload={() => downloadCSV(mockData, `Transactions_${new Date().toISOString()}.csv`)}
                     onAdd={() => alert('TODO: show modal')}
                     onActiveView={(view: DataViewType) => setActiveView(view)}
                     activeView={activeView}
                 />
 
-
-                <View className='my-12'>
+                <View className='my-4'>
                     <Async loading={loading} error={null} onRetry={retry}>
                         {activeView === 'table' ? (
                             <Card>
@@ -174,27 +169,24 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                             </Card>
                         ) : null}
 
-                        {activeView === 'chart-bar' ? (
-                            <Card>
+                        {activeView === 'charts' ? (
+                            <View className='flex flex-col'>
+                                <Card>
+                                    <BarChart
+                                        data={mockData?.map((item: ITransaction) => ({
+                                            name: item?.date,
+                                            x: item?.date,
+                                            y: item?.amount,
+                                            ...item
+                                        }))}
+                                        bars={[
+                                            { key: 'amount', color: theme?.primary }, // Red
+                                            // { key: 'revenue', color: '#008000' }, // Green
+                                        ]}
+                                        xAxisKey="date"
+                                    />
+                                </Card>
 
-                                <BarChart
-                                    data={mockData?.map((item: ITransaction) => ({
-                                        name: item?.date,
-                                        x: item?.date,
-                                        y: item?.amount,
-                                        ...item
-                                    }))}
-                                    bars={[
-                                        { key: 'amount', color: theme?.primary }, // Red
-                                        // { key: 'revenue', color: '#008000' }, // Green
-                                    ]}
-                                    xAxisKey="date"
-                                />
-                            </Card>
-                        ) : null}
-
-                        {activeView === 'chart-pie' ? (
-                            <>
                                 <View className='flex flex-row'>
                                     <Card className='w-full md:w-1/2 m-2'>
                                         <View>
@@ -232,7 +224,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                                         />
                                     </Card>
                                 </View>
-                            </>
+                            </View>
                         ) : null}
 
                         {/* <Charts /> */}

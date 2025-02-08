@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useNexidusPage } from '../../hooks/useNexidusPage';
 import { useNexidusApi } from '../../hooks/useNexidusApi';
 import { GlobalFilters } from '../../components/App/GlobalFilters';
-import { ContentFilters } from '../../components/App/ContentFilters/ContentFilters';
-import { Text, View } from '../../components/Core'
+import { ContentFilters, DataViewType } from '../../components/App/ContentFilters/ContentFilters';
+import { Modal, Text, View } from '../../components/Core'
 import { Async } from '../../components/Core/Async';
 import { Table } from '../../components/Core/Table';
 import { ITransaction } from '../../models/transaction';
 import { getFilterOptions } from '../../components/App/ContentFilters/filterOptions';
 import { payins as mockData } from '../../data/mockData'
 import { ColumnDef } from '@tanstack/react-table';
+import { downloadCSV } from '../../utils/download';
+import { useTheme } from '../../context/ThemeContext';
+import BarChart from '../../components/Core/Charts/recharts/BarChart';
+import PieChart, { getPieData, palette } from '../../components/Core/Charts/recharts/PieChart';
+import { Card } from '../../components/Core';
+import AppTopBar from '../../components/App/TopBar';
+// import Charts from '../misc/charts';
+// import BarChart from '../../components/Core/Charts/react-chartjs-2/BarChart';
 
 type PayinsWalletProps = object
 
 export const PayinsWallet: React.FC<PayinsWalletProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
+    const { theme } = useTheme();
     const { globalFilters, contentFilters } = useNexidusPage<ITransaction>();
     const { loading, retry } = useNexidusApi<ITransaction>({
         path: '',
@@ -27,7 +36,8 @@ export const PayinsWallet: React.FC<PayinsWalletProps> = () => {
     });
     // #endregion
 
-    // Define filter options dynamically based on ITransaction properties
+    const [activeView, setActiveView] = useState<DataViewType>('table');
+    const [showModal, setShowModal] = useState<boolean>(false);
     const filterOptions = getFilterOptions<ITransaction>(mockData[0]);
 
     // #region TABLE
@@ -127,25 +137,109 @@ export const PayinsWallet: React.FC<PayinsWalletProps> = () => {
 
     return (
         <View isPage className="w-full">
-            <View className='mb-10'>
-                <Text className="text-xl font-semibold">{t('PayinsWallet')}</Text>
-            </View>
-
-            <GlobalFilters value={globalFilters} />
-
-            <ContentFilters<ITransaction>
-                value={contentFilters}
-                options={filterOptions}
-                onChange={handleFilterChange}
+            <AppTopBar
+                title={t('PayinsWallet')}
+                hasBreadcrumbs
             />
 
-            <View className='my-12'>
-                <Async loading={loading} error={null} onRetry={retry}>
-                    <Table
-                        data={mockData}
-                        columns={columns}
-                    />
-                </Async>
+
+            <View isPadded className='mt-12'>
+
+                <GlobalFilters value={globalFilters} />
+
+                <ContentFilters<ITransaction>
+                    value={contentFilters}
+                    options={filterOptions}
+                    onChange={handleFilterChange}
+                    onReload={retry}
+                    onDownload={() => downloadCSV(mockData, `PayinsWallet_${new Date().toISOString()}.csv`)}
+                    onAdd={() => alert('TODO: show modal')}
+                    onActiveView={(view: DataViewType) => setActiveView(view)}
+                    activeView={activeView}
+                />
+
+                <View className='my-4'>
+                    <Async loading={loading} error={null} onRetry={retry}>
+                        {activeView === 'table' ? (
+                            <Card>
+                                <Table
+                                    data={mockData}
+                                    columns={columns}
+                                />
+                            </Card>
+                        ) : null}
+
+                        {activeView === 'charts' ? (
+                            <View className='flex flex-col'>
+                                <Card>
+                                    <BarChart
+                                        data={mockData?.map((item: ITransaction) => ({
+                                            name: item?.date,
+                                            x: item?.date,
+                                            y: item?.amount,
+                                            ...item
+                                        }))}
+                                        bars={[
+                                            { key: 'amount', color: theme?.primary }, // Red
+                                            // { key: 'revenue', color: '#008000' }, // Green
+                                        ]}
+                                        xAxisKey="date"
+                                    />
+                                </Card>
+
+                                <View className='flex flex-row'>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <View>
+                                            <Text className='text-lg font-bold'>Bank</Text>
+                                        </View>
+                                        <PieChart
+                                            data={getPieData(mockData, 'bank')}
+                                            colors={palette}
+                                            className='card'
+                                        />
+                                    </Card>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <Text className='text-lg font-bold'>Status</Text>
+                                        <PieChart
+                                            data={getPieData(mockData, 'status')}
+                                            colors={palette}
+                                        />
+                                    </Card>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <View>
+                                            <Text className='text-lg font-bold'>Type</Text>
+                                        </View>
+                                        <PieChart
+                                            data={getPieData(mockData, 'type')}
+                                            colors={palette}
+                                        />
+                                    </Card>
+                                    <Card className='w-full md:w-1/2 m-2'>
+                                        <View>
+                                            <Text className='text-lg font-bold'>PaymentType</Text>
+                                        </View>
+                                        <PieChart
+                                            data={getPieData(mockData, 'paymentType')}
+                                            colors={palette}
+                                        />
+                                    </Card>
+                                </View>
+                            </View>
+                        ) : null}
+
+                        {/* <Charts /> */}
+                    </Async>
+                </View>
+
+                <Modal
+                    isOpen={showModal}
+                    onClose={() => setShowModal(false)}
+                    isCloseButtonInverted
+                >
+                    <View className="w-11/12 md:w-fit md:min-w-44 lg:min-w-56">
+                        <Text className='text-lg'>Modal demo</Text>
+                    </View>
+                </Modal>
             </View>
         </View>
     );

@@ -14,7 +14,15 @@ const Loader: React.FC<LoaderProps> = ({ color = "blue-500", size = "w-8 h-8" })
                 className={`absolute inset-0 rounded-full border-4 border-t-transparent animate-spin ${isHex ? "" : `border-${color}`
                     }`}
                 style={isHex ? { borderColor: `${color} transparent transparent transparent` } : {}}
-            />
+            >
+                <div
+                    className={`absolute inset-4 rounded-full animate-pulse ${isHex ? "" : `border-${color}`
+                        }`}
+                    style={isHex ? {
+                        backgroundColor: `${color}88`,
+                    } : {}}
+                />
+            </div>
         </div>
     );
 };
