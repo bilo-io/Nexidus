@@ -23,7 +23,7 @@ import AppTopBar from '../../components/App/TopBar';
 
 type TransactionsProps = object
 
-export const Transactions: React.FC<TransactionsProps> = () => {
+export const PayinsCard: React.FC<TransactionsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
     const { theme } = useTheme();
@@ -245,4 +245,4 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     );
 };
 
-export default Transactions;
+export default PayinsCard;

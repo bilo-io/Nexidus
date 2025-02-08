@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Card, DateRangePicker, Dropdown } from "../Core";
+import Icon from "../Core/Icon";
+import { useTheme } from "../../context/ThemeContext";
 
 interface GlobalFiltersProps {
     value: Record<string, any>;
@@ -28,6 +30,7 @@ const currencyOptions = [
 ]
 
 export const GlobalFilters = ({ }: GlobalFiltersProps) => {
+    const { theme } = useTheme();
     const [currency, setCurrency] = useState<IFiatCurrency>('ZAR')
     const [, setDateRange] = useState<IDateRange>({
         startDate: '',
@@ -37,6 +40,7 @@ export const GlobalFilters = ({ }: GlobalFiltersProps) => {
     return (
 
         <Card className='my-4 w-full flex flex-row items-center gap-x-4'>
+            <Icon name="GlobeAlt" className='size-8' color={theme.textLight} />
             <div className='w-full md:w-1/4 lg:w-1/6'>
                 <Dropdown
                     options={currencyOptions}
@@ -44,6 +48,7 @@ export const GlobalFilters = ({ }: GlobalFiltersProps) => {
                     value={currency}
                 />
             </div>
+            <Icon name="Calendar" className='size-8' color={theme.textLight} />
             <div className='w-full md:w-1/4 lg:w-1/6'>
                 <DateRangePicker
                     onChange={(range: IDateRange): void => setDateRange(range)}

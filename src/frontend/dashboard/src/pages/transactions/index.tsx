@@ -187,11 +187,9 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                                     />
                                 </Card>
 
-                                <View className='flex flex-row'>
+                                <View className='flex flex-row mt-2 -mx-2'>
                                     <Card className='w-full md:w-1/2 m-2'>
-                                        <View>
-                                            <Text className='text-lg font-bold'>Bank</Text>
-                                        </View>
+                                        <Text className='text-lg font-bold'>Bank</Text>
                                         <PieChart
                                             data={getPieData(mockData, 'bank')}
                                             colors={palette}

@@ -16,7 +16,7 @@ export const palette = [
     '#09A8AA', '#DD0838', '#0000FF', '#FFA500', '#00aedd', '#008000', '#800080', "#008000"
 ]
 
-interface PieData {
+export interface PieData {
     name: string;
     value: number;
 }

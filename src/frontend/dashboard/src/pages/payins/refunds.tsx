@@ -21,9 +21,9 @@ import AppTopBar from '../../components/App/TopBar';
 // import Charts from '../misc/charts';
 // import BarChart from '../../components/Core/Charts/react-chartjs-2/BarChart';
 
-type TransactionsProps = object
+type PayinsRefundsProps = object
 
-export const Transactions: React.FC<TransactionsProps> = () => {
+export const PayinsRefunds: React.FC<PayinsRefundsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
     const { theme } = useTheme();
@@ -138,7 +138,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     return (
         <View isPage className="w-full">
             <AppTopBar
-                title={t('Transactions')}
+                title={t('PayinsRefunds')}
                 hasBreadcrumbs
             />
 
@@ -152,7 +152,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                     options={filterOptions}
                     onChange={handleFilterChange}
                     onReload={retry}
-                    onDownload={() => downloadCSV(mockData, `Transactions_${new Date().toISOString()}.csv`)}
+                    onDownload={() => downloadCSV(mockData, `PayinsRefunds_${new Date().toISOString()}.csv`)}
                     onAdd={() => alert('TODO: show modal')}
                     onActiveView={(view: DataViewType) => setActiveView(view)}
                     activeView={activeView}
@@ -245,4 +245,4 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     );
 };
 
-export default Transactions;
+export default PayinsRefunds;

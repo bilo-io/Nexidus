@@ -43,17 +43,17 @@ export const ContentFilters = <T,>({
                         <Icon
                             name='TableCells'
                             onClick={() => onActiveView('table')}
-                            className='size-8'
+                            className='size-6'
                             style={{
-                                color: activeView === 'table' ? theme?.primary : theme?.text,
+                                color: activeView === 'table' ? theme?.primary : theme?.textLight,
                             }}
                         />
                         <Icon
                             name='ChartPie'
                             onClick={() => onActiveView('charts')}
-                            className='size-8'
+                            className='size-6'
                             style={{
-                                color: activeView === 'charts' ? theme?.primary : theme?.text,
+                                color: activeView === 'charts' ? theme?.primary : theme?.textLight,
                             }}
                         />
                     </View>

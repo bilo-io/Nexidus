@@ -42,7 +42,7 @@ export const Card: React.FC<CardProps> = ({
             ${rounded ? "rounded-lg" : ""} 
             ${className}`}
             style={{
-                backgroundColor: isHovered ? `${theme.panel}66` : `${theme.panel}33`
+                backgroundColor: isHovered ? `${theme.primary}33` : `${theme.primary}22`
             }}
             {...props}
         >
