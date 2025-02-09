@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import './SlidingSteps.scss'; // Create this CSS file for styling
+import './SlidingSteps.css'; // Create this CSS file for styling
 
 interface SlidingStepsProps {
     steps: ReactNode[];

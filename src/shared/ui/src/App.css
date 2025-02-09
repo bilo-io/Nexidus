@@ -42,3 +42,18 @@
 .read-the-docs {
   color: #888;
 }
+
+.no-scrollbar {
+
+  /* IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+
+  /* Chrome, Safari and Opera */
+  display: none;
+}
