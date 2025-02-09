@@ -99,7 +99,7 @@ export const Payouts: React.FC<PayoutsProps> = () => {
         {
             accessorKey: 'rrn',
             header: t('RRN'),
-            cell: ({ row: { original } }) => original.rrn ?? t('N/A'),
+            cell: ({ row: { original } }) => original.cardNetwork ?? t('N/A'),
         },
         {
             accessorKey: 'sender',

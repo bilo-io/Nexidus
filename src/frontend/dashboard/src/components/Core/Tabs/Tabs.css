@@ -1,0 +1,80 @@
+.tabs-container {
+    width: 100%;
+}
+
+/* Removing @extend .no-scrollbar - Replace with actual styles */
+.tabs {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-bottom: 1px solid rgba(136, 136, 136, 0.53);
+}
+
+.tabs.centerd {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab {
+    padding: calc(0.7rem + 0.5px);
+    border-bottom: 1px solid transparent;
+    text-align: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.tab.active {
+    color: #0067FF; /* Replace $col-active */
+    border-bottom: 2px solid #0067FF;
+}
+
+.tab.active.dark {
+    text-shadow: 0px 0px 5px #000000;
+}
+
+.tab.active.light {
+    text-shadow: 0px 0px 10px #AAAAAA;
+}
+
+/* Underline Animations */
+.underline {
+    height: 1px;
+    position: absolute;
+    top: -2px;
+    background-color: #0067FF;
+    transition: all 0.5s ease;
+}
+
+.underline.first {
+    transform: translateX(0);
+}
+
+.underline.second {
+    transform: translateX(100%);
+}
+
+.underline.third {
+    transform: translateX(200%);
+}
+
+.tab-content {
+    height: fit-content;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+    padding-bottom: 2rem;
+}
+
+.content {
+    display: none;
+}
+
+.content.active {
+    display: block;
+    height: fit-content;
+    max-height: 100%;
+}

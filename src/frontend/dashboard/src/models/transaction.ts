@@ -4,10 +4,11 @@ export interface ITransaction {
     amount: number;           // Amount of the transaction
     type: string;             // Type of transaction (Credit or Debit)
     status: 'pending' | 'success' | 'failed';  // Transaction status
+    authStatus: 'authenticated' | 'pending' | 'unauthenticated';
     externalRef?: string;     // Reference from an external system
-    rrn?: string;             // Reference number for the transaction
+    cardNetwork?: string;             // Reference number for the transaction
     currency: string;         // Currency code (e.g., 'USD', 'EUR')
-    paymentType: 'EFT' | 'Crypto' | 'Card' | 'AppleWallet' | 'PayPal' | 'Other';  // Payment method used
+    paymentType: 'EFT' | 'Crypto' | 'Card' | 'ApplePay' | 'GooglePay' | 'PayPal' | 'Other';  // Payment method used
     sender?: string;          // Sender of the funds (for transfers)
     receiver?: string;        // Receiver of the funds (for transfers)
     transactionFee?: number;  // Transaction fee, if applicable

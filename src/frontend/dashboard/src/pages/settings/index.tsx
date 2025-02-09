@@ -2,6 +2,7 @@ import React from 'react';
 import FormSettings from './FormSettings';
 import { useTranslation } from 'react-i18next';
 import { Text, View } from '../../components/Core'
+import AppTopBar from '../../components/App/TopBar';
 
 type SettingsProps = object
 
@@ -10,9 +11,7 @@ export const Settings: React.FC<SettingsProps> = () => {
 
     return (
         <View isPage className='w-full'>
-            <Text className='text-xl font-semibold'>
-                {t('settings')}
-            </Text>
+            <AppTopBar title={t('settings')} />
             <FormSettings />
         </View>
     );

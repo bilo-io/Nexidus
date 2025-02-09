@@ -20,6 +20,9 @@ import { Card } from '../../components/Core';
 import AppTopBar from '../../components/App/TopBar';
 import { getStats } from '../../utils/stats';
 import Icon from '../../components/Core/Icon';
+import { formatCurrency } from '../../utils/format';
+import FintechIcon, { FintechType } from '../../components/Core/FintechIcon';
+import { toSentenceCase } from '../../utils/casing';
 // import Charts from '../misc/charts';
 // import BarChart from '../../components/Core/Charts/react-chartjs-2/BarChart';
 
@@ -29,7 +32,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
     const { theme } = useTheme();
-    const { globalFilters, contentFilters } = useNexidusPage<ITransaction>();
+    const { globalFilters, setGlobalFilters, contentFilters } = useNexidusPage<ITransaction>();
     const { loading, retry } = useNexidusApi<ITransaction>({
         path: '',
         params: {
@@ -38,13 +41,13 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     });
     // #endregion
 
+    console.log({ globalFilters })
+
     const [activeView, setActiveView] = useState<DataViewType>('table');
     const [showModal, setShowModal] = useState<boolean>(false);
     const filterOptions = getFilterOptions<ITransaction>(mockData[0]);
 
     const stats = getStats<ITransaction>(mockData, 'amount')
-
-    console.log({ stats })
 
     // #region TABLE
     const columns: ColumnDef<ITransaction>[] = [
@@ -69,17 +72,35 @@ export const Transactions: React.FC<TransactionsProps> = () => {
             header: t('Status'),
             // You can also add conditional formatting for status
             cell: ({ row: { original } }) => {
-                switch (original.status) {
-                    case 'pending':
-                        return t('Pending');
+                const { status } = original;
+                switch (status) {
+                case 'pending':
+                        return <StatusCircle status={status} color={theme.warning} />;
                     case 'success':
-                        return t('Success');
+                        return <StatusCircle status={status} color={theme.success} />;
                     case 'failed':
-                        return t('Failed');
+                        return <StatusCircle status={status} color={theme.error} />;
                     default:
                         return t('Unknown');
                 }
             },
+        },
+        {
+            accessorKey: 'authStatus',
+            header: t('authStatus'),
+            cell: ({ row: { original } }) => {
+                const { authStatus } = original;
+                switch (authStatus) {
+                    case 'authenticated':
+                        return <StatusCircle status={authStatus} color={theme.success} />;
+                    case 'unauthenticated':
+                        return <StatusCircle status={authStatus} color={theme.error} />;
+                    case 'pending':
+                        return <StatusCircle status={authStatus} color={theme.warning} />;
+                    default:
+                        return <StatusCircle status={'N / A'} color={theme.textLight} />;
+                }
+            }
         },
         {
             accessorKey: 'type',
@@ -95,7 +116,12 @@ export const Transactions: React.FC<TransactionsProps> = () => {
         {
             accessorKey: 'paymentType',
             header: t('Payment Type'),
-            cell: ({ row: { original } }) => t(original.paymentType),
+            cell: ({ row: { original } }) => (
+                <View className='flex flex-row items-center'>
+                    <FintechIcon name={original.paymentType as FintechType} />
+                    <Text className='ml-2 opacity-50 text-sm'>({original.paymentType})</Text>
+                </View>
+            ),
         },
         {
             accessorKey: 'externalRef',
@@ -103,9 +129,11 @@ export const Transactions: React.FC<TransactionsProps> = () => {
             cell: ({ row: { original } }) => original.externalRef ?? t('N/A'),
         },
         {
-            accessorKey: 'rrn',
-            header: t('RRN'),
-            cell: ({ row: { original } }) => original.rrn ?? t('N/A'),
+            accessorKey: 'cardNetwork',
+            header: t('Network'),
+            cell: ({ row: { original } }) => (
+                <FintechIcon name={original.cardNetwork as FintechType} />
+            ),
         },
         {
             accessorKey: 'sender',
@@ -151,7 +179,16 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
             <View isPadded className='mt-12'>
 
-                <GlobalFilters value={globalFilters} />
+                <GlobalFilters
+                    value={globalFilters}
+                    onChange={(arg) => {
+                        console.log("GlobalFilters.onChange", arg)
+                        setGlobalFilters((prev) => ({
+                            ...prev,
+                            ...arg
+                        }))
+                    }}
+                />
 
                 <ContentFilters<ITransaction>
                     value={contentFilters}
@@ -193,7 +230,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                                                 <View className='w-full md:w-1/3'>
                                                     <View flex flexRow className='my-6'>
                                                         <Icon name='ChevronDoubleUp' className='mr-2 size-8' color={theme.success} />
-                                                        <Text className='text-xl'><strong>Max</strong>: {stats.max?.toFixed(2)}</Text>
+                                                        <Text className='text-xl'><strong>Max</strong>: {formatCurrency(stats.max, globalFilters?.currency)}</Text>
                                                     </View>
                                                     <View flex flexRow>
                                                         <Icon name='ChevronDoubleDown' className='mr-2 size-8' color={theme.error} />
@@ -312,3 +349,18 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 };
 
 export default Transactions;
+
+export const StatusCircle = ({ color, status }: { color: string, status: string }) => {
+    return <View className='flex flex-row items-center'>
+        <Circle color={color} />
+        <Text className='ml-2'>{toSentenceCase(status)}</Text>
+    </View>
+}
+
+export const Circle = ({ color }: { color: string }) => {
+    return (
+        <div className='w-2.5 h-2.5 rounded-full' style={{
+            backgroundColor: color
+        }}></div>
+    )
+}

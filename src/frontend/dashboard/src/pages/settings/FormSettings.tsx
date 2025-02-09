@@ -29,7 +29,7 @@ const MyForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='px-4'>
+        <form onSubmit={handleSubmit(onSubmit)} className='px-4 w-full grow'>
             <div>
                 <Field
                     name="baseCurrency"

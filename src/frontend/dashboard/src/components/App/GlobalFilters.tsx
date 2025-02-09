@@ -4,6 +4,7 @@ import Icon from "../Core/Icon";
 import { useTheme } from "../../context/ThemeContext";
 
 interface GlobalFiltersProps {
+    onChange?: (arg: any) => void; 
     value: Record<string, any>;
 }
 
@@ -14,7 +15,10 @@ interface IDateRange {
     endDate: string;
 }
 
-const currencyOptions = [
+const currencyOptions: {
+    label: string,
+    value: IFiatCurrency
+}[] = [
     {
         label: 'ZAR - South African Rands',
         value: 'ZAR'
@@ -29,7 +33,7 @@ const currencyOptions = [
     }
 ]
 
-export const GlobalFilters = ({ }: GlobalFiltersProps) => {
+export const GlobalFilters = ({ onChange }: GlobalFiltersProps) => {
     const { theme } = useTheme();
     const [currency, setCurrency] = useState<IFiatCurrency>('ZAR')
     const [, setDateRange] = useState<IDateRange>({
@@ -44,7 +48,12 @@ export const GlobalFilters = ({ }: GlobalFiltersProps) => {
             <div className='w-full md:w-1/4 lg:w-1/6'>
                 <Dropdown
                     options={currencyOptions}
-                    onChange={(e) => setCurrency(e as IFiatCurrency)}
+                    onChange={(e) => {
+                        setCurrency(e as IFiatCurrency)
+                        onChange?.({
+                            currency: e.value
+                        })
+                    }}
                     value={currency}
                 />
             </div>

@@ -37,7 +37,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({ onChange, clas
                 isClearable
                 placeholderText="Start Date, End Date"
                 dateFormat="yyyy-MM-dd"
-                className="w-full min-w-64 px-4 py-2 rounded-lg shadow-sm bg-white text-gray-800 
+                className="w-full min-w-64 px-4 py-2 rounded-lg shadow-sm bg-transparent text-gray-800 
                    focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
             />
         </div>

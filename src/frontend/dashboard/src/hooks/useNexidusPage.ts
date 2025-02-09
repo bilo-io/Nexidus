@@ -2,7 +2,11 @@ import { useState, useMemo } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 
 export const useNexidusPage = <T extends Record<string, any>>() => {
-    const [globalFilters, setGlobalFilters] = useState<Record<string, any>>({});
+    const [globalFilters, setGlobalFilters] = useState<Record<string, any>>({
+        currency: 'ZAR',
+        startDate: new Date(),
+        endDate: new Date()
+    });
     const [contentFilters, setContentFilters] = useState<Record<string, any>>({});
 
     // Infer column definitions based on the type of T

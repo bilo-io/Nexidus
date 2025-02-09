@@ -27,7 +27,7 @@ export const PayinsRefunds: React.FC<PayinsRefundsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
     const { theme } = useTheme();
-    const { globalFilters, contentFilters } = useNexidusPage<ITransaction>();
+    const { globalFilters, setGlobalFilters, contentFilters } = useNexidusPage<ITransaction>();
     const { loading, retry } = useNexidusApi<ITransaction>({
         path: '',
         params: {
@@ -99,7 +99,7 @@ export const PayinsRefunds: React.FC<PayinsRefundsProps> = () => {
         {
             accessorKey: 'rrn',
             header: t('RRN'),
-            cell: ({ row: { original } }) => original.rrn ?? t('N/A'),
+            cell: ({ row: { original } }) => original.cardNetwork ?? t('N/A'),
         },
         {
             accessorKey: 'sender',
@@ -145,7 +145,10 @@ export const PayinsRefunds: React.FC<PayinsRefundsProps> = () => {
 
             <View isPadded className='mt-12'>
 
-                <GlobalFilters value={globalFilters} />
+                <GlobalFilters
+                    value={globalFilters}
+                    onChange={(arg) => console.log("GlobalFilters.onChange", arg)}
+                />
 
                 <ContentFilters<ITransaction>
                     value={contentFilters}
