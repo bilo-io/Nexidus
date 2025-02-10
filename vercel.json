@@ -9,13 +9,5 @@
             "source": "/api/transactions/(.*)",
             "destination": "/services/transactions/dist/index.js"
         }
-    ],
-    "functions": {
-        "src/api/gateway/dist/index.js": {
-            "runtime": "nodejs18.x"
-        },
-        "services/transactions/dist/index.js": {
-            "runtime": "nodejs18.x"
-        }
-    }
+    ]
 }
