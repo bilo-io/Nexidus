@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { toSentenceCase } from "../../../utils/casing";
-import { Card, Dropdown, View } from "../../Core";
+import { Card, Dropdown, ISelectOption, View } from "../../Core";
 import Icon from "../../Core/Icon";
 import { useTheme } from "../../../context/ThemeContext";
 
-export type DataViewType = 'table' | 'chart-pie' | 'chart-bar' | 'charts';
+export type DataViewType = 'table' | 'charts';
 
 interface ContentFiltersProps<T> {
     value: Record<keyof T, any>;
-    options: Record<keyof T, { label: string; value: any }[]>; // Options for each filter
+    options: { key: string, options: ISelectOption[] }[];
     onChange: (key: keyof T, value: any) => void;
     onAdd?: () => void;
     onDownload?: () => void;
@@ -31,7 +31,7 @@ export const ContentFilters = <T,>({
 }: ContentFiltersProps<T>) => {
     const { theme } = useTheme();
     const [isShowingFilters, setIsShowingFilters] = useState<boolean>(isDefaultShowFilters)
-    const keys = Object.keys(options);
+    const keys = options.map((option) => option.key);
 
     return (
         <Card className='w-full my-4'>
@@ -63,15 +63,18 @@ export const ContentFilters = <T,>({
                         <Icon name='ArrowPath' className='size-6' onClick={onReload} />
                     </View>
                 </View>
-                <div className={`flex flex-row items-center gap-x-4 ${isShowingFilters ? 'mt-4' : 'mt-0'} w-full`}>
-                    {isShowingFilters && keys.map((key) => (
+                <div className={`flex flex-row flex-wrap items-center gap-x-4 ${isShowingFilters ? 'mt-4' : 'mt-0'} w-full`}>
+                    {isShowingFilters && options.map((item: {
+                        key: string,
+                        options: ISelectOption[]
+                    }) => (
                         // <div key={key} className="w-full md:w-1/4 lg:w-1/6">
-                        <div key={key} className="">
+                        <div key={item.key} className="w-40">
                             <Dropdown
-                                options={options[key as keyof T] || []}
-                                onChange={(e) => onChange(key as keyof T, e)}
-                                value={value[key as keyof T]}
-                                placeholder={toSentenceCase(key)}
+                                options={item.options || []}
+                                onChange={(e) => onChange(item.key as keyof T, e)}
+                                value={value[item.key as keyof T]}
+                                placeholder={toSentenceCase(item.key)}
                             />
                         </div>
                     ))}

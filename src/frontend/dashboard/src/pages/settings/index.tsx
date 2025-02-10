@@ -1,5 +1,4 @@
 import React from 'react';
-import FormSettings from './FormSettings';
 import { useTranslation } from 'react-i18next';
 import { Tab, Tabs, Text, View } from '../../components/Core'
 import AppTopBar from '../../components/App/TopBar';
@@ -76,7 +75,7 @@ export const Settings: React.FC<SettingsProps> = () => {
                 <Tabs
                     data={tabData}
                     defaultTabIndex={tabData?.find(
-                        (t: Tab & { key: string }) => t.key?.toUpperCase() === tab?.toUpperCase()
+                        (t: Tab & { key: string }) => t.key?.toUpperCase() === tab?.toString().toUpperCase()
                     )?.id as number}
                     onChangeTab={handleSetTab}
                 />

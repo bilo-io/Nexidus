@@ -8,7 +8,7 @@ interface GlobalFiltersProps {
     value: Record<string, any>;
 }
 
-type IFiatCurrency = 'ZAR' | 'USD' | 'EUR'
+export type IFiatCurrency = 'ZAR' | 'USD' | 'EUR'
 
 interface IDateRange {
     startDate: string;

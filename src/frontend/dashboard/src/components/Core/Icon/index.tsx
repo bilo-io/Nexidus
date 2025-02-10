@@ -5,7 +5,7 @@ interface DynamicIconProps extends React.SVGAttributes<SVGElement> {
     name: string; // The name of the icon as a string (e.g., "HomeIcon")
 }
 
-const DynamicIcon: React.FC<DynamicIconProps> = ({ name, ...props }) => {
+export const Icon: React.FC<DynamicIconProps> = ({ name, ...props }) => {
     const IconComponent = (HeroIcons as Record<string, React.FC<React.SVGAttributes<SVGElement>>>)[name + 'Icon'];
 
     if (!IconComponent) {
@@ -24,4 +24,4 @@ https://heroicons.com/
     return <IconComponent {...props} />;
 };
 
-export default DynamicIcon;
+export default Icon;
