@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import { useTheme } from "../../../context/ThemeContext";
 
 interface DateRangePickerProps {
     onChange: (range: { startDate: string; endDate: string }) => void;
@@ -11,6 +12,7 @@ interface DateRangePickerProps {
 export const DateRangePicker: React.FC<DateRangePickerProps> = ({ onChange, className = "" }) => {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
+    const { theme } = useTheme();
 
     const handleChange = (dates: [Date | null, Date | null]) => {
         const [start, end] = dates;
@@ -27,7 +29,11 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({ onChange, clas
     };
 
     return (
-        <div className={`relative w-full ${className}`}>
+        <div className={`relative w-fit ${className} rounded-lg`}
+            style={{
+                backgroundColor: theme?.background,
+                border: `1px solid ${theme?.textLight}66`
+            }}>
             <DatePicker
                 selected={startDate}
                 onChange={handleChange}

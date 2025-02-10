@@ -9,6 +9,7 @@ import BankCardIcon from "../../../assets/icons/BankCard.svg";
 import BankTransferIcon from '../../../assets/icons/BankTransfer.svg';
 import WalletIcon from "../../../assets/icons/Wallet.svg";
 import CryptoIcon from "../../../assets/icons/Crypto.svg";
+import PayPalIcon from '../../../assets/icons/PayPal.svg';
 
 export type FintechType =
     | "Mastercard"
@@ -21,6 +22,7 @@ export type FintechType =
     | "EFT"
     | "Wallet"
     | "Crypto"
+    | "PayPal"
     
 
 interface CardIconProps {
@@ -39,7 +41,8 @@ export const icons = {
     Card: BankCardIcon,
     Wallet: WalletIcon,
     Crypto: CryptoIcon,
-    EFT: BankTransferIcon
+    EFT: BankTransferIcon,
+    PayPal: PayPalIcon
 };
 
 export const FintechIcon: React.FC<CardIconProps> = ({

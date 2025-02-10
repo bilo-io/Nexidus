@@ -1353,7 +1353,7 @@ export const transactions: ITransaction[] = [
         currency: 'EUR',
         paymentType: 'Crypto',
         externalRef: 'EXT12423',
-        cardNetwork: 'Ethereum',
+        cardNetwork: 'Visa',
         sender: 'Victor Stone',
         receiver: 'Cybernetics Research',
         transactionFee: 14.50,
