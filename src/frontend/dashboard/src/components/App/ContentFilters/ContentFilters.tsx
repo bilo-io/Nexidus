@@ -31,7 +31,6 @@ export const ContentFilters = <T,>({
 }: ContentFiltersProps<T>) => {
     const { theme } = useTheme();
     const [isShowingFilters, setIsShowingFilters] = useState<boolean>(isDefaultShowFilters)
-    const keys = options.map((option) => option.key);
 
     return (
         <Card className='w-full my-4'>

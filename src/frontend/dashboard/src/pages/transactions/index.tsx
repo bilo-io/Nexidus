@@ -30,7 +30,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     // #region HOOKS
     const { t } = useTranslation();
     const { theme } = useTheme();
-    const { getStaticFilterOptions, getDynamicFilterOptions } = useFilterOptions();
+    const { getStaticFilterOptions } = useFilterOptions();
     const [params,] = useAppUrl(null);
     const [query,] = useState<any>({
         status: {

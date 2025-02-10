@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tab, Tabs, Text, View } from '../../components/Core'
+import { Tab, Tabs, View } from '../../components/Core'
 import AppTopBar from '../../components/App/TopBar';
 import { useAppUrl } from '../../hooks/useAppUrl';
 import LanguagePicker from '../../components/Config/LanguagePicker';
