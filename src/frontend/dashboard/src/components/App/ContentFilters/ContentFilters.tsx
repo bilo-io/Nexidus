@@ -12,6 +12,7 @@ interface ContentFiltersProps<T> {
     onChange: (key: keyof T, value: any) => void;
     onCopyLink: () => void;
     onAdd?: () => void;
+    onClear?: () => void;
     onDownload?: () => void;
     onReload?: () => void;
     activeView: DataViewType;
@@ -26,6 +27,7 @@ export const ContentFilters = <T,>({
     onAdd,
     onDownload,
     onCopyLink,
+    onClear,
     onReload,
     activeView,
     onActiveView,
@@ -63,6 +65,7 @@ export const ContentFilters = <T,>({
                         {onDownload && <Icon name='ArrowDownTray' className='size-6' onClick={onDownload} />}
                         <Icon name='ArrowPath' className='size-6' onClick={onReload} />
                         <Icon name="Link" className='size-6' onClick={() => onCopyLink?.()} />
+                        {onClear && <Icon name='XMark' className='size-6' onClick={onClear} />}
                     </View>
                 </View>
                 <div className={`flex flex-row flex-wrap items-center gap-x-4 ${isShowingFilters ? 'mt-4' : 'mt-0'} w-full`}>

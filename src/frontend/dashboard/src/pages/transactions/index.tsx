@@ -214,6 +214,12 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                     onCopyLink={() => {
                         copyToClipboard(window.location.href)
                     }}
+                    onClear={() => {
+                        setQuery({})
+                        setSearchParams({})
+                        setTimeout(() => retry())
+
+                    }}
                     onActiveView={(view: DataViewType) => setActiveView(view)}
                     activeView={activeView}
                 />
