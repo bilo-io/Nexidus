@@ -217,8 +217,9 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                     onClear={() => {
                         setQuery({})
                         setSearchParams({})
-                        setTimeout(() => retry())
 
+                        // setTimeout(() => retry())
+                        window.location.reload()
                     }}
                     onActiveView={(view: DataViewType) => setActiveView(view)}
                     activeView={activeView}
