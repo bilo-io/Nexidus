@@ -31,15 +31,13 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     const { t } = useTranslation();
     const { theme } = useTheme();
     const { getStaticFilterOptions } = useFilterOptions();
+    const [, setSearchParams] = useAppUrl('');
     const [params,] = useAppUrl(null);
-    const [query,] = useState<any>({
-        status: {
-            key: 'status',
-            // @ts-ignore
-            options: params.status
-        }
+    const [query, setQuery] = useState<any>({
+        ...(params as object)
     })
-    console.log({ query, params })
+    
+    console.log('query', query)
     const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
     const { loading, retry } = useNexidusApi<ITransaction>({
         path: '',
@@ -174,9 +172,16 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
     const filterOptions = getFilterOptionsArray<ITransaction>(mockData, columns)
 
-    const handleFilterChange = (key: keyof ITransaction, value: any) => {
-        console.log(`Filter changed: ${key} = ${value}`);
-        // TODO: Implement state update logic
+    const handleFilterChange = (key: keyof ITransaction, item: ISelectOption) => {
+        setQuery((prev: any) => ({
+            ...prev,
+            [key]: item.value,
+        }));
+
+        setSearchParams({
+            ...query,
+            [key]: item.value,
+        })
     };
 
     return (

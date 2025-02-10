@@ -63,20 +63,25 @@ export const ContentFilters = <T,>({
                     </View>
                 </View>
                 <div className={`flex flex-row flex-wrap items-center gap-x-4 ${isShowingFilters ? 'mt-4' : 'mt-0'} w-full`}>
-                    {isShowingFilters && options.map((item: {
-                        key: string,
-                        options: ISelectOption[]
-                    }) => (
-                        // <div key={key} className="w-full md:w-1/4 lg:w-1/6">
-                        <div key={item.key} className="w-40">
-                            <Dropdown
-                                options={item.options || []}
-                                onChange={(e) => onChange(item.key as keyof T, e)}
-                                value={value[item.key as keyof T]}
-                                placeholder={toSentenceCase(item.key)}
-                            />
-                        </div>
-                    ))}
+                    {
+                        isShowingFilters && options.map((item) => {
+                            const currentValue = value[item.key as keyof T];
+
+                            // Find the selected option that corresponds to the value
+                            const selectedOption = item.options.find(option => option.value === currentValue);
+
+                            return (
+                                <div key={item.key} className="w-40">
+                                    <Dropdown
+                                        options={item.options || []}
+                                        onChange={(e) => onChange(item.key as keyof T, e)} // Pass the full option back to onChange
+                                        value={selectedOption || null} // Ensure the value is in the correct format
+                                        placeholder={toSentenceCase(item.key)}
+                                    />
+                                </div>
+                            );
+                        })
+                    }
                 </div>
             </View>
         </Card>
