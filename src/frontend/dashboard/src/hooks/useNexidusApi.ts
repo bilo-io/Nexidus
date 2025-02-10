@@ -15,6 +15,7 @@ interface ApiResponse<T> {
     };
 }
 
+// @ts-ignore
 const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
 
 const API_BASE_URL = window.location.origin === 'http://localhost:8080'
@@ -31,7 +32,7 @@ export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
         setLoading(true);
         setError(null);
 
-        await sleep(2000);
+        // await sleep(2000);
 
         try {
             // Convert params object to query string
