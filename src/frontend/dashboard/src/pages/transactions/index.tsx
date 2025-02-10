@@ -219,7 +219,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 />
 
                 <View className='my-4'>
-                    <Async loading={loading} error={null} onRetry={retry}>
+                    <Async loading={loading} error={error} onRetry={retry}>
                         {activeView === 'table' ? (
                             <Card>
                                 <Table
