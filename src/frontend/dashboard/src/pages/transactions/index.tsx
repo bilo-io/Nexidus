@@ -210,7 +210,9 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                     onReload={retry}
                     onDownload={() => downloadCSV(mockData, `Transactions_${new Date().toISOString()}.csv`)}
                     onAdd={() => alert('TODO: show modal')}
-                    onCopyLink={() => copyToClipboard(window.location.href )}
+                    onCopyLink={() => {
+                        copyToClipboard(window.location.href)
+                    }}
                     onActiveView={(view: DataViewType) => setActiveView(view)}
                     activeView={activeView}
                 />
