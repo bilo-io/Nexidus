@@ -27,7 +27,7 @@ export const StatsView: React.FC<StatsViewProps> = ({
                                 <Text className='font-bold mr-2'>{t('Total')}</Text>
                                 <br />
                                 <br />
-                                {stats.total?.toString()}
+                                {formatCurrency(stats.total?.toString(), currency)}
                             </Text>
                         </Card>
                     </View>

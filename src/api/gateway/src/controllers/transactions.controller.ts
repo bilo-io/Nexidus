@@ -22,21 +22,23 @@ const filtersConfig: Record<string, FilterFunction<ITransaction>> = {
         const [startDate, endDate] = value;
         return item.date >= startDate && item.date <= endDate;
     },
+    /** Filter transactions with specific banks */
+    bank: (item, value) => item.bank?.toLowerCase() === value?.toLowerCase(),
 
     /** Filter by transaction status (pending, success, failed). */
-    status: (item, value) => item.status === value,
+    status: (item, value) => item.status?.toLowerCase() === value?.toLowerCase(),
 
     /** Filter by authentication status. */
-    authStatus: (item, value) => item.authStatus === value,
+    authStatus: (item, value) => item.authStatus?.toLowerCase() === value?.toLowerCase(),
 
     /** Filter by transaction type (Credit or Debit). */
     type: (item, value) => item.type.toLowerCase() === value.toLowerCase(),
 
     /** Filter by payment type (EFT, Crypto, Card, etc.). */
-    paymentType: (item, value) => item.paymentType === value,
+    paymentType: (item, value) => item.paymentType?.toLowerCase() === value?.toLowerCase(),
 
     /** Filter by card network if applicable. */
-    cardNetwork: (item, value) => item.cardNetwork === value,
+    cardNetwork: (item, value) => item.cardNetwork?.toLowerCase() === value?.toLowerCase(),
 
     /** Filter transactions by merchant ID. */
     merchantId: (item, value) => item.merchantId === value,

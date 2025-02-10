@@ -5,23 +5,45 @@ interface FetchOptions {
     params?: Record<string, string | number | boolean>;
 }
 
-const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
+interface ApiResponse<T> {
+    data: T[];
+    meta: {
+        limit: number;
+        page: number;
+        totalPages: number;
+        totalItems: number;
+    };
+}
+
+const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
+
+const API_BASE_URL = window.location.origin === 'http://localhost:8080'
+    ? 'http://localhost:8001'
+    : 'https://nexidus-api.vercel.app';
 
 export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
     const [data, setData] = useState<T[]>([]);
+    const [meta, setMeta] = useState<ApiResponse<T>['meta'] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
         setError(null);
-        
-        await sleep(2000)
+
+        await sleep(2000);
 
         try {
             // Convert params object to query string
-            const queryString = new URLSearchParams(params as Record<string, string>).toString();
-            const url = queryString ? `${path}?${queryString}` : path;
+            const queryString = new URLSearchParams(
+                Object.entries(params).reduce((acc, [key, value]) => {
+                    acc[key] = String(value);
+                    return acc;
+                }, {} as Record<string, string>)
+            ).toString();
+
+            const url = queryString ? `${API_BASE_URL}${path}?${queryString}` : `${API_BASE_URL}${path}`;
+            console.log({ url });
 
             const response = await fetch(url);
 
@@ -29,18 +51,20 @@ export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
                 throw new Error(`Error ${response.status}: ${response.statusText}`);
             }
 
-            const result = await response.json();
-            setData(result);
+            const result: ApiResponse<T> = await response.json();
+
+            setData(result.data);
+            setMeta(result.meta);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch data');
         } finally {
             setLoading(false);
         }
-    }, [path, params]);
+    }, [path, JSON.stringify(params)]); // Stringify params to avoid unnecessary re-renders
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [fetchData]);
 
-    return { data, loading, error, retry: fetchData };
+    return { data, meta, loading, error, retry: fetchData };
 };

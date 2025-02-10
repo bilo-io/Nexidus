@@ -9,7 +9,6 @@ import { ISelectOption, Modal, Text, View } from '../../components/Core'
 import { Async } from '../../components/Core/Async';
 import { Table } from '../../components/Core/Table';
 import { ITransaction } from '../../models/transaction';
-import { payins as mockData } from '../../data/mockData'
 import { ColumnDef } from '@tanstack/react-table';
 import { downloadCSV } from '../../utils/download';
 import { useTheme } from '../../context/ThemeContext';
@@ -39,13 +38,15 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     })
 
     const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
-    const { loading, retry } = useNexidusApi<ITransaction>({
-        path: '',
+    const { data, meta, error, loading, retry } = useNexidusApi<ITransaction>({
+        path: '/api/transactions',
         params: params as { [key in string]: string }
     });
+
+    console.log(data, meta)
     // #endregion
 
-    const stats = getStats<ITransaction>(mockData, 'amount')
+    const stats = getStats<ITransaction>(data, 'amount')
     const [activeView, setActiveView] = useState<DataViewType>('table');
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -170,7 +171,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
         ];
     //#endregion
 
-    const filterOptions = getFilterOptionsArray<ITransaction>(mockData, columns)
+    const filterOptions = getFilterOptionsArray<ITransaction>(data, columns)
 
     const handleFilterChange = (key: keyof ITransaction, item: ISelectOption) => {
         setQuery((prev: any) => ({
@@ -208,7 +209,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                     options={filterOptions}
                     onChange={handleFilterChange}
                     onReload={retry}
-                    onDownload={() => downloadCSV(mockData, `Transactions_${new Date().toISOString()}.csv`)}
+                    onDownload={() => downloadCSV(data, `Transactions_${new Date().toISOString()}.csv`)}
                     onAdd={() => alert('TODO: show modal')}
                     onCopyLink={() => {
                         copyToClipboard(window.location.href)
@@ -222,7 +223,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                         {activeView === 'table' ? (
                             <Card>
                                 <Table
-                                    data={mockData}
+                                    data={data}
                                     columns={columns}
                                 />
                             </Card>
@@ -235,7 +236,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                                 </View>
 
                                 <View>
-                                    <ChartsView data={mockData} />
+                                    <ChartsView data={data} />
                                 </View>
                             </View>
                         ) : null}
