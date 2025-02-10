@@ -11,7 +11,10 @@
         }
     ],
     "functions": {
-        "src/api/gateway/src/index.ts": {
+        "src/api/gateway/dist/index.js": {
+            "runtime": "nodejs18.x"
+        },
+        "services/transactions/dist/index.js": {
             "runtime": "nodejs18.x"
         }
     }
