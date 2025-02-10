@@ -42,6 +42,15 @@ const filtersConfig: Record<string, FilterFunction<ITransaction>> = {
 
     /** Filter transactions by merchant ID. */
     merchantId: (item, value) => item.merchantId === value,
+
+    /** Filter transactions by sender */
+    sender: (item, value) => item.sender?.toLowerCase() === value?.toLowerCase(),
+
+    /** Filter transactions by receiver */
+    receiver: (item, value) => item.receiver?.toLowerCase() === value?.toLowerCase(),
+
+    /** Filter transactions by amount */
+    // amount: (item, value) => item.amount === value,
 };
 
 const transactionsController = {
