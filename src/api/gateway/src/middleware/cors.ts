@@ -3,19 +3,13 @@ import { NextFunction, Request, Response } from "express";
 
 // Static allowed origins
 const allowedOrigins: string[] = [
-    'https://app-octiv-test.vercel.app',
-    // Jadon Hansen
-    'https://spatial-awareness.vercel.app',
-    // Denis Siduna
-    'https://octiv-denis.vercel.app',
-    // Luqmaan Essop
-    'https://le-oktiv-assessment.vercel.app',
-    // Nick Craze
-    'https://my-map-app-rho.vercel.app',
-    // Siya
-    'https://octivfitness.vercel.app',
-    // Charles
-    'https://octiv.vercel.app'
+    'https://nexidus.vercel.app',
+    'https://nexidus-dashboard.vercel.app',
+
+    'https://nexidus-staging.vercel.app',
+    'https://nexidus-dashboard-staging.vercel.app',
+    
+    'http://localhost:8080',
 ];
 
 export const corsMiddleware = cors({
