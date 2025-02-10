@@ -36,8 +36,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     const [query, setQuery] = useState<any>({
         ...(params as object)
     })
-    
-    console.log('query', query)
+
     const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
     const { loading, retry } = useNexidusApi<ITransaction>({
         path: '',
