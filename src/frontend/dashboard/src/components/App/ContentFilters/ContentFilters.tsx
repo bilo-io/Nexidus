@@ -10,6 +10,7 @@ interface ContentFiltersProps<T> {
     value: Record<keyof T, any>;
     options: { key: string, options: ISelectOption[] }[];
     onChange: (key: keyof T, value: any) => void;
+    onCopyLink: () => void;
     onAdd?: () => void;
     onDownload?: () => void;
     onReload?: () => void;
@@ -24,6 +25,7 @@ export const ContentFilters = <T,>({
     onChange,
     onAdd,
     onDownload,
+    onCopyLink,
     onReload,
     activeView,
     onActiveView,
@@ -60,6 +62,7 @@ export const ContentFilters = <T,>({
                         <Icon name='AdjustmentsVertical' className='size-6' onClick={() => setIsShowingFilters((prev) => !prev)} />
                         {onDownload && <Icon name='ArrowDownTray' className='size-6' onClick={onDownload} />}
                         <Icon name='ArrowPath' className='size-6' onClick={onReload} />
+                        <Icon name="Link" className='size-6' onClick={() => onCopyLink?.()} />
                     </View>
                 </View>
                 <div className={`flex flex-row flex-wrap items-center gap-x-4 ${isShowingFilters ? 'mt-4' : 'mt-0'} w-full`}>
