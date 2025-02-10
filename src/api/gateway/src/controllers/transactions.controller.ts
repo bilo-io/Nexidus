@@ -1,33 +1,56 @@
-import { Request, Response } from "express";
-import { fiatCurrencies, cryptoCurrencies } from "../_data/currencies";
-import { ICurrency, ITransaction } from 'models/finance'
-import { paginateRequest } from "../utils/paginate";
-import { applyFilters, FilterFunction, SortDirection, sortItems } from "../utils/filters";
-import { transactions as data } from "_data/transactions";
+import { Request, Response } from 'express';
+import { ITransaction } from 'models/finance';
+import { paginateRequest } from '../utils/paginate';
+import { applyFilters, FilterFunction, SortDirection, sortItems } from '../utils/filters';
+import { transactions as data } from '../_data/transactions';
 
-// Combine fiat and crypto currencies into a single list
+// Load transactions from data source
 const transactions: ITransaction[] = data;
 
 // Define filter functions for transactions
 const filtersConfig: Record<string, FilterFunction<ITransaction>> = {
+    /** Filter transactions by search query (matches externalRef or bank name). */
     search: (item, query) =>
-        item.senderName.toLocaleLowerCase().includes(query.toLowerCase()) ||
-        item.recipientName.toLowerCase().includes(query.toLowerCase())
-    ,
-    currencyCode: (item, value) => item.currencyCode?.toUpperCase() === value,
+        (item.externalRef?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
+        (item.bank?.toLowerCase().includes(query.toLowerCase()) ?? false),
+
+    /** Filter transactions by exact currency match (case-insensitive). */
+    currency: (item, value) => item.currency.toUpperCase() === value,
+
+    /** Filter transactions within a date range. */
     between: (item, value) => {
         const [startDate, endDate] = value;
-        return item.createdAt >= startDate && item.createdAt <= endDate
+        return item.date >= startDate && item.date <= endDate;
     },
+
+    /** Filter by transaction status (pending, success, failed). */
+    status: (item, value) => item.status === value,
+
+    /** Filter by authentication status. */
+    authStatus: (item, value) => item.authStatus === value,
+
+    /** Filter by transaction type (Credit or Debit). */
+    type: (item, value) => item.type.toLowerCase() === value.toLowerCase(),
+
+    /** Filter by payment type (EFT, Crypto, Card, etc.). */
+    paymentType: (item, value) => item.paymentType === value,
+
+    /** Filter by card network if applicable. */
+    cardNetwork: (item, value) => item.cardNetwork === value,
+
+    /** Filter transactions by merchant ID. */
+    merchantId: (item, value) => item.merchantId === value,
 };
 
 const transactionsController = {
-    // List all currencies with filtering, sorting, and pagination
+    /**
+     * List all transactions with filtering, sorting, and pagination.
+     */
     listTransactions: async (req: Request, res: Response) => {
         const filters = req.query;
-        const { sortBy = "name", sortDirection = "asc" } = filters;
+        const { sortBy = 'date', sortDirection = 'desc' } = filters;
 
-        // Sort, filter, and paginate the data
+        // Sort, filter, and paginate transactions
         const sortedItems = sortItems(transactions, sortBy as keyof ITransaction, sortDirection as SortDirection);
         const filteredItems = applyFilters(sortedItems, filters, filtersConfig);
         const { paginatedItems, ...pagination } = paginateRequest(filteredItems, req);
@@ -38,12 +61,14 @@ const transactionsController = {
         });
     },
 
-    // Find a specific transaction by its code
+    /**
+     * Find a specific transaction by its ID.
+     */
     findTransaction: async (req: Request, res: Response) => {
-        const result = transactions.find((item: ITransaction) => item.id === req.params.id.toUpperCase());
+        const result = transactions.find((item: ITransaction) => item.id === req.params.id);
 
         if (!result) {
-            return res.status(404).send({ message: "Currency not found" });
+            return res.status(404).send({ message: 'Transaction not found' });
         }
 
         res.status(200).send(result);

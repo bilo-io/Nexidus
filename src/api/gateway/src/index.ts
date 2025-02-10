@@ -1,19 +1,17 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import bodyParser from 'body-parser'
+import bodyParser from 'body-parser';
 import { loggerMiddleware } from './middleware/logger';
-import version from './version.json'
+import version from './version.json';
 import { corsMiddleware } from './middleware/cors';
-import detectPort from 'detect-port'
+import detectPort from 'detect-port';
 
-import { VercelRequest, VercelResponse } from "@vercel/node";
+// Import Vercel types
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
-
-
-
-
+// Initialize environment variables
 dotenv.config();
-const port = process.env.PORT || 7000;
+
 const app: Express = express();
 
 //#region VERCEL
@@ -30,57 +28,57 @@ app.use(corsMiddleware);
 
 // #region ROUTES
 app.get('/', (req: Request, res: Response) => {
-    res.setHeader('Content-Type', 'text/html')
+    res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
 
-    const welcomeMessage = `API: v${version.version}`
+    const welcomeMessage = `API: v${version.version}`;
     res.end(welcomeMessage).status(200);
-})
+});
 
 // Feature routes
 app.use(require('./routes/router'));
 
-// app.get('/api/routes', (req: Request, res: Response) => {
-//     console.log({ apiRoutes })
-//     res.json({
-//         apiRoutes,
-//         expectedResult: 'ApiRoutesArray'
-//     }).status(200)
-// })
-
+// Example ping route
 app.get('/api/ping', (req: Request, res: Response) => {
     res.end('Pong!').status(200);
-})
+});
 
 app.get('/api/', (req: Request, res: Response) => {
     res.json(
         [app._router]
             .map((routeInfo) => ({
-                entityPath: routeInfo.path || "",
+                entityPath: routeInfo.path || '',
                 stack: (routeInfo?.router?.stack || routeInfo.stack).filter(
                     (stack: any) => stack.route
                 ),
             }))
             .map(({ entityPath, stack }) =>
-                // @ts-ignore
                 stack.map(({ route: { path, methods } }) => ({
                     path: entityPath ? `/api${entityPath}${path}` : path,
                     methods,
                 }))
-            ).flat()
+            )
+            .flat()
     );
 });
 //#endregion
 
-detectPort(port, (err, availablePort) => {
-    if (err) {
-        console.error('🔴 Error detecting port:', err);
-        process.exit(1);
-    }
+// Local port detection logic (only for local development)
+if (process.env.NODE_ENV !== 'production') {
+    const port = process.env.PORT || 7000;
+    detectPort(port, (err, availablePort) => {
+        if (err) {
+            console.error('🔴 Error detecting port:', err);
+            process.exit(1);
+        }
 
-    app.listen(availablePort, () => {
-        console.log(`🟢 ⚡️ [server]: Server running at http://localhost:${availablePort}`);
+        app.listen(availablePort, () => {
+            console.log(`🟢 ⚡️ [server]: Server running at http://localhost:${availablePort}`);
+        });
     });
-});
+}
 
-export default (req: VercelRequest, res: VercelResponse) => app(req, res);
+// Vercel expects an exported handler function, no need for app.listen() in production
+export default (req: VercelRequest, res: VercelResponse) => {
+    app(req, res); // Call Express with Vercel's request/response objects
+};

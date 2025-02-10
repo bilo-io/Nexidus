@@ -47,57 +47,48 @@ export interface ICurrency {
  * Represents a financial transaction
  */
 export interface ITransaction {
-    /** Unique identifier for the transaction */
+    /** Unique transaction ID */
     id: string;
 
-    /** ISO 8601 date of transaction creation */
-    createdAt: string;
-
-    /** ISO 8601 date of the last update to the transaction */
-    updatedAt: string;
+    /** Date and time of the transaction (ISO format) */
+    date: string;
 
     /** Amount of the transaction */
     amount: number;
 
-    /** Currency code used in the transaction (e.g., "USD", "BTC") */
-    currencyCode: CurrencyCode;
+    /** Type of transaction (Credit or Debit) */
+    type: string;
 
-    /** Type of currency (either "fiat" or "crypto") */
-    currencyType: CurrencyType;
+    /** Transaction status */
+    status: 'pending' | 'success' | 'failed';
 
-    /** Name of the sender involved in the transaction */
-    senderName: string;
+    /** Authentication status */
+    authStatus: 'authenticated' | 'pending' | 'unauthenticated';
 
-    /** Name of the recipient involved in the transaction */
-    recipientName: string;
-
-    /** Reference visible to the sender (e.g., invoice number or note) */
-    internalRef?: string;
-
-    /** Reference visible to the recipient (e.g., transaction ID or message) */
+    /** Reference from an external system */
     externalRef?: string;
 
-    /** Last 4 digits of the sender's card used in the transaction (if applicable) */
-    cardLast4?: string;
+    /** Card network (e.g., Visa, Mastercard) */
+    cardNetwork?: string;
 
-    /** First 6-8 digits of the sender's card (if applicable) */
-    cardBin?: string;
+    /** Currency code (e.g., 'USD', 'EUR') */
+    currency: string;
 
-    /** Current status of the transaction */
-    status?: "pending" | "completed" | "failed";
+    /** Payment method used */
+    paymentType: 'EFT' | 'Crypto' | 'Card' | 'ApplePay' | 'GooglePay' | 'PayPal' | 'Other';
 
-    /** Optional description or note for the transaction */
-    description?: string;
+    /** Sender of the funds (for transfers) */
+    sender?: string;
 
-    /** Optional transaction fee applied */
-    fee?: number;
+    /** Receiver of the funds (for transfers) */
+    receiver?: string;
 
-    /** Exchange rate applied if the transaction involves a currency conversion */
-    exchangeRate?: number;
+    /** Transaction fee, if applicable */
+    transactionFee?: number;
 
-    /** ID of the source account */
-    sourceAccountId?: string;
+    /** Merchant identifier (if applicable) */
+    merchantId?: string;
 
-    /** ID of the destination account */
-    destinationAccountId?: string;
+    /** Bank or wallet used in case of EFT or Crypto */
+    bank?: string;
 }
