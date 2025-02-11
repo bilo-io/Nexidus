@@ -1,4 +1,20 @@
-export const themes = {
+export interface ITheme {
+    primary: string;
+    text: string;
+    textLight: string;
+    background: string;
+    panel: string;
+    success: string;
+    successBg: string;
+    warning: string;
+    warningBg: string;
+    error: string;
+    errorBg: string;
+}
+
+export const themes: {
+    [key in string]: ITheme
+} = {
     light: {
         primary: '#007bff',
         text: '#000',

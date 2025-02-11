@@ -23,6 +23,11 @@ import { getFilterOptionsArray, useFilterOptions } from '../../hooks/useFilterOp
 import StatsView from '../../components/Core/StatsView';
 import ChartsView from '../../components/Core/ChartsView';
 import { copyToClipboard } from '../../utils/clipboard';
+import {
+    renderAuthStatus,
+    renderPaymentType,
+    renderTransactionStatus
+} from '../../components/Core/Table/CellRenderers';
 
 type TransactionsProps = object
 
@@ -58,6 +63,11 @@ export const Transactions: React.FC<TransactionsProps> = () => {
             {
                 accessorKey: 'id',
                 header: t('Transaction ID'),
+                cell: ({ row: { original } }) => (
+                    <View className='mx-auto w-fit'>
+                        <Text># {original.id}</Text>
+                    </View>
+                )
             },
             {
                 accessorKey: 'date',
@@ -72,37 +82,13 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 accessorKey: 'status',
                 header: t('Status'),
                 options: getStaticFilterOptions('status'),
-                cell: ({ row: { original } }) => {
-                    const { status } = original;
-                    switch (status) {
-                        case 'pending':
-                            return <StatusCircle status={status} color={theme.warning} />;
-                        case 'success':
-                            return <StatusCircle status={status} color={theme.success} />;
-                        case 'failed':
-                            return <StatusCircle status={status} color={theme.error} />;
-                        default:
-                            return t('Unknown');
-                    }
-                },
+                cell: renderTransactionStatus({ t, theme })
             },
             {
                 accessorKey: 'authStatus',
                 header: t('authStatus'),
                 options: getStaticFilterOptions('authStatus'),
-                cell: ({ row: { original } }) => {
-                    const { authStatus } = original;
-                    switch (authStatus) {
-                        case 'authenticated':
-                            return <StatusCircle status={authStatus} color={theme.success} />;
-                        case 'unauthenticated':
-                            return <StatusCircle status={authStatus} color={theme.error} />;
-                        case 'pending':
-                            return <StatusCircle status={authStatus} color={theme.warning} />;
-                        default:
-                            return <StatusCircle status={'N / A'} color={theme.textLight} />;
-                    }
-                },
+                cell: renderAuthStatus({ t, theme })
             },
             {
                 accessorKey: 'type',
@@ -120,12 +106,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 accessorKey: 'paymentType',
                 header: t('Payment Type'),
                 options: getStaticFilterOptions('paymentType'),
-                cell: ({ row: { original } }) => (
-                    <View className='flex flex-row items-center'>
-                        <FintechIcon name={original.paymentType as FintechType} />
-                        <Text className='ml-2 opacity-50 text-sm'>({original.paymentType})</Text>
-                    </View>
-                ),
+                cell: renderPaymentType({ t, theme })
             },
             {
                 accessorKey: 'externalRef',
@@ -138,7 +119,10 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 header: t('Network'),
                 options: getStaticFilterOptions('cardNetwork'),
                 cell: ({ row: { original } }) => (
-                    <FintechIcon name={original.cardNetwork as FintechType} />
+                    <View className='flex flex-row items-center'>
+                        <FintechIcon name={original.cardNetwork as FintechType} />
+                        <Text className='ml-2 opacity-50 text-sm'>({original.cardNetwork as string})</Text>
+                    </View>
                 ),
             },
             {
@@ -210,7 +194,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                     onChange={handleFilterChange}
                     onReload={retry}
                     onDownload={() => downloadCSV(data, `Transactions_${new Date().toISOString()}.csv`)}
-                    onAdd={() => alert('TODO: show modal')}
+                    onAdd={() => setShowModal(true)}
                     onCopyLink={() => {
                         copyToClipboard(window.location.href)
                     }}
@@ -247,15 +231,13 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                                 </View>
                             </View>
                         ) : null}
-
-                        {/* {activeView === 'custom'} */}
                     </Async>
                 </View>
 
                 <Modal
                     isOpen={showModal}
                     onClose={() => setShowModal(false)}
-                    isCloseButtonInverted
+                    position='bottom'
                 >
                     <View className="w-11/12 md:w-fit md:min-w-44 lg:min-w-56">
                         <Text className='text-lg'>Modal demo</Text>
