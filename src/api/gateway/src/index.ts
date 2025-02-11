@@ -36,7 +36,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Feature routes
-app.use(require('./routes/router'));
+app.use(require('./routes/router.v2'));
 
 // Example ping route
 app.get('/api/ping', (req: Request, res: Response) => {

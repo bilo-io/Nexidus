@@ -10,6 +10,7 @@ import features from './features-router'
 import movies from './movies-router'
 import places from './places-router'
 import transactions from './transactions-router'
+import test from './test-router'
 
 
 // link to router
@@ -21,6 +22,7 @@ router.use('/', features.router)
 router.use('/', movies.router)
 router.use('/', places.router)
 router.use('/', transactions.router)
+router.user('/', test.router)
 
 export const apiRoutes = [
     ai.path,

@@ -3,7 +3,7 @@ import controller from '../controllers/test-controller'
 
 const router = Router()
 
-const path = '/api'
+const path = '/api/test'
 
 router.get(`${path}/movies`, controller.listMovies)
 router.get(`${path}/movies/:id`, controller.findMovie)
