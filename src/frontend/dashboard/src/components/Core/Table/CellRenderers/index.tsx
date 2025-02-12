@@ -18,7 +18,7 @@ export const Circle = ({ color }: { color: string }) => {
     )
 }
 
-export const renderTransactionStatus = ({ t, theme }: { t: any, theme: ITheme }) => ({ row: { original } }: { row: { original: any } }) => {
+export const renderTransactionStatus = ({ theme }: { t: any, theme: ITheme }) => ({ row: { original } }: { row: { original: any } }) => {
     const { status } = original;
     switch (status) {
         case 'pending':
@@ -32,7 +32,7 @@ export const renderTransactionStatus = ({ t, theme }: { t: any, theme: ITheme })
     }
 }
 
-export const renderAuthStatus = ({ t, theme }: { t: any, theme: ITheme }) => ({ row: { original } }: { row: { original: any } }) => {
+export const renderAuthStatus = ({ theme }: { t: any, theme: ITheme }) => ({ row: { original } }: { row: { original: any } }) => {
     const { authStatus } = original;
     switch (authStatus) {
         case 'authenticated':

@@ -17,7 +17,7 @@ export const CustomCharts = <T,>({ data }: CustomChartsProps<T>) => {
     const [barKeys, setBarKeys] = useState<(keyof T)[]>([]);
     const [pieKeys, setPieKeys] = useState<(keyof T)[]>([]);
 
-    const [xAxisKey, setXAxisKey] = useState<keyof T | string>('date');
+    const [xAxisKey,] = useState<keyof T | string>('date');
 
     const removePieKey = (key: keyof T) => {
         setPieKeys((prev) => prev.filter((k) => k !== key));

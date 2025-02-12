@@ -93,32 +93,32 @@ export const AppNavBar: React.FC = () => {
         },
         {
             icon: 'Cog',
-            name: 'Settings',
+            name: t('settings'),
             action: () => navigate('/settings'),
         },
         {
             icon: 'QuestionMarkCircle',
-            name: 'Support',
+            name: t('support'),
             action: () => navigate('/support'),
         },
         {
             icon: 'User',
-            name: 'Account Management',
+            name: t('accountManagement'),
             action: () => navigate('/account'),
         },
         {
             icon: 'QueueList',
-            name: 'Switch Tenant',
+            name: t('switchTenant'),
             action: () => navigate('/switch-tenant'),
         },
         {
             icon: 'UserPlus',
-            name: 'Signup Invites',
+            name: t('SignupInvites'),
             action: () => navigate('/signup-invites'),
         },
         {
             icon: 'Power',
-            name: 'Log Out',
+            name: t('LogOut'),
             action: () => navigate('/logout'),
         },
     ];
@@ -139,7 +139,6 @@ export const AppNavBar: React.FC = () => {
             style={{
                 height: '100vh',
                 backgroundColor: theme.primary,
-                // boxShadow: "3px 5px 18px #0000005A",
             }}
         >
             {/* Header */}
@@ -162,14 +161,11 @@ export const AppNavBar: React.FC = () => {
                                     name: item.name,
                                     action: item.action,
                                 }}
-                                // icon={item.icon}
-                                // className={`flex flex-row items-center w-full cursor-pointer ${hoverStyle}`}
-                                // style={{ color: '#FFF' }}
                             >
                                 <Icon name={item.icon as string} className='size-6 m-4' />
                                 {isOpen ? item.name : ''}
                             </NavItem>
-                            
+
                             {item.children && (
                                 <div
                                     className={`pl-8 flex flex-col transition-all duration-300 ease-in-out ${isOpen && expanded === item.name ? 'h-auto opacity-100' : 'h-0 opacity-20 overflow-hidden'
@@ -180,8 +176,6 @@ export const AppNavBar: React.FC = () => {
                                             key={child.path}
                                             onClick={() => navigate(child.path!)}
                                             isRoundedLeft
-                                            // className={`flex flex-row items-center w-11/12 rounded-lg cursor-pointer ${hoverStyle} mr-2`}
-                                            // style={{ color: '#FFF' }}
                                             item={{
                                                 name: child.name,
                                                 action: child.action
@@ -246,7 +240,7 @@ const NavItem = ({
             className={`flex flex-row items-center w-full cursor-pointer z-10 ${isRoundedLeft ? 'rounded-l-full' : ''}`}
             onClick={item.action || onClick}
             style={{
-                color: isHovered ? theme?.primary : '#FFF' ,
+                color: isHovered ? theme?.primary : '#FFF',
                 backgroundColor: isHovered ? theme?.background : 'transparent',
                 // boxShadow: isHovered ? '3px 5px 18px #0000005A' : undefined
             }}
