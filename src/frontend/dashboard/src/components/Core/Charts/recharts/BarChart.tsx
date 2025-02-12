@@ -22,6 +22,7 @@ interface BarChartComponentProps {
     xAxisKey: string;
     yAxisLabel?: string;
     barSize?: number;
+    focusColor?: string,
 }
 
 const BarChartComponent: React.FC<BarChartComponentProps> = ({
@@ -31,6 +32,7 @@ const BarChartComponent: React.FC<BarChartComponentProps> = ({
     xAxisKey,
     yAxisLabel,
     barSize = 20,
+    focusColor = '#A0F',
 }) => {
     return (
         <ResponsiveContainer width="100%" height={300}>
@@ -41,12 +43,20 @@ const BarChartComponent: React.FC<BarChartComponentProps> = ({
                         dataKey={bar.key}
                         fill={bar.color}
                         barSize={barSize}
+                        activeBar={{ fill: focusColor }}
                     />
                 ))}
-                {grid && <CartesianGrid stroke="#ccc" />}
+                {grid && (
+                    <CartesianGrid
+                        stroke="#ccc"
+                        vertical={true}
+                        horizontal={true}
+                        strokeDasharray="3 3"
+                    />
+                )}
                 <XAxis dataKey={xAxisKey} />
                 <YAxis label={yAxisLabel ? { value: yAxisLabel, angle: -90, position: 'insideLeft' } : undefined} />
-                <Tooltip />
+                <Tooltip cursor={{ fill: 'none' }} />
                 <Legend />
             </BarChart>
         </ResponsiveContainer>
