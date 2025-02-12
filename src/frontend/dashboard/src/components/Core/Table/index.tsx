@@ -155,10 +155,6 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                             table.setPageSize(Number(value.value))
                         }}
                         value={table.getState().pagination.pageSize.toString()}
-                    // options={paginationOptions}
-                    // onChange={(e: { target: { value: any } }) => {
-                    //     table.setPageSize(Number(e.target.value))
-                    // }}
                     />
                 </div>
             </div>

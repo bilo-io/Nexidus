@@ -28,6 +28,7 @@ import {
     renderPaymentType,
     renderTransactionStatus
 } from '../../components/Core/Table/CellRenderers';
+import CustomCharts from '../../components/Core/CustomCharts';
 
 type TransactionsProps = object
 
@@ -228,6 +229,16 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
                                 <View>
                                     <ChartsView data={data} />
+                                </View>
+                            </View>
+                        ) : null}
+
+                        {activeView === 'custom' ? (
+                            <View className='flex flex-col w-full'>
+                                <View>
+                                    <CustomCharts<ITransaction>
+                                        data={data}
+                                    />
                                 </View>
                             </View>
                         ) : null}

@@ -4,7 +4,7 @@ import { Card, Dropdown, ISelectOption, View } from "../../Core";
 import Icon from "../../Core/Icon";
 import { useTheme } from "../../../context/ThemeContext";
 
-export type DataViewType = 'table' | 'charts';
+export type DataViewType = 'table' | 'charts' | 'custom';
 
 interface ContentFiltersProps<T> {
     value: Record<keyof T, any>;
@@ -55,6 +55,14 @@ export const ContentFilters = <T,>({
                             className='size-6'
                             style={{
                                 color: activeView === 'charts' ? theme?.primary : theme?.textLight,
+                            }}
+                        />
+                        <Icon
+                            name='Wrench'
+                            onClick={() => onActiveView('custom')}
+                            className='size-6'
+                            style={{
+                                color: activeView === 'custom' ? theme?.primary : theme?.textLight,
                             }}
                         />
                     </View>
