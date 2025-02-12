@@ -22,9 +22,9 @@ jobs:
           cd src/frontend/dashboard
           rm -rf node_modules yarn.lock
           yarn cache clean
-          yarn install --frozen-lockfile
+          yarn install --check-files --frozen-lockfile
           yarn build
-          vercel --prod --yes --token=$VERCEL_TOKEN
+          vercel deploy --prod --yes --token=$VERCEL_TOKEN
 
   deploy-api:
     runs-on: ubuntu-latest
@@ -42,24 +42,6 @@ jobs:
           cd src/api/gateway
           rm -rf node_modules yarn.lock
           yarn cache clean
-          yarn install --frozen-lockfile
+          yarn install --check-files --frozen-lockfile
           yarn build
-          vercel --prod --yes --token=$VERCEL_TOKEN
-
-  # deploy-transactions:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-  #     - name: Install Vercel CLI
-  #       run: yarn global add vercel
-  #     - name: Deploy Transactions Service
-  #       env:
-  #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  #       run: |
-  #         cd src/services/transactions
-  #         rm -rf node_modules yarn.lock
-  #         yarn cache clean
-  #         yarn install --frozen-lockfile
-  #         yarn build
-  #         vercel deploy --prod --token=$VERCEL_TOKEN
+          vercel deploy --prod --yes --token=$VERCEL_TOKEN
