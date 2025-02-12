@@ -11,15 +11,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Install Vercel CLI
-        run: npm install -g vercel
+        run: yarn global add vercel
+
       - name: Deploy Dashboard
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           cd src/frontend/dashboard
-          npm install
-          npm run build
+          rm -rf node_modules yarn.lock
+          yarn cache clean
+          yarn install --frozen-lockfile
+          yarn build
           vercel deploy --prod --token=$VERCEL_TOKEN
 
   deploy-api:
@@ -27,15 +31,19 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Install Vercel CLI
-        run: npm install -g vercel
+        run: yarn global add vercel
+
       - name: Deploy API Gateway
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           cd src/api/gateway
-          npm install
-          npm run build
+          rm -rf node_modules yarn.lock
+          yarn cache clean
+          yarn install --frozen-lockfile
+          yarn build
           vercel deploy --prod --token=$VERCEL_TOKEN
 
   # deploy-transactions:
@@ -44,12 +52,14 @@ jobs:
   #     - name: Checkout repository
   #       uses: actions/checkout@v4
   #     - name: Install Vercel CLI
-  #       run: npm install -g vercel
+  #       run: yarn global add vercel
   #     - name: Deploy Transactions Service
   #       env:
   #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   #       run: |
   #         cd src/services/transactions
-  #         npm install
-  #         npm run build
+  #         rm -rf node_modules yarn.lock
+  #         yarn cache clean
+  #         yarn install --frozen-lockfile
+  #         yarn build
   #         vercel deploy --prod --token=$VERCEL_TOKEN
