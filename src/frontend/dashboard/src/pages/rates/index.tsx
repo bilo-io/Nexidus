@@ -25,6 +25,7 @@ import {
     renderTransactionStatus
 } from '../../components/Core/Table/CellRenderers';
 import CustomCharts from '../../components/Core/CustomCharts';
+import { formatCurrency } from '../../utils/format';
 
 type RatesProps = object
 
@@ -90,27 +91,27 @@ export const Rates: React.FC<RatesProps> = () => {
             {
                 accessorKey: 'change24h',
                 header: t('change24h'),
-                cell: ({ row: { original } }) => `$${original.change24h.toFixed(2)}`,
+                cell: ({ row: { original } }) => `${formatCurrency(original.change24h, 'USD')}`,
             },
             {
                 accessorKey: 'change7d',
                 header: t('change7d'),
-                cell: ({ row: { original } }) => `$${original.change7d.toFixed(2)}`,
+                cell: ({ row: { original } }) => `${formatCurrency(original.change7d, 'USD')}`,
             },
             {
                 accessorKey: 'change30d',
                 header: t('change30d'),
-                cell: ({ row: { original } }) => `$${original.change30d.toFixed(2)}`,
+                cell: ({ row: { original } }) => `${formatCurrency(original.change30d, 'USD')}`,
             },
             {
                 accessorKey: 'volume24h',
                 header: t('volume24h'),
-                cell: ({ row: { original } }) => `$${original.volume24h.toFixed(2)}`,
+                cell: ({ row: { original } }) => `${formatCurrency(original.volume24h, 'USD')}`,
             },
             {
                 accessorKey: 'marketCap',
                 header: t('marketCap'),
-                cell: ({ row: { original } }) => `$${original.marketCap.toFixed(2)}`,
+                cell: ({ row: { original } }) => `${formatCurrency(original.marketCap, 'USD')}`,
             },
             {
                 accessorKey: 'code',
