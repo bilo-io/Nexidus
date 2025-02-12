@@ -572,9 +572,9 @@
     json-schema-to-ts "1.6.4"
     ts-morph "12.0.0"
 
-"@vision/core@bilo-io/vision-core.git#0.1.17":
+"@vision/core@https://github.com/bilo-io/vision-core.git#0.1.17":
   version "0.1.17"
-  resolved "git+ssh://git@github.com/bilo-io/vision-core.git#af54e62678c4da6dafe95b7e8bdbc679282498fe"
+  resolved "https://github.com/bilo-io/vision-core.git#af54e62678c4da6dafe95b7e8bdbc679282498fe"
 
 abbrev@1:
   version "1.1.1"
