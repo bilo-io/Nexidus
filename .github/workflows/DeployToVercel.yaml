@@ -22,7 +22,7 @@ jobs:
           npm run build
           vercel deploy --prod --token=$VERCEL_TOKEN
 
-  deploy-gateway:
+  deploy-api:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
