@@ -7,6 +7,9 @@ const Dashboard = lazy(() => import('./Dashboard'));
 const Transactions = lazy(() => import('./transactions'));
 const TransactionsOOB = lazy(() => import('./transactions/oob'));
 
+// Rates
+const Rates = lazy(() => import('./rates'));
+
 // Payins
 const Payins = lazy(() => import('./payins'));
 const PayinsCard = lazy(() => import('./payins/card'));
@@ -51,6 +54,8 @@ export const routes = [
     { path: '/transactions', element: <Transactions /> },
     { path: '/transactions/all', element: <Transactions /> }, // Assuming this route
     { path: '/transactions/oob', element: <TransactionsOOB /> }, // Assuming this route
+
+    { path: '/rates', element: <Rates /> },
 
     // Payins
     { path: '/payins', element: <Payins /> },

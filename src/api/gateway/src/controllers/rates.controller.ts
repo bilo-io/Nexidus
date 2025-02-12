@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { IActor, IMovie } from '@vision/core';
 import {
     GET, POST, PUT, DELETE,
     Filter, Paginate, Status,
@@ -8,26 +7,26 @@ import {
 import { IController } from './_controller';
 import { FilterFunction } from 'utils/filters';
 
-import { tenants as allTenants } from '../_data/tenants'
-import { ITenant } from 'models/tenant';
+import { rates as allRates } from '../_data/rates'
+import { IRate } from '../models/rates';
 
 const path = '/api'
 
-// #region MOVIES
-const filtersConfig: Record<string, FilterFunction<ITenant>> = {
-    /** Filter tenants by search query (matches externalRef or bank name). */
+// #region Rates
+const filtersConfig: Record<string, FilterFunction<IRate>> = {
+    /** Filter rates by search query (matches externalRef or bank name). */
     name: (item, query) =>
         (item.name?.toLowerCase().includes(query.toLowerCase()) ?? false)
 };
 
 
-export class TenantsController implements IController<ITenant> {
-    @GET(`${path}/tenants`)
-    @DB(() => allTenants)
+export class RatesController implements IController<IRate> {
+    @GET(`${path}/rates`)
+    @DB(() => allRates)
     @Filter(filtersConfig)
     @Paginate()
     @Status([400, 404, 500])
-    listTenants(req: Request, res: Response): void {
+    listRates(req: Request, res: Response): void {
         if (req.body.paginatedItems?.length === 0) {
             res.status(404)
             return;
@@ -39,9 +38,9 @@ export class TenantsController implements IController<ITenant> {
         });
     }
 
-    @GET(`${path}/tenants/:id`)
+    @GET(`${path}/rates/:id`)
     find(req: Request, res: Response): void {
-        const result = allTenants.find((movie: ITenant) => movie.id === req.params.id);
+        const result = allRates.find((movie: IRate) => movie.id === req.params.id);
         res.status(200).send(result);
     }
 }

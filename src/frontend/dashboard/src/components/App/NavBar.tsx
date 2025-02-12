@@ -78,6 +78,11 @@ export const AppNavBar: React.FC = () => {
                 { name: t('Unallocated Funds'), path: '/recon/unallocated-funds' },
             ],
         },
+        {
+            name: t('rates'),
+            icon: 'CurrencyDollar',
+            path: '/rates'
+        }
     ];
 
     const bottomItems: INavLink[] = [
