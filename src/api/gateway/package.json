@@ -43,7 +43,8 @@
     "reflect-metadata": "^0.1.13",
     "stable-diffusion-cjs": "^1.0.7",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",

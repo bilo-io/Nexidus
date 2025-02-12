@@ -1,16 +1,16 @@
 import React from 'react';
-import { Text, View } from '../../components/Core';
-// import Charts from '../misc/charts';
-// import BarChart from '../../components/Core/Charts/react-chartjs-2/BarChart';
+import { View } from '../../components/Core';
+import { useTranslation } from 'react-i18next';
+import AppTopBar from '../../components/App/TopBar';
 
 type PayinsProps = object
 
 export const Payins: React.FC<PayinsProps> = () => {
-
-
+    const { t } = useTranslation();
+    
     return (
         <View>
-            <Text>Payins</Text>
+            <AppTopBar title={`${t('payins')}`} />
         </View>
     );
 };

@@ -1,13 +1,19 @@
 import { Request, Response } from 'express';
+import { IActor, IMovie } from '@vision/core';
+import {
+    GET, POST, PUT, DELETE,
+    Filter, Paginate, Status,
+    DB
+} from '../@decorators/rest';
+import { IController } from './_controller';
+import { FilterFunction } from 'utils/filters';
+
+import { transactions as allTransactions  } from '../_data/transactions'
 import { ITransaction } from 'models/finance';
-import { paginateRequest } from '../utils/paginate';
-import { applyFilters, FilterFunction, SortDirection, sortItems } from '../utils/filters';
-import { transactions as data } from '../_data/transactions';
 
-// Load transactions from data source
-const transactions: ITransaction[] = data;
+const path = '/api'
 
-// Define filter functions for transactions
+// #region MOVIES
 const filtersConfig: Record<string, FilterFunction<ITransaction>> = {
     /** Filter transactions by search query (matches externalRef or bank name). */
     search: (item, query) =>
@@ -48,42 +54,31 @@ const filtersConfig: Record<string, FilterFunction<ITransaction>> = {
 
     /** Filter transactions by receiver */
     receiver: (item, value) => item.receiver?.toLowerCase() === value?.toLowerCase(),
-
-    /** Filter transactions by amount */
-    // amount: (item, value) => item.amount === value,
 };
 
-const transactionsController = {
-    /**
-     * List all transactions with filtering, sorting, and pagination.
-     */
-    listTransactions: async (req: Request, res: Response) => {
-        const filters = req.query;
-        const { sortBy = 'date', sortDirection = 'desc' } = filters;
 
-        // Sort, filter, and paginate transactions
-        const sortedItems = sortItems(transactions, sortBy as keyof ITransaction, sortDirection as SortDirection);
-        const filteredItems = applyFilters(sortedItems, filters, filtersConfig);
-        const { paginatedItems, ...pagination } = paginateRequest(filteredItems, req);
-
-        res.status(200).send({
-            meta: pagination,
-            data: paginatedItems,
-        });
-    },
-
-    /**
-     * Find a specific transaction by its ID.
-     */
-    findTransaction: async (req: Request, res: Response) => {
-        const result = transactions.find((item: ITransaction) => item.id === req.params.id);
-
-        if (!result) {
-            return res.status(404).send({ message: 'Transaction not found' });
+export class TransactionsController implements IController<ITransaction> {
+    @GET(`${path}/transactions`)
+    @DB(() => allTransactions)
+    @Filter(filtersConfig)
+    @Paginate()
+    @Status([400, 404, 500])
+    listTransactions(req: Request, res: Response): void {
+        if (req.body.paginatedItems?.length === 0) {
+            res.status(404)
+            return;
         }
 
-        res.status(200).send(result);
-    },
-};
+        res.status(200).send({
+            meta: req.body.pagination,
+            data: req.body.paginatedItems,
+        });
+    }
 
-export default transactionsController;
+    @GET('/api/transactions/:id')
+    find(req: Request, res: Response): void {
+        const result = allTransactions.find((movie: ITransaction) => movie.id === req.params.id);
+        res.status(200).send(result);
+    }
+}
+// #endregion

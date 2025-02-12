@@ -1,35 +1,83 @@
-import { ITenant } from "../models/tenant";
+import { ITenant, DashboardFeature } from "../models/tenant";
+import { v4 as uuidv4 } from "uuid";
 
 export const tenants: ITenant[] = [
     {
-        id: "",
-        name: "",
+        id: uuidv4(),
+        name: "FinTrust Bank",
         clients: [
             {
-                id: 'live-client-1',
-                name: 'Cards & Wallets',
-                type: "live"
+                id: `live-${uuidv4()}`,
+                name: "Wealth Management",
+                type: "live",
+                features: ['card', 'reporting']
             },
             {
-                id: 'live-client-2',
-                name: 'Crypto',
-                type: "live"
+                id: `live-${uuidv4()}`,
+                name: "Corporate Banking",
+                type: "live",
+                features: ['wallet', 'recon']
             },
             {
-                id: 'test-client-1',
-                name: 'Test Client 1',
-                type: "test"
+                id: `test-${uuidv4()}`,
+                name: "Payment Gateway Sandbox",
+                type: "test",
+                features: ['refunds', 'reporting']
+            }
+        ]
+    },
+    {
+        id: uuidv4(),
+        name: "NeoPay Solutions",
+        clients: [
+            {
+                id: `live-${uuidv4()}`,
+                name: "Merchant Processing",
+                type: "live",
+                features: ['card', 'wallet', 'reporting']
             },
             {
-                id: 'test-client-2',
-                name: 'Test Client 2',
-                type: "test"
+                id: `live-${uuidv4()}`,
+                name: "Mobile Wallets",
+                type: "live",
+                features: ['wallet', 'refunds']
             },
             {
-                id: 'test-client-3',
-                name: 'Test Client 3',
-                type: "test"
+                id: `test-${uuidv4()}`,
+                name: "Beta Crypto Transfers",
+                type: "test",
+                features: ['recon', 'reporting']
             },
+            {
+                id: `test-${uuidv4()}`,
+                name: "Test Banking APIs",
+                type: "test",
+                features: ['card', 'refunds']
+            }
+        ]
+    },
+    {
+        id: uuidv4(),
+        name: "SecurePay Inc.",
+        clients: [
+            {
+                id: `live-${uuidv4()}`,
+                name: "Fraud Detection",
+                type: "live",
+                features: ['recon', 'reporting']
+            },
+            {
+                id: `live-${uuidv4()}`,
+                name: "Card Issuing",
+                type: "live",
+                features: ['card', 'wallet']
+            },
+            {
+                id: `test-${uuidv4()}`,
+                name: "Risk Assessment Engine",
+                type: "test",
+                features: ['refunds', 'recon']
+            }
         ]
     }
-]
+];
