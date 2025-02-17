@@ -49,12 +49,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
         option: (provided: any, state: { isSelected: any; isFocused: any; }) => ({
             ...provided,
             backgroundColor: state.isSelected ? theme?.successBg : state.isFocused ? theme?.primary : theme?.background,
-            color: state.isSelected ? theme?.primary : theme?.text,
+            color: state.isFocused ? '#FFF' : theme?.text,
             cursor: 'pointer',
         }),
         placeholder: (provided: any) => ({
             ...provided,
-            color: '#88888888',
+            color: `${theme?.textLight}88`,
         }),
         singleValue: (provided: any) => ({
             ...provided,

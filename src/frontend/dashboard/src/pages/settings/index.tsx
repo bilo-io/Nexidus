@@ -53,15 +53,15 @@ export const Settings: React.FC<SettingsProps> = () => {
         },
         {
             id: 2,
-            key: 'Language',
+            key: 'Preferences',
             label: (
-                <div style={{ color: tab === 'language' ? theme?.primary : theme?.text }}>
-                    {'Language'}
+                <div style={{ color: tab === 'preferences' ? theme?.primary : theme?.text }}>
+                    {'Preferences'}
                 </div>
             ),
             view: (
-                <View>
-                    <LanguagePicker />
+                <View className='p-4'>
+                    {/* <LanguagePicker /> */}
                 </View>
             )
         },

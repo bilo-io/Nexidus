@@ -35,6 +35,7 @@ export const ContentFilters = <T,>({
 }: ContentFiltersProps<T>) => {
     const { theme } = useTheme();
     const [isShowingFilters, setIsShowingFilters] = useState<boolean>(isDefaultShowFilters)
+    const iconClassName = 'cursor-pointer size-6'
 
     return (
         <Card className='w-full my-4'>
@@ -44,7 +45,7 @@ export const ContentFilters = <T,>({
                         <Icon
                             name='TableCells'
                             onClick={() => onActiveView('table')}
-                            className='size-6'
+                            className={iconClassName}
                             style={{
                                 color: activeView === 'table' ? theme?.primary : theme?.textLight,
                             }}
@@ -52,7 +53,7 @@ export const ContentFilters = <T,>({
                         <Icon
                             name='ChartPie'
                             onClick={() => onActiveView('charts')}
-                            className='size-6'
+                            className={iconClassName}
                             style={{
                                 color: activeView === 'charts' ? theme?.primary : theme?.textLight,
                             }}
@@ -60,20 +61,20 @@ export const ContentFilters = <T,>({
                         <Icon
                             name='Wrench'
                             onClick={() => onActiveView('custom')}
-                            className='size-6'
+                            className={iconClassName}
                             style={{
                                 color: activeView === 'custom' ? theme?.primary : theme?.textLight,
                             }}
                         />
                     </View>
                     <View flex flexRow className='gap-4 mx-4 py-2 justify-end'>
-                        <Icon name='MagnifyingGlass' className='size-6' />
-                        {onAdd && <Icon name='Plus' className='size-6' onClick={onAdd} />}
-                        <Icon name='AdjustmentsVertical' className='size-6' onClick={() => setIsShowingFilters((prev) => !prev)} />
-                        {onDownload && <Icon name='ArrowDownTray' className='size-6' onClick={onDownload} />}
-                        <Icon name='ArrowPath' className='size-6' onClick={onReload} />
-                        <Icon name="Link" className='size-6' onClick={() => onCopyLink?.()} />
-                        {onClear && <Icon name='XMark' className='size-6' onClick={onClear} />}
+                        <Icon name='MagnifyingGlass' className={iconClassName} />
+                        {onAdd && <Icon name='Plus' className={iconClassName} onClick={onAdd} />}
+                        <Icon name='AdjustmentsVertical' className={iconClassName} onClick={() => setIsShowingFilters((prev) => !prev)} />
+                        {onDownload && <Icon name='ArrowDownTray' className={iconClassName} onClick={onDownload} />}
+                        <Icon name='ArrowPath' className={iconClassName} onClick={onReload} />
+                        <Icon name="Link" className={iconClassName} onClick={() => onCopyLink?.()} />
+                        {onClear && <Icon name='XMark' className={iconClassName} onClick={onClear} />}
                     </View>
                 </View>
                 <div className={`flex flex-row flex-wrap items-center gap-x-4 ${isShowingFilters ? 'mt-4' : 'mt-0'} w-full`}>

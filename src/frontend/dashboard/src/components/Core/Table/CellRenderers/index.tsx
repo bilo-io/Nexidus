@@ -1,4 +1,3 @@
-import { toSentenceCase } from "../../../../utils/casing"
 import { View, Text } from "../../"
 import { ITheme } from "../../../../themes"
 import FintechIcon, { FintechType } from "../../FintechIcon"
@@ -6,15 +5,18 @@ import FintechIcon, { FintechType } from "../../FintechIcon"
 export const StatusCircle = ({ color, status }: { color: string, status: string }) => {
     return <View className='flex flex-row items-center'>
         <Circle color={color} />
-        <Text className='ml-2'>{toSentenceCase(status)}</Text>
+        <Text className='ml-2'>{status}</Text>
     </View>
 }
 
 export const Circle = ({ color }: { color: string }) => {
     return (
-        <div className='w-2.5 h-2.5 rounded-full' style={{
-            backgroundColor: color
-        }}></div>
+        <div
+            className='w-2.5 h-2.5 rounded-full'
+            style={{
+                backgroundColor: color
+            }}
+        />
     )
 }
 
@@ -47,7 +49,7 @@ export const renderAuthStatus = ({ theme }: { t: any, theme: ITheme }) => ({ row
 }
 
 
-export const renderPaymentType = ({  }: { t: any, theme: ITheme }) => ({ row: { original } }: { row: { original: any } }) => {
+export const renderPaymentType = ({ }: { t: any, theme: ITheme }) => ({ row: { original } }: { row: { original: any } }) => {
     return (
         <View className='flex flex-row items-center'>
             <FintechIcon name={original.paymentType as FintechType} />

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Dropdown } from '../Core';
 import { ActionMeta } from 'react-select';
 import { useTheme } from '../../context/ThemeContext';
+import { AppBreadCrumbs } from './BreadCrumbs';
 
 interface AppTopBarProps {
     title?: string,
@@ -10,7 +11,7 @@ interface AppTopBarProps {
 
 export const AppTopBar: React.FC<AppTopBarProps> = ({
     title,
-    // hasBreadcrumbs,
+    hasBreadcrumbs = true,
 }) => {
     const { theme } = useTheme();
 
@@ -20,10 +21,16 @@ export const AppTopBar: React.FC<AppTopBarProps> = ({
                 style={{
                     backgroundColor: theme.background,
                     borderColor: theme.panel
-            }}>
-                <View>
-                    <Text className='font-bold text-lg'>{title as string}</Text>
-                </View>
+                }}>
+                {hasBreadcrumbs ? (
+                    <View className='pt-1 px-4'>
+                        <AppBreadCrumbs />
+                    </View>
+                ) : (
+                    <View>
+                        <Text className='font-bold text-lg'>{title as string}</Text>
+                    </View>
+                )}
                 <Dropdown
                     options={[]}
                     value={undefined}

@@ -15,7 +15,11 @@ import Input from '../Forms/Input'
 import { paginationOptions } from '../../../utils/constants'
 import Dropdown from '../Dropdown'
 
-export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[], }) => {
+export const Table = ({ data, columns }: {
+    data: any[],
+    columns: ColumnDef<any>[],
+    onClickRow?: (row: any) => void
+}) => {
     // const rerender = React.useReducer(() => ({}), {})[1]
 
     // Create the table and pass your options
@@ -64,7 +68,7 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                 </thead>
                 <tbody className='overflow-hidden overflow-y-auto' style={{ maxHeight: 'calc(50vh - 20rem)' }}>
                     {table.getRowModel().rows.map(row => (
-                        <tr key={row.id} className='h-6'>
+                        <tr key={row.id} className='h-6' onClick={() => onClickRow?.(row)}>
                             {row.getVisibleCells().map(cell => (
                                 <td key={cell.id}>
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -159,9 +163,6 @@ export const Table = ({ data, columns }: { data: any[], columns: ColumnDef<any>[
                 </div>
             </div>
             <div className="h-4" />
-            {/* <Button onClick={() => rerender()} className="border p-2">
-                Rerender
-            </Button> */}
         </div>
     )
 }

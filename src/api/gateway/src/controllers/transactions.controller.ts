@@ -18,6 +18,11 @@ const filtersConfig: Record<string, FilterFunction<ITransaction>> = {
     /** Filter transactions by search query (matches externalRef or bank name). */
     search: (item, query) =>
         (item.externalRef?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
+        (item.sender?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
+        (item.receiver?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
+        (item.paymentType?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
+        (item.type?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
+        (item.authStatus?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
         (item.bank?.toLowerCase().includes(query.toLowerCase()) ?? false),
 
     /** Filter transactions by exact currency match (case-insensitive). */

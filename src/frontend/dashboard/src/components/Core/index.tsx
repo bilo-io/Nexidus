@@ -14,6 +14,7 @@ export * from './SlidingSteps'
 export * from './Table'
 export * from './Tabs'
 export * from './Text'
+export * from './TextHighlight'
 export * from './View'
 
 

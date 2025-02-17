@@ -113,7 +113,7 @@ export const AppNavBar: React.FC = () => {
         },
         {
             icon: 'UserPlus',
-            name: t('SignupInvites'),
+            name: t('signupInvites'),
             action: () => navigate('/signup-invites'),
         },
         {

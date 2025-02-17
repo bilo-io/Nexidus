@@ -10,7 +10,7 @@ export const Dashboard: React.FC<LandingProps> = () => {
 
     return (
         <View>
-            <AppTopBar title={`${t('dashboard')}`} />
+            <AppTopBar title={`${t('dashboard')}`} hasBreadcrumbs={false} />
         </View>
     );
 };

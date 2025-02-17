@@ -4,7 +4,7 @@ import { themes } from '../themes';
 
 // Define a context shape
 interface ThemeContextType {
-    theme: typeof themes.light; // Type the theme to match any of the theme objects
+    theme: typeof themes.light;
     setTheme: (theme: keyof typeof themes) => void;
 }
 
@@ -16,8 +16,14 @@ interface ThemeProviderProps {
     children: ReactNode;
 }
 
+const getCurrentTheme = (): 'stitch' | 'dark' => {
+    const currentHour = new Date().getHours();
+    
+    return currentHour >= 6 && currentHour < 18 ? 'stitch' : 'stitch';
+};
+
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-    const [theme, setTheme] = useState<keyof typeof themes>('stitch'); // Default theme is light
+    const [theme, setTheme] = useState<keyof typeof themes>(getCurrentTheme());
 
     return (
         <ThemeContext.Provider value={{ theme: themes[theme], setTheme }}>
