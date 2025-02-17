@@ -183,6 +183,7 @@ export const Rates: React.FC<RatesProps> = () => {
                                 <Table
                                     data={data}
                                     columns={columns}
+                                    onClickRow={(row) => console.log(row)}
                                 />
                             </Card>
                         ) : null}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from '../../components/Core';
+import { View } from '../../components/Core';
 import AppTopBar from '../../components/App/TopBar';
 import { useTranslation } from 'react-i18next';
 // import Charts from '../misc/charts';
