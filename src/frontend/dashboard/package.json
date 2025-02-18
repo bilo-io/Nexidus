@@ -15,7 +15,8 @@
     "build:docker:prod": "docker build . -f Dockerfile.prod --platform linux/amd64 --tag nexidus-prod:latest --load .",
     "start:docker": "docker run -d -p 8080:8080 --name nexidus-frontend-dashboard nexidus-frontend-dashboard:latest",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_3726ce523f1ab74"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -56,6 +57,7 @@
     "@types/react-dom": "^18.3.5",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "chromatic": "^11.25.2",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
