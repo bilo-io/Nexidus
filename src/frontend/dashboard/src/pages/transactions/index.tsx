@@ -29,11 +29,14 @@ import {
     renderTransactionStatus
 } from '../../components/Core/Table/CellRenderers';
 import CustomCharts from '../../components/Core/CustomCharts';
+import { useNavigate } from 'react-router-dom';
+import { formatDate } from '../../utils/format';
 
 type TransactionsProps = object
 
 export const Transactions: React.FC<TransactionsProps> = () => {
     // #region HOOKS
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const { theme } = useTheme();
     const { getStaticFilterOptions } = useFilterOptions();
@@ -44,10 +47,12 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     })
 
     const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
-    const { data, error, loading, retry } = useNexidusApi<ITransaction>({
+    const { data: transactionData, error, loading, retry } = useNexidusApi<ITransaction[]>({
         path: '/api/transactions',
-        params: params as { [key in string]: string }
+        params: params as { [key in string]: string },
+        enabled: true
     });
+    const data: ITransaction[] = transactionData ?? [];
     // #endregion
     const stats = getStats<ITransaction>(data, 'amount')
     const [activeView, setActiveView] = useState<DataViewType>('table');
@@ -63,13 +68,27 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 header: t('Transaction ID'),
                 cell: ({ row: { original } }) => (
                     <View className='ml-2 w-fit'>
-                        <Text className='text-left'>{original.id}</Text>
+                        <Text className='text-left mr-2' style={{
+                            color: theme.primary,
+                            textDecoration: 'underline',
+                            textWrap: 'nowrap',
+                            textOverflow: 'ellipses',
+                        }}>
+                            {original.id}
+                        </Text>
                     </View>
                 )
             },
             {
                 accessorKey: 'date',
                 header: t('Date'),
+                cell: ({ row: { original } }) => (
+                    <View className='w-24'>
+                        <Text>
+                            {formatDate(original.date)}
+                        </Text>
+                    </View>
+                )
             },
             {
                 accessorKey: 'amount',
@@ -213,6 +232,9 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                                 <Table
                                     data={data}
                                     columns={columns}
+                                    onClickRow={(row: ITransaction) => {
+                                        navigate(`/transactions/${row.id}`)
+                                    }}
                                 />
                             </Card>
                         ) : null}

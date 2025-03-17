@@ -1,12 +1,20 @@
 import { View, Text } from "../../"
 import { ITheme } from "../../../../themes"
+import { toSentenceCase } from "../../../../utils/casing"
 import FintechIcon, { FintechType } from "../../FintechIcon"
 
 export const StatusCircle = ({ color, status }: { color: string, status: string }) => {
-    return <View className='flex flex-row items-center'>
-        <Circle color={color} />
-        <Text className='ml-2'>{status}</Text>
-    </View>
+    return (
+        <View
+            className='flex flex-row items-center p-1 px-2 mx-1 rounded-md w-fit'
+            style={{
+                backgroundColor: `${color}1A`,
+                color
+            }}>
+            <Circle color={color} />
+            <Text className='ml-2 rounded-md' color={color}>{toSentenceCase(status)}</Text>
+        </View>
+    )
 }
 
 export const Circle = ({ color }: { color: string }) => {
@@ -53,7 +61,7 @@ export const renderPaymentType = ({ }: { t: any, theme: ITheme }) => ({ row: { o
     return (
         <View className='flex flex-row items-center'>
             <FintechIcon name={original.paymentType as FintechType} />
-            <Text className='ml-2 opacity-50 text-sm'>({original.paymentType})</Text>
+            <Text className='ml-2 opacity-50 text-sm'>({toSentenceCase(original.paymentType)})</Text>
         </View>
     )
 }

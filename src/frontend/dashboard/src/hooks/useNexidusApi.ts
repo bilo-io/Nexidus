@@ -24,7 +24,7 @@ const API_BASE_URL = window.location.origin === 'http://localhost:8080'
     : 'https://nexidus-api.vercel.app';
 
 export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOptions) => {
-    const [data, setData] = useState<T[]>([]);
+    const [data, setData] = useState<T>();
     const [meta, setMeta] = useState<ApiResponse<T>['meta'] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -56,7 +56,7 @@ export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOp
 
             const result: ApiResponse<T> = await response.json();
 
-            setData(result.data);
+            setData(result.data as T);
             setMeta(result.meta);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch data');
