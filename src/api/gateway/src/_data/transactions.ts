@@ -1,4 +1,5 @@
 import { ITransaction } from "../models/finance";
+import { payers } from "./payers";
 
 export const transactions: ITransaction[] = [
     {
@@ -16,7 +17,8 @@ export const transactions: ITransaction[] = [
         transactionFee: 7.50,
         merchantId: "M123456",
         bank: "FNB",
-        authStatus: "authenticated"
+        authStatus: "authenticated",
+        payerId: payers[0].id
     },
     {
         id: "2",
@@ -33,7 +35,8 @@ export const transactions: ITransaction[] = [
         transactionFee: 5.50,
         merchantId: "M123456",
         bank: "FNB",
-        authStatus: "authenticated"
+        authStatus: "authenticated",
+        payerId: payers[0].id
     },
     {
         id: "3",
@@ -50,7 +53,8 @@ export const transactions: ITransaction[] = [
         transactionFee: 15.00,
         merchantId: "M123457",
         bank: "FNB",
-        authStatus: "authenticated"
+        authStatus: "authenticated",
+        payerId: payers[1].id
     },
     {
         id: "4",
@@ -67,7 +71,8 @@ export const transactions: ITransaction[] = [
         transactionFee: 3.00,
         merchantId: "M123458",
         bank: "FNB",
-        authStatus: "pending"
+        authStatus: "pending",
+        payerId: payers[2].id
     },
     {
         id: "5",
@@ -84,7 +89,8 @@ export const transactions: ITransaction[] = [
         transactionFee: 10.00,
         merchantId: "M123459",
         bank: "FNB",
-        authStatus: "pending"
+        authStatus: "pending",
+        payerId: payers[3].id
     },
     {
         id: "6",
@@ -101,7 +107,8 @@ export const transactions: ITransaction[] = [
         transactionFee: 7.50,
         merchantId: "M123460",
         bank: "ABSA",
-        authStatus: "pending"
+        authStatus: "pending",
+        payerId: payers[2].id
     },
     {
         id: "7",
@@ -118,7 +125,8 @@ export const transactions: ITransaction[] = [
         transactionFee: 25.00,
         merchantId: "M123461",
         bank: "ABSA",
-        authStatus: "pending"
+        authStatus: "pending",
+        payerId: payers[4].id
     },
     {
         id: "8",
@@ -1324,7 +1332,7 @@ export const transactions: ITransaction[] = [
         receiver: 'Atlantis Marine Tech',
         transactionFee: 28.50,
         merchantId: 'M123532',
-        bank: 'Wells Fargo',
+        bank: 'Standard Bank',
         authStatus: 'pending'
     },
     {
@@ -1588,7 +1596,7 @@ export const transactions: ITransaction[] = [
         paymentType: 'PayPal',
         transactionFee: 4.00,
         merchantId: 'MERCHANT013',
-        bank: 'Sandard Bank',
+        bank: 'Standard Bank',
     },
     {
         id: '96',

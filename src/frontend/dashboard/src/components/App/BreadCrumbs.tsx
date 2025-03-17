@@ -26,7 +26,8 @@ export const AppBreadCrumbs: React.FC<AppBreadCrumbsProps> = ({ separator = "/" 
                 {paths.map((path, index) => {
                     const routeTo = "/" + paths.slice(0, index + 1).join("/");
                     const isLast = index === paths.length - 1;
-                    const pathLabel = toSentenceCase(decodeURIComponent(path))
+                    const isLastItemAUUID = isLast && path.length === 36;
+                    const pathLabel = isLastItemAUUID ? path : toSentenceCase(decodeURIComponent(path))
 
                     return (
                         <li key={routeTo} className="flex items-center">

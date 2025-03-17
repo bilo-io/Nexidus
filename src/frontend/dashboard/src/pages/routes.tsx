@@ -5,6 +5,7 @@ const Dashboard = lazy(() => import('./Dashboard'));
 
 // Transactions
 const Transactions = lazy(() => import('./transactions'));
+const TransactionDetails = lazy(() => import('./transactions/[id]'));
 const TransactionsOOB = lazy(() => import('./transactions/oob'));
 
 // Rates
@@ -52,7 +53,8 @@ export const routes = [
 
     // Transactions
     { path: '/transactions', element: <Transactions /> },
-    { path: '/transactions/all', element: <Transactions /> }, // Assuming this route
+    { path: '/transactions/all', element: <Transactions /> },
+    { path: '/transactions/:id', element: <TransactionDetails /> },
     { path: '/transactions/oob', element: <TransactionsOOB /> }, // Assuming this route
 
     { path: '/rates', element: <Rates /> },

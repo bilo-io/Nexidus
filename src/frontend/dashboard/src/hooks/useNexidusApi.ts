@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 interface FetchOptions {
     path: string;
     params?: Record<string, string | number | boolean>;
+    enabled?: boolean;
 }
 
 interface ApiResponse<T> {
@@ -22,13 +23,15 @@ const API_BASE_URL = window.location.origin === 'http://localhost:8080'
     ? 'http://localhost:8001'
     : 'https://nexidus-api.vercel.app';
 
-export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
+export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOptions) => {
     const [data, setData] = useState<T[]>([]);
     const [meta, setMeta] = useState<ApiResponse<T>['meta'] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchData = useCallback(async () => {
+        if (!enabled) return;
+
         setLoading(true);
         setError(null);
 
@@ -44,7 +47,6 @@ export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
             ).toString();
 
             const url = queryString ? `${API_BASE_URL}${path}?${queryString}` : `${API_BASE_URL}${path}`;
-            console.log({ url });
 
             const response = await fetch(url);
 
@@ -61,7 +63,7 @@ export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
         } finally {
             setLoading(false);
         }
-    }, [path, JSON.stringify(params)]); // Stringify params to avoid unnecessary re-renders
+    }, [path, JSON.stringify(params), enabled]); // Stringify params to avoid unnecessary re-renders
 
     useEffect(() => {
         fetchData();

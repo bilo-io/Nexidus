@@ -44,14 +44,11 @@ export const Transactions: React.FC<TransactionsProps> = () => {
     })
 
     const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
-    const { data, meta, error, loading, retry } = useNexidusApi<ITransaction>({
+    const { data, error, loading, retry } = useNexidusApi<ITransaction>({
         path: '/api/transactions',
         params: params as { [key in string]: string }
     });
-
-    console.log(data, meta)
     // #endregion
-
     const stats = getStats<ITransaction>(data, 'amount')
     const [activeView, setActiveView] = useState<DataViewType>('table');
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -65,8 +62,8 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 accessorKey: 'id',
                 header: t('Transaction ID'),
                 cell: ({ row: { original } }) => (
-                    <View className='mx-auto w-fit'>
-                        <Text># {original.id}</Text>
+                    <View className='ml-2 w-fit'>
+                        <Text className='text-left'>{original.id}</Text>
                     </View>
                 )
             },
@@ -126,21 +123,21 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                     </View>
                 ),
             },
-            {
-                accessorKey: 'sender',
-                header: t('Sender'),
-                cell: ({ row: { original } }) => original.sender ?? t('Unknown'),
-            },
-            {
-                accessorKey: 'receiver',
-                header: t('Receiver'),
-                cell: ({ row: { original } }) => original.receiver ?? t('Unknown'),
-            },
+            // {
+            //     accessorKey: 'sender',
+            //     header: t('Sender'),
+            //     cell: ({ row: { original } }) => original.sender ?? t('Unknown'),
+            // },
+            // {
+            //     accessorKey: 'receiver',
+            //     header: t('Receiver'),
+            //     cell: ({ row: { original } }) => original.receiver ?? t('Unknown'),
+            // },
             {
                 accessorKey: 'transactionFee',
                 header: t('Transaction Fee'),
                 // @ts-ignore
-                cell: ({ row: { original } }) => `$${original.transactionFee.toFixed(2)}`,
+                cell: ({ row: { original } }) => `$${original.transactionFee?.toFixed(2)}`,
             },
             {
                 accessorKey: 'merchantId',
@@ -181,7 +178,6 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 <GlobalFilters
                     value={globalFilters}
                     onChange={(arg) => {
-                        console.log("GlobalFilters.onChange", arg)
                         setGlobalFilters((prev) => ({
                             ...prev,
                             ...arg

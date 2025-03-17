@@ -43,11 +43,40 @@ export interface ICurrency {
     type: CurrencyType;
 }
 
+type TransactionStatus = 
+    | "success"
+    | "pending"
+    | "failed"
+
+type AuthStatus = 
+    | "authenticated"
+    | "unauthenticated"
+    | "pending"
+    | "failed"
+
+type PaymentType = 
+    | "EFT"
+    | "Crypto"
+    | "Card"
+    | "ApplePay"
+    | "GooglePay"
+    | "PayPal"
+    | "Other"
+
+type BankType =
+    | "FNB"
+    | "Nedbank"
+    | "ABSA"
+    | "Standard Bank"
+    | "Capitec"
+    | "TymeBank"
+    | "Bidvest"
+    | "Discovery"
 /**
  * Represents a financial transaction
  */
 export interface ITransaction {
-    /** Unique transaction ID */
+    /** Unique transaction ID as UUID */
     id: string;
 
     /** Date and time of the transaction (ISO format) */
@@ -60,13 +89,16 @@ export interface ITransaction {
     type: string;
 
     /** Transaction status */
-    status: 'pending' | 'success' | 'failed';
+    status: TransactionStatus;
 
     /** Authentication status */
-    authStatus: 'authenticated' | 'pending' | 'unauthenticated';
+    authStatus: AuthStatus;
 
     /** Reference from an external system */
     externalRef?: string;
+
+    /** Card ID (if applicable) */
+    cardId?: string;
 
     /** Card network (e.g., Visa, Mastercard) */
     cardNetwork?: string;
@@ -75,7 +107,10 @@ export interface ITransaction {
     currency: string;
 
     /** Payment method used */
-    paymentType: 'EFT' | 'Crypto' | 'Card' | 'ApplePay' | 'GooglePay' | 'PayPal' | 'Other';
+    paymentType: PaymentType;
+
+    /** Payer information: foreign key to the PayerInformation table */
+    payerId?: string;
 
     /** Sender of the funds (for transfers) */
     sender?: string;
@@ -90,5 +125,46 @@ export interface ITransaction {
     merchantId?: string;
 
     /** Bank or wallet used in case of EFT or Crypto */
-    bank?: string;
+    bank?: BankType;
 }
+
+/**
+ * Represents a payer's information
+ */
+export interface IPayer {
+    /** Unique payer ID, as UUID */
+    id: string;
+
+    /** Payer's full name */
+    fullName: string;
+
+    /** Payer's email address */
+    email: string;
+
+    /** Payer's mobile number */
+    mobile: string;
+}
+
+export interface ICard {
+    /** Unique card ID as UUID */
+    id: string;
+
+    /** Card number */
+    PAN: string;
+
+    /** Cardholder's name */
+    name: string;
+
+    /** Card expiry date */
+    expiry: string;
+
+    /** Card network (e.g., Visa, Mastercard) */
+    network: string;
+
+    /** Card type (e.g., Debit, Credit) */
+    type: string;
+
+    /** Foreign key to the PayerInformation table */
+    payerId: string;
+}
+
