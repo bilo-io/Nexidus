@@ -168,3 +168,107 @@ export interface ICard {
     payerId: string;
 }
 
+export interface ICardRefund {
+    /** Unique refund ID as UUID */
+    id: string;
+
+    /** Date and time of the refund (ISO format) */
+    date: string;
+
+    /** Amount of the refund */
+    amount: number;
+
+    /** Reason for the refund */
+    reason: string;
+
+    /** Foreign key to the Transaction table */
+    transactionId: string;
+
+    /** Foreign key to the Card table */
+    cardId: string;
+
+    /** Currency code (e.g., 'USD', 'EUR') */
+    currency: string;
+
+    /** Refund status */
+    status: TransactionStatus;
+}
+
+// #region STITCH
+export interface ICryptoTransaction {
+    clientId?: string | null; // UUID
+    completedAt?: string | null; // Assuming ISO string format for Timestamp_TZ
+    consentRequestId?: string | null;
+    context?: string | null;
+    createdAt?: string | null; // Assuming ISO string format for Timestamp_TZ
+    cryptocurrency?: string | null; // BTC, USDT, ETH etc.
+    cryptocurrencyAmount?: number | null;
+    currency?: string | null; // ZAR, USD, EUR etc.
+    depositAddress?: string | null;
+    externalReference?: string | null;
+    id?: string | null;
+    internalStatusReason?: string | null;
+    merchantId?: string | null;
+    method?: string | null;
+    nonce?: string | null;
+    originalTransactionId?: string | null;
+    partnerRequestId?: string | null;
+    payerInformationId?: string | null;
+    paymentRequestId?: string | null;
+    quantity?: number | null;
+    senderAddress?: string | null;
+    status?: string | null;
+    statusReason?: string | null;
+    stitchIntermediaryAccount?: string | null;
+    transactionHash?: string | null;
+    type?: string | null;
+}
+
+export interface ISettlement {
+    createdAt?: string | null; // Assuming ISO string format for Timestamp_NTZ
+    destinationBeneficiary?: string | null;
+    destinationReference?: string | null;
+    id?: string | null;
+    paymentMethod?: string | null;
+    paymentRequestId?: string | null;
+    payoutSubmissionId?: string | null;
+    reconIntentId?: string | null;
+    settlementReason?: string | null;
+    sourceAccountNumber?: string | null;
+    sourceBankId?: string | null;
+    sourceReference?: string | null;
+    transactionId?: string | null;
+    updatedAt?: string | null; // Assuming ISO string format for Timestamp_NTZ
+    riveryLastUpdate?: string | null; // Assuming ISO string format for Timestamp_NTZ
+    riveryRiverId?: string | null;
+    riveryRunId?: string | null;
+  }
+
+export interface IWalletRefundTransaction {
+    acquirerCode?: string | null;
+    acquirerMessage?: string | null;
+    clientId?: string | null;
+    completedAt?: string | null; // Assuming ISO string format for Timestamp_TZ
+    consentRequestId?: string | null;
+    context?: string | null;
+    createdAt?: string | null; // Assuming ISO string format for Timestamp_TZ
+    currency?: string | null;
+    externalReference?: string | null;
+    id?: string | null;
+    initiatorEmail?: string | null;
+    internalStatusReason?: string | null;
+    merchantId?: string | null;
+    nonce?: string | null;
+    originalTransactionId?: string | null;
+    payerInformationId?: string | null;
+    paymentRequestId?: string | null;
+    quantity?: number | null;
+    reason?: string | null;
+    retrievalReferenceNumber?: string | null;
+    status?: string | null;
+    statusReason?: string | null;
+    stitchIntermediaryAccount?: string | null;
+    type?: string | null;
+    updatedAt?: string | null; // Assuming ISO string format for Timestamp_TZ
+  }
+// #endregion

@@ -1,6 +1,8 @@
 import { ITransaction } from "../models/finance";
 
 import { v4 as uuidv4 } from 'uuid';
+import { cards } from "./cards";
+import { payers } from "./payers";
 
 export const transactions: ITransaction[] = [
     {
@@ -12,9 +14,9 @@ export const transactions: ITransaction[] = [
         authStatus: "authenticated",
         currency: "USD",
         paymentType: "Card",
-        cardId: "a8b3d8e1-9c47-4bfb-a3c3-58a27b9e9a8a",
+        cardId: cards[0].id,
         cardNetwork: "Visa",
-        payerId: "e3f3b2c1-2a74-4d8c-bd6f-3a8e7d2a9c5e",
+        payerId: payers[0].id,
         transactionFee: 2.50,
         merchantId: "m12345",
         bank: "FNB"
@@ -28,7 +30,8 @@ export const transactions: ITransaction[] = [
         authStatus: "pending",
         currency: "BTC",
         paymentType: "Crypto",
-        payerId: "c1b2a3d4-e5f6-4789-9a8b-6c5d4e3f2b1a",
+        cardId: cards[1].id,
+        payerId: payers[1].id,
         transactionFee: 0.0005,
         sender: "0xabc123...",
         receiver: "0xdef456..."
@@ -42,7 +45,8 @@ export const transactions: ITransaction[] = [
         authStatus: "failed",
         currency: "EUR",
         paymentType: "PayPal",
-        payerId: "d4c3b2a1-e6f5-4798-8b7c-5d4e3f2b1a6c",
+        cardId: cards[2].id,
+        payerId: payers[2].id,
         transactionFee: 1.99,
         merchantId: "m67890"
     },
@@ -55,7 +59,8 @@ export const transactions: ITransaction[] = [
         authStatus: "authenticated",
         currency: "ETH",
         paymentType: "Crypto",
-        payerId: "e6d5c4b3-a2f1-4789-9b8c-6d5e4f3a2b1c",
+        cardId: cards[1].id,
+        payerId: payers[1].id,
         transactionFee: 0.005,
         sender: "0x987xyz...",
         receiver: "0x654uvw..."
@@ -82,7 +87,8 @@ export const transactions: ITransaction[] = [
         authStatus: "authenticated",
         currency: "DOGE",
         paymentType: "Crypto",
-        payerId: "c3d4b5a6-e7f8-4989-9a8b-6d5e4f3a2c1b",
+        cardId: cards[1].id,
+        payerId: payers[1].id,
         transactionFee: 20.00,
         sender: "0xaaa111...",
         receiver: "0xbbb222..."
@@ -96,7 +102,8 @@ export const transactions: ITransaction[] = [
         authStatus: "pending",
         currency: "LTC",
         paymentType: "Crypto",
-        payerId: "e3f4g5h6-i7j8-9k8l-7m6n5o4p3q2r",
+        cardId: cards[2].id,
+        payerId: payers[2].id,
         transactionFee: 0.002,
         sender: "0xccc333...",
         receiver: "0xddd444..."
@@ -110,7 +117,8 @@ export const transactions: ITransaction[] = [
         authStatus: "failed",
         currency: "SOL",
         paymentType: "Crypto",
-        payerId: "i3j4k5l6-m7n8-9o7p-6q5r4s3t2u1v",
+        cardId: cards[4].id,
+        payerId: payers[4].id,
         transactionFee: 0.001,
         sender: "0xeee555...",
         receiver: "0xfff666..."
@@ -124,7 +132,8 @@ export const transactions: ITransaction[] = [
         authStatus: "authenticated",
         currency: "USD",
         paymentType: "GooglePay",
-        payerId: "k3l4m5n6-o7p8-9q7r-6s5t4u3v2w1x",
+        cardId: cards[3].id,
+        payerId: payers[3].id,
         transactionFee: 2.99,
         merchantId: "m54321"
     },
@@ -137,9 +146,9 @@ export const transactions: ITransaction[] = [
         authStatus: "pending",
         currency: "EUR",
         paymentType: "Card",
-        cardId: "x1y2z3a4-b5c6-7d8e9f0g1h2i",
+        cardId: cards[2].id,
+        payerId: payers[2].id,
         cardNetwork: "Mastercard",
-        payerId: "m5n6o7p8-q9r0-7s6t5u4v3w2x1y",
         transactionFee: 1.50
     }
 ];

@@ -35,7 +35,7 @@ export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOp
         setLoading(true);
         setError(null);
 
-        // await sleep(2000);
+        await sleep(1000);
 
         try {
             // Convert params object to query string
@@ -56,8 +56,9 @@ export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOp
 
             const result: ApiResponse<T> = await response.json();
 
-            setData(result.data as T);
+            setData((Array.isArray(result.data) ? result.data : result) as T);
             setMeta(result.meta);
+            
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch data');
         } finally {

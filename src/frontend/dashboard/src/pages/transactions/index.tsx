@@ -68,7 +68,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 header: t('Transaction ID'),
                 cell: ({ row: { original } }) => (
                     <View className='ml-2 w-fit'>
-                        <Text className='text-left mr-2' style={{
+                        <Text className='text-left mr-2 cursor-pointer' style={{
                             color: theme.primary,
                             textDecoration: 'underline',
                             textWrap: 'nowrap',
@@ -120,16 +120,16 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 cell: ({ row: { original } }) => original.currency.toUpperCase(),
             },
             {
-                accessorKey: 'paymentType',
-                header: t('Payment Type'),
-                options: getStaticFilterOptions('paymentType'),
-                cell: renderPaymentType({ t, theme })
-            },
-            {
                 accessorKey: 'externalRef',
                 header: t('External Reference'),
                 options: [],
                 cell: ({ row: { original } }) => original.externalRef ?? t('N/A'),
+            },
+            {
+                accessorKey: 'paymentType',
+                header: t('Payment Type'),
+                options: getStaticFilterOptions('paymentType'),
+                cell: renderPaymentType({ t, theme })
             },
             {
                 accessorKey: 'cardNetwork',

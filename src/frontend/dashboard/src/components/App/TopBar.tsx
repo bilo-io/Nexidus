@@ -31,13 +31,13 @@ export const AppTopBar: React.FC<AppTopBarProps> = ({
                         <Text className='font-bold text-lg'>{title as string}</Text>
                     </View>
                 )}
-                <Dropdown
+                {/* <Dropdown
                     options={[]}
                     value={undefined}
                     onChange={function (_newValue: any, _actionMeta: ActionMeta<any>): void {
                         throw new Error('Function not implemented.');
                     }}
-                />
+                /> */}
             </View>
         </View>
     );

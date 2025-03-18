@@ -21,7 +21,7 @@ export const KeyValueView: React.FC<KeyValueViewProps> = ({ heading, data, viewT
 
             {
                 viewType === 'table' ? (
-                    <table className='relative w-full'>
+                    <table className='relative w-full border-transparent'>
                         {/* <thead>
                             <tr>
                                 <th>Key</th>

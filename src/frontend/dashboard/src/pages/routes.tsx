@@ -1,5 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from 'react';
+import AIScripts from './ai';
+import AIGenerator from './ai/generator';
 
 const Dashboard = lazy(() => import('./Dashboard'));
 
@@ -50,6 +52,10 @@ const NotFound = lazy(() => import('./NotFound'));
 
 export const routes = [
     { path: '/', element: <Dashboard /> },
+
+    // AI
+    { path: '/ai', element: <AIScripts /> },
+    { path: '/ai/generate', element: <AIGenerator /> },
 
     // Transactions
     { path: '/transactions', element: <Transactions /> },

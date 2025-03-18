@@ -7,7 +7,11 @@ export const Input: React.FC<InputProps> = ({ ...props }) => {
     const { theme } = useTheme();
 
     return (
-        <input {...props} style={{ color: theme.text, background: theme.background }} />
+        <input
+            {...props}
+            className={`border border-gray-300 rounded-lg p-0 indent-1 h-12 ${props.className}`}
+            style={{ color: theme.text, background: theme.background, lineHeight: '' }}
+        />
     );
 };
 
