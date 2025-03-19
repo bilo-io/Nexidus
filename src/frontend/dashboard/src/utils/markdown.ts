@@ -27,4 +27,21 @@ INSERT INTO users (name, email, age) VALUES ('Judy', 'judy@example.com', 26);
 COMMIT;
 \`\`\``;
 
-console.log(removeMarkdownCodeBlock(rawText));
+const rawText2 = `
+\`\`\`;sql
+INSERT INTO payerInformation (id, clientId, fullName, email, mobile) VALUES
+('123e4567-e89b-12d3-a456-426614174000', 'bilo-testing', 'John Doe', 'john.doe@example.com', '+1234567890');
+
+INSERT INTO card (id, clientId, PAN, name, expiry, network, type, payerId) VALUES
+('123e4567-e89b-12d3-a456-426614174001', 'bilo-testing', '1234567812345678', 'John Doe', '2025-12', 'Visa', 'Credit', '123e4567-e89b-12d3-a456-426614174000');
+
+INSERT INTO cardTransaction (id, clientId, date, amount, type, status, authStatus, externalRef, cardId, cardNetwork, currency, paymentType, payerId, sender, receiver, transactionFee, merchantId, bank) VALUES
+('123e4567-e89b-12d3-a456-426614174002', 'bilo-testing', '2023-10-15T14:48:00', 100.00, 'Credit', 'Completed', 'Authenticated', 'EXT123456', '123e4567-e89b-12d3-a456-426614174001', 'Visa', 'USD', 'CreditCard', '123e4567-e89b-12d3-a456-426614174000', 'Alice', 'Bob', 1.50, 'MERCHANT123', 'Wells Fargo');
+
+INSERT INTO cardRefund (id, clientId, date, amount, reason, transactionId, cardId, currency, status) VALUES
+('123e4567-e89b-12d3-a456-426614174003', 'bilo-testing', '2023-10-16T10:30:00', 20.00, 'Product return', '123e4567-e89b-12d3-a456-426614174002', '123e4567-e89b-12d3-a456-426614174001', 'USD', 'Processed');
+\`\`\`
+`;
+
+// console.log(removeMarkdownCodeBlock(rawText));
+console.log(removeMarkdownCodeBlock(rawText2));

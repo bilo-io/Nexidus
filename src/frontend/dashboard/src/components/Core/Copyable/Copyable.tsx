@@ -26,8 +26,16 @@ export default function Copyable({ text }: CopyableProps) {
             onClick={() => copyToClipboard(text)}>
             <span className="select-all">Copy</span>
             {copied
-                ? <Icon name='Check' color={theme.success} className='size-6' />
-                : <Icon name='DocumentDuplicate' className={'size-6'} />
+                ? <Icon
+                    name='Check'
+                    color={theme.success}
+                    className='size-6'
+                />
+                : <Icon
+                    name='DocumentDuplicate'
+                    color={theme.textLight}
+                    className={'size-6'}
+                />
             }
         </div>
     );

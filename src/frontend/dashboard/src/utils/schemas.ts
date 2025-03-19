@@ -16,8 +16,6 @@ interface ICard {
     /** Card expiry date */
     expiry: string;
 
-    
-
     /** Card network (e.g., Visa, Mastercard) */
     network: string;
 
