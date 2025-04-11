@@ -11,33 +11,12 @@ type AIScriptsProps = object
 
 export const AIScripts: React.FC<AIScriptsProps> = () => {
     const navigate = useNavigate();
+    const localStorageData = localStorage.getItem('saved-db-scripts');
 
-    const scriptList: IScriptList[] = [
-        {
-            name: 'SQL Script 1',
-            data: `
-            SELECT * FROM users WHERE id = 1
-            ORDER BY created_at DESC
-            LIMIT 10
-            `
-        },
-        {
-            name: 'SQL Script 2',
-            data: `
-            SELECT * FROM users WHERE id = 1
-            ORDER BY created_at DESC
-            LIMIT 10
-            `
-        },
-        {
-            name: 'SQL Script 3',
-            data: `
-            SELECT * FROM users WHERE id = 1
-            ORDER BY created_at DESC
-            LIMIT 10
-            `
-        },
-    ]
+    const scriptList: IScriptList[] = localStorageData 
+        ? JSON.parse(localStorageData as string) 
+        : []
+
     return (
         <View isPage>
             <AppTopBar />
@@ -62,7 +41,7 @@ export const AIScripts: React.FC<AIScriptsProps> = () => {
                     </View>
 
                     <View className='my-4'>
-                        <Text>View a previously generates SQL script</Text>
+                        <Text>View previously generated Database scripts</Text>
                     </View>
 
                     <br />

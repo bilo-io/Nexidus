@@ -12,7 +12,17 @@ export const cards: ICard[] = [
         expiry: "12/25",
         network: "Visa",
         type: "Credit",
-        payerId: payers[0].id
+        payerId: payers[0].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
     },
     {
         id: uuidv4(),
@@ -21,7 +31,17 @@ export const cards: ICard[] = [
         expiry: "06/24",
         network: "Mastercard",
         type: "Debit",
-        payerId: payers[1].id
+        payerId: payers[1].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
     },
     {
         id: uuidv4(),
@@ -30,7 +50,17 @@ export const cards: ICard[] = [
         expiry: "09/26",
         network: "American Express",
         type: "Credit",
-        payerId: payers[2].id
+        payerId: payers[2].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
     },
     {
         id: uuidv4(),
@@ -39,7 +69,17 @@ export const cards: ICard[] = [
         expiry: "05/27",
         network: "Discover",
         type: "Credit",
-        payerId: payers[3].id
+        payerId: payers[3].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
     },
     {
         id: uuidv4(),
@@ -48,6 +88,16 @@ export const cards: ICard[] = [
         expiry: "11/28",
         network: "Visa",
         type: "Debit",
-        payerId: payers[3].id
+        payerId: payers[3].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
     }
 ];

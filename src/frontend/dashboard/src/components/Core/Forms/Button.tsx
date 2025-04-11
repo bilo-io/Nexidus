@@ -13,7 +13,7 @@ export const Button: React.FC<ButtonProps> = ({ ...props }) => {
         <button
             {...props}
             style={{
-                backgroundColor: theme.primary,
+                backgroundColor: props.color || theme.primary,
                 color: '#FFF',
             }}
         />

@@ -65,3 +65,13 @@ export const renderPaymentType = ({ }: { t: any, theme: ITheme }) => ({ row: { o
         </View>
     )
 }
+
+export const renderFintechIcon = ({ }: { t: any, theme: ITheme }) => ({ row: { original } }: { row: { original: any } }) => {
+    const { fintech } = original;
+    return (
+        <View className='flex flex-row items-center'>
+            <FintechIcon name={fintech as FintechType} />
+            <Text className='ml-2 opacity-50 text-sm'>({toSentenceCase(fintech)})</Text>
+        </View>
+    )
+}

@@ -1,5 +1,6 @@
 import { useState, ReactNode } from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "../../../context/ThemeContext";
 
 interface AccordionProps {
   title: ReactNode;
@@ -7,13 +8,21 @@ interface AccordionProps {
 }
 
 export default function Accordion({ title, children }: AccordionProps) {
+  const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className="overflow-hidden shadow-md">
       <button
-        className="w-full p-4 text-left flex items-center justify-between bg-gray-100 hover:bg-gray-200"
+        className="w-full p-4 text-left flex items-center justify-between rounded-none"
+        style={{
+          backgroundColor: isHovered ? theme.primary : theme.panel,
+          color: isHovered ? '#FFF' : theme.text
+        }}
         onClick={() => setIsOpen(!isOpen)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <span>{title}</span>
         <span className="transition-transform duration-300" style={{ transform: `rotate(${isOpen ? 180 : 0}deg)` }}>

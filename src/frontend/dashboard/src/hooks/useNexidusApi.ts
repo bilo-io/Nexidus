@@ -24,8 +24,9 @@ const API_BASE_URL = window.location.origin === 'http://localhost:8080'
     : 'https://nexidus-api.vercel.app';
 
 export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOptions) => {
-    const [data, setData] = useState<T>();
     const [meta, setMeta] = useState<ApiResponse<T>['meta'] | null>(null);
+
+    const [data, setData] = useState<T>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 

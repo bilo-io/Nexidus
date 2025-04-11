@@ -1,30 +1,28 @@
 export const schemas = {
     card: `
 interface ICard {
-    /** Unique card ID as UUID */
-    id: string;
-
-    /** Client ID */
+    id: string; // uuid v4
+    createdAt: string; // ISO timestamp with time zone
+    updatedAt: string; // ISO timestamp with time zone
     clientId: string;
-
-    /** Card number */
-    PAN: string;
-
-    /** Cardholder's name */
-    name: string;
-
-    /** Card expiry date */
-    expiry: string;
-
-    /** Card network (e.g., Visa, Mastercard) */
-    network: string;
-
-    /** Card type (e.g., Debit, Credit) */
-    type: string;
-
-    /** Foreign key to the PayerInformation table */
-    payerId: string;
-}
+    redactedCardNumber: string;
+    redactedSecurityCode?: string;
+    cardHolderName: string;
+    cardUsageType: string; // 'onceOff' | 'clientReturning' | 'userReturning'
+    first6: string;
+    last4: string;
+    externalUserId?: string;
+    network?: string;
+    expiryYear: number;
+    expiryMonth: number;
+    authorizationTransactionId?: string; // uuid v4
+    issuerName?: string;
+    issuerCountry?: string;
+    fundingType?: string;
+    interchangeType?: string;
+    binRangeStart?: string;
+    binRangeEnd?: string;
+  }
     `,
     cardRefund: `
 interface IRefund {
@@ -56,7 +54,7 @@ interface IRefund {
     status: TransactionStatus;
 }
     `,
-    cardTransaction: `
+    transaction: `
 interface ITransaction {
     /** Unique transaction ID as UUID */
     id: string;
@@ -113,22 +111,71 @@ interface ITransaction {
     bank?: BankType;
 }
     `,
-    payerInformation: `
-interface IPayer {
-    /** Unique payer ID, as UUID */
-    id: string;
-
-    /** Client ID */
+    cardTransaction: `
+interface ICardTransaction {
+    id: string; // uuid v4
+    quantity: number;
+    currency: string;
+    type: string;
+    context?: Record<string, any>; // jsonb
+    status: string;
+    statusReason?: string;
+    createdAt: string; // ISO timestamp with time zone
+    updatedAt?: string; // ISO timestamp with time zone
+    paymentRequestId?: string; // uuid v4
+    cardId?: string; // uuid v4
+    provider?: string;
+    acsUrl?: string;
     clientId: string;
-
-    /** Payer's full name */
-    fullName: string;
-
-    /** Payer's email address */
-    email: string;
-
-    /** Payer's mobile number */
-    mobile: string;
+    paymentAuthorizationRequestId?: string; // uuid v4
+    authCode?: string;
+    pareq?: string;
+    consentRequestId?: string; // uuid v4
+    nonce: string;
+    webhookStatus?: string;
+    inDispute: boolean;
+    externalReference?: string;
+    originalTransactionId?: string; // uuid v4
+    internalStatusReason?: string;
+    originalQuantity: number;
+    voidAt?: string; // ISO timestamp with time zone
+    isPreAuthorization: boolean;
+    scenario?: string;
+    completedAt?: string; // ISO timestamp with time zone
+    retrievalReferenceNumber?: string;
+    secure3dDecision?: string;
+    secure3dDecisionReason?: string;
+    stitchIntermediaryAccount?: string;
+    payerInformationId?: string; // uuid v4
+    merchantId?: string;
+    mid?: string;
+    acquirer?: string;
+    acquirerMessage?: string;
+    acquirerCode?: string;
+    tokenizedCardSecurityCode?: string;
+    providerOptionKey?: string;
+}
+    `,
+    payerInformation: `
+interface interface IPayerInformation {
+    id: string; // uuid v4
+    createdAt: string; // ISO timestamp with time zone
+    paymentRequestId?: string; // uuid v4
+    payerId?: string;
+    fullName?: string;
+    accountCreatedDate?: string;
+    mobileNumber?: string;
+    email?: string;
+    businessRegistrationNumber?: string;
+    businessRegistrationCountry?: string;
+    idNumber?: string;
+    idCountry?: string;
+    passportNumber?: string;
+    passportCountry?: string;
+    clientId?: string;
+    authorizationRequestId?: string; // uuid v4
+    temporaryResidenceCountry?: string;
+    temporaryResidenceId?: string;
 }
     `,
     user: `
@@ -195,34 +242,194 @@ interface IWalletRefundTransaction {
     updatedAt?: string | null; // Assuming ISO string format for Timestamp_TZ
 `,
 secure3dData: `
-interface Secure3dData {
-  acsReferenceNumber?: string;
-  acsTransactionId?: string;
-  areqToResMilliseconds?: string;
-  authenticationMethod?: string;
-  authMessage?: string;
-  authStatus?: string;
-  authTimestamp?: string;
-  cavv?: string;
-  createdAt?: string; // Timestamp_NTZ stored as a string
-  dsTransactionId?: string;
-  eci?: string;
-  id?: string;
-  metadata?: string;
-  paresSyntaxOk?: boolean;
-  paresVerified?: boolean;
-  provider?: string;
-  secure3dServerTransactionId?: string;
-  secure3dVersion?: string;
-  status?: string;
-  transactionId?: string;
-  updatedAt?: string; // Timestamp_NTZ stored as a string
-  xid?: string;
-  riveryLastUpdate?: string; // Timestamp_NTZ stored as a string
-  riveryRiverId?: string;
-  riveryRunId?: string;
+interface ISecure3dData {
+    id: string; // uuid v4
+    transactionId: string; // uuid v4
+    status: string;
+    createdAt: string; // ISO timestamp with time zone
+    updatedAt?: string; // ISO timestamp with time zone
+    provider?: string;
+    authStatus?: string;
+    eci?: string;
+    cavv?: string;
+    xId?: string;
+    paresVerified?: boolean;
+    paresSyntaxOk?: boolean;
+    secure3dServerTransactionId?: string;
+    dsTransactionId?: string;
+    acsTransactionId?: string;
+    acsReferenceNumber?: string;
+    authTimestamp?: string;
+    areqToResMilliseconds?: string;
+    secure3dVersion?: string;
+    authenticationMethod?: string;
+    metadata?: Record<string, any>; // jsonb
+    authMessage?: string;
 }
-
-`
-
+`,
+applePayTransaction: `
+interface IApplePayTransaction {
+    id: string; // uuid v4
+    quantity: number;
+    currency: string;
+    type: string;
+    context?: Record<string, any>; // jsonb
+    status: string;
+    statusReason?: string;
+    createdAt: string; // ISO timestamp with timezone
+    updatedAt?: string; // ISO timestamp with timezone
+    clientId: string;
+    paymentRequestId?: string; // uuid v4
+    consentRequestId?: string; // uuid v4
+    webhookStatus?: string;
+    externalReference?: string;
+    nonce: string; // uuid v4
+    originalTransactionId?: string; // uuid v4
+    internalStatusReason?: string;
+    partnerTransactionId?: string; // uuid v4
+    applicationPrimaryAccountNumber?: string; // card number
+    applicationExpirationDate?: string;
+    currencyCode?: string; // ZAR
+    cardholderName?: string;
+    deviceManufacturerId?: string;
+    paymentDataType?: string;
+    onlinePaymentCryptogram?: string;
+    eciIndicator?: string;
+    cardDisplayName?: string;
+    cardNetwork?: string;
+    cardType?: string;
+    completedAt?: string; // timestamp with time zone
+    retrievalReferenceNumber?: string;
+    stitchIntermediaryAccount?: string;
+    payerInformationId?: string; // uuid v4
+    merchantId?: string;
+    walletTransactionMerchantDetailsId?: string; // uuid v4
+    cardIssuerName?: string;
+    cardIssuerCountry?: string;
+    cardInterchangeType?: string;
+    authCode?: string;
+    provider?: string;
+    secure3dDecision?: string;
+    secure3dDecisionReason?: string;
+    acquirerMessage?: string;
+    acquirerCode?: string;
+    paymentToken?: string;
+    bin?: string;
+    voidAt?: string; // timestamp with time zone
+    isPreAuthorization?: boolean;
+    originalQuantity?: number;
+    providerOptionKey?: string;
+    acquirer?: string;
+    mid?: string;
+    cardId?: string; // uuid v4
+}
+`,
+googlePayTransaction: `
+interface IGooglePayTransaction {
+    id: string; // uuid v4
+    quantity: number;
+    currency: string;
+    type: string;
+    context?: Record<string, any>; // jsonb
+    status: string;
+    statusReason?: string;
+    createdAt: string; // ISO timestamp with time zone
+    updatedAt?: string; // ISO timestamp with time zone
+    clientId: string;
+    paymentRequestId?: string; // uuid v4
+    consentRequestId?: string; // uuid v4
+    webhookStatus?: string;
+    externalReference?: string;
+    nonce: string;
+    originalTransactionId?: string; // uuid v4
+    internalStatusReason?: string;
+    partnerTransactionId?: string; // uuid v4
+    primaryAccountNumber?: string;
+    expirationYear?: string;
+    expirationMonth?: string;
+    eciIndicator?: string;
+    cryptogram?: string;
+    cardLast4?: string;
+    cardNetwork?: string;
+    completedAt?: string; // ISO timestamp with time zone
+    retrievalReferenceNumber?: string;
+    stitchIntermediaryAccount?: string;
+    payerInformationId?: string; // uuid v4
+    merchantId?: string;
+    walletTransactionMerchantDetailsId?: string; // uuid v4
+    cardIssuerName?: string;
+    cardIssuerCountry?: string;
+    cardType?: string;
+    cardInterchangeType?: string;
+    authCode?: string;
+    provider?: string;
+    secure3dDecision?: string;
+    secure3dDecisionReason?: string;
+    acquirerMessage?: string;
+    acquirerCode?: string;
+    paymentToken?: string;
+    bin?: string;
+    voidAt?: string; // ISO timestamp with time zone
+    isPreAuthorization?: boolean;
+    originalQuantity?: number;
+    providerOptionKey?: string;
+    acquirer?: string;
+    mid?: string;
+    cardId?: string; // uuid v4
+  }
+`,
+    samsungPayTransaction: `
+export interface ISamsungPayTransaction {
+  id: string; // uuid v4
+  quantity: number;
+  currency: string;
+  type: string;
+  context?: Record<string, any>; // jsonb
+  status: string;
+  statusReason?: string;
+  createdAt: string; // ISO timestamp with time zone
+  updatedAt?: string; // ISO timestamp with time zone
+  clientId: string;
+  paymentRequestId?: string; // uuid v4
+  consentRequestId?: string; // uuid v4
+  webhookStatus?: string;
+  externalReference?: string;
+  nonce: string;
+  originalTransactionId?: string; // uuid v4
+  internalStatusReason?: string;
+  partnerTransactionId?: string; // uuid v4
+  tokenPrimaryAccountNumber?: string;
+  tokenExpirationDate?: string;
+  currencyCode?: string;
+  eciIndicator?: string;
+  cryptogram?: string;
+  cardLast4?: string;
+  cardNetwork?: string;
+  completedAt?: string; // ISO timestamp with time zone
+  retrievalReferenceNumber?: string;
+  stitchIntermediaryAccount?: string;
+  payerInformationId?: string; // uuid v4
+  merchantId?: string;
+  walletTransactionMerchantDetailsId?: string; // uuid v4
+  cardIssuerName?: string;
+  cardIssuerCountry?: string;
+  cardType?: string;
+  cardInterchangeType?: string;
+  authCode?: string;
+  provider?: string;
+  secure3dDecision?: string;
+  secure3dDecisionReason?: string;
+  acquirerMessage?: string;
+  acquirerCode?: string;
+  paymentToken?: string;
+  bin?: string;
+  voidAt?: string; // ISO timestamp with time zone
+  isPreAuthorization?: boolean;
+  originalQuantity?: number;
+  providerOptionKey?: string;
+  acquirer?: string;
+  mid?: string;
+  cardId?: string; // uuid v4
+}
+    `
 }

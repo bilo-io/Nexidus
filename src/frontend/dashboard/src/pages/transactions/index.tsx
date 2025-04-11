@@ -26,11 +26,14 @@ import { copyToClipboard } from '../../utils/clipboard';
 import {
     renderAuthStatus,
     renderPaymentType,
-    renderTransactionStatus
+    renderTransactionStatus,
+    renderFintechIcon,
 } from '../../components/Core/Table/CellRenderers';
 import CustomCharts from '../../components/Core/CustomCharts';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../../utils/format';
+import { TFunction } from 'i18next';
+import { ITheme } from '../../themes';
 
 type TransactionsProps = object
 
@@ -46,14 +49,16 @@ export const Transactions: React.FC<TransactionsProps> = () => {
         ...(params as object)
     })
 
-    const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
     const { data: transactionData, error, loading, retry } = useNexidusApi<ITransaction[]>({
         path: '/api/transactions',
         params: params as { [key in string]: string },
         enabled: true
     });
+    const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
+
     const data: ITransaction[] = transactionData ?? [];
     // #endregion
+    
     const stats = getStats<ITransaction>(data, 'amount')
     const [activeView, setActiveView] = useState<DataViewType>('table');
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -135,23 +140,8 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 accessorKey: 'cardNetwork',
                 header: t('Network'),
                 options: getStaticFilterOptions('cardNetwork'),
-                cell: ({ row: { original } }) => (
-                    <View className='flex flex-row items-center'>
-                        <FintechIcon name={original.cardNetwork as FintechType} />
-                        <Text className='ml-2 opacity-50 text-sm'>({original.cardNetwork as string})</Text>
-                    </View>
-                ),
+                cell: renderFintechIcon({ t, theme })
             },
-            // {
-            //     accessorKey: 'sender',
-            //     header: t('Sender'),
-            //     cell: ({ row: { original } }) => original.sender ?? t('Unknown'),
-            // },
-            // {
-            //     accessorKey: 'receiver',
-            //     header: t('Receiver'),
-            //     cell: ({ row: { original } }) => original.receiver ?? t('Unknown'),
-            // },
             {
                 accessorKey: 'transactionFee',
                 header: t('Transaction Fee'),
@@ -227,6 +217,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
                 <View className='my-4'>
                     <Async loading={loading} error={error} onRetry={retry}>
+                        {/* Table */}
                         {activeView === 'table' ? (
                             <Card>
                                 <Table
@@ -239,6 +230,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                             </Card>
                         ) : null}
 
+                        {/* Charts */}
                         {activeView === 'charts' ? (
                             <View className='flex flex-col w-full'>
                                 <View className='mb-4 w-full'>
@@ -251,6 +243,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                             </View>
                         ) : null}
 
+                        {/* Custom Charts */}
                         {activeView === 'custom' ? (
                             <View className='flex flex-col w-full'>
                                 <View>

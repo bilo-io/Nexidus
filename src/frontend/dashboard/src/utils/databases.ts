@@ -1,0 +1,17 @@
+export const databases = [
+    'postgres',
+    'snowflake',
+    'graphql',
+    'mongodb',
+    'mysql',
+    'mariadb',
+    'sqlite',
+    'oracle',
+    'mssql',
+    'cassandra',
+    'redis',
+    'couchdb',
+    'couchbase',
+    'bigquery',
+    'dynamodb',
+]
