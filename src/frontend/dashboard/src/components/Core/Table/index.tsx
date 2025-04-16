@@ -15,8 +15,8 @@ import Input from '../Forms/Input'
 import { paginationOptions } from '../../../utils/constants'
 import Dropdown from '../Dropdown'
 
-export const Table = ({ data, columns, onClickRow }: {
-    data: any[],
+export const Table = <T,>({ data, columns, onClickRow }: {
+    data: T[],
     columns: ColumnDef<any>[],
     onClickRow?: (row: any) => void
 }) => {

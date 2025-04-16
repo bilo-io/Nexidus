@@ -142,7 +142,7 @@ please just respond with the raw ${databaseType.value}, and I just want the quer
                     <View flex flexCol>
                         <Text>1. Please enter a <code style={{ color: theme.primary }}>clientID</code> for which to generate data.</Text>
                         <Input
-                            value={clientId}
+                            value={clientId as string}
                             onChange={(e) => setClientId(e.target.value)}
                             placeholder='Client ID'
                             className="mt-1"

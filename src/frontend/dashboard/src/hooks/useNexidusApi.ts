@@ -26,7 +26,7 @@ const API_BASE_URL = window.location.origin === 'http://localhost:8080'
 export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOptions) => {
     const [meta, setMeta] = useState<ApiResponse<T>['meta'] | null>(null);
 
-    const [data, setData] = useState<T>();
+    const [data, setData] = useState<T[]>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -57,7 +57,7 @@ export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOp
 
             const result: ApiResponse<T> = await response.json();
 
-            setData((Array.isArray(result.data) ? result.data : result) as T);
+            setData((Array.isArray(result.data) ? result.data : result) as T[]);
             setMeta(result.meta);
             
         } catch (err) {

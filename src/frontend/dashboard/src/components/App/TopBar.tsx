@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, Dropdown } from '../Core';
-import { ActionMeta } from 'react-select';
+import { View, Text } from '../Core';
 import { useTheme } from '../../context/ThemeContext';
 import { AppBreadCrumbs } from './BreadCrumbs';
 
