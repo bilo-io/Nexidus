@@ -45,11 +45,12 @@ export const Rates: React.FC<RatesProps> = () => {
         path: '/api/rates',
         params: params as { [key in string]: string }
     });
+    const apiData = data as IRate[];
 
     console.log(data, meta)
     // #endregion
 
-    const stats = getStats<IRate>(data, 'id')
+    const stats = getStats<IRate>(apiData, 'id')
     const [activeView, setActiveView] = useState<DataViewType>('table');
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -122,7 +123,7 @@ export const Rates: React.FC<RatesProps> = () => {
         ];
     //#endregion
 
-    const filterOptions = getFilterOptionsArray<IRate>(data, columns)
+    const filterOptions = getFilterOptionsArray<IRate>(apiData, columns)
 
     const handleFilterChange = (key: keyof IRate, item: ISelectOption) => {
         setQuery((prev: any) => ({
@@ -160,6 +161,7 @@ export const Rates: React.FC<RatesProps> = () => {
                     options={filterOptions}
                     onChange={handleFilterChange}
                     onReload={retry}
+                    // @ts-ignore
                     onDownload={() => downloadCSV(data, `Rates_${new Date().toISOString()}.csv`)}
                     onAdd={() => setShowModal(true)}
                     onCopyLink={() => {
@@ -180,8 +182,8 @@ export const Rates: React.FC<RatesProps> = () => {
                     <Async loading={loading} error={error} onRetry={retry}>
                         {activeView === 'table' ? (
                             <Card>
-                                <Table
-                                    data={data}
+                                <Table<IRate>
+                                    data={apiData}
                                     columns={columns}
                                     onClickRow={(row) => console.log(row)}
                                 />
@@ -195,7 +197,7 @@ export const Rates: React.FC<RatesProps> = () => {
                                 </View>
 
                                 <View>
-                                    <ChartsView data={data} />
+                                    <ChartsView data={apiData} />
                                 </View>
                             </View>
                         ) : null}
@@ -204,7 +206,7 @@ export const Rates: React.FC<RatesProps> = () => {
                             <View className='flex flex-col w-full'>
                                 <View>
                                     <CustomCharts<IRate>
-                                        data={data}
+                                        data={apiData}
                                     />
                                 </View>
                             </View>

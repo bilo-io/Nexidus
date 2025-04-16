@@ -30,6 +30,15 @@ export const AppNavBar: React.FC = () => {
             path: '/',
         },
         {
+            name: t('Database'),
+            icon: 'CircleStack',
+            path: '/ai',
+            children: [
+                { name: t('scripts'), path: '/ai' },
+                { name: t('generate'), path: '/ai/generate' },
+            ],
+        },
+        {
             name: t('transactions'),
             icon: 'ListBullet',
             path: '/transactions',
@@ -142,7 +151,10 @@ export const AppNavBar: React.FC = () => {
             }}
         >
             {/* Header */}
-            <div className={`flex flex-row items-center w-full mb-12`} onClick={() => navigate('/')} style={{ color: '#FFF' }}>
+            <div
+                className={`flex flex-row items-center w-full mb-12`}
+                onClick={() => navigate('/')}
+                style={{ color: '#FFF' }}>
                 <img src={nexidusIcon} className='size-8 mx-4 my-2' />
                 {isOpen ? <div className='grow font-bold'>Nexidus</div> : null}
             </div>

@@ -15,7 +15,6 @@ import { useTheme } from '../../context/ThemeContext';
 import { Card } from '../../components/Core';
 import AppTopBar from '../../components/App/TopBar';
 import { getStats } from '../../utils/stats';
-import FintechIcon, { FintechType } from '../../components/Core/FintechIcon';
 import { toSentenceCase } from '../../utils/casing';
 import { useAppUrl } from '../../hooks/useAppUrl';
 import { getFilterOptionsArray, useFilterOptions } from '../../hooks/useFilterOptions';
@@ -26,14 +25,18 @@ import { copyToClipboard } from '../../utils/clipboard';
 import {
     renderAuthStatus,
     renderPaymentType,
-    renderTransactionStatus
+    renderTransactionStatus,
+    renderFintechIcon,
 } from '../../components/Core/Table/CellRenderers';
 import CustomCharts from '../../components/Core/CustomCharts';
+import { useNavigate } from 'react-router-dom';
+import { formatDate } from '../../utils/format';
 
 type TransactionsProps = object
 
 export const Transactions: React.FC<TransactionsProps> = () => {
     // #region HOOKS
+    const navigate = useNavigate();
     const { t } = useTranslation();
     const { theme } = useTheme();
     const { getStaticFilterOptions } = useFilterOptions();
@@ -43,15 +46,16 @@ export const Transactions: React.FC<TransactionsProps> = () => {
         ...(params as object)
     })
 
-    const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
-    const { data, meta, error, loading, retry } = useNexidusApi<ITransaction>({
+    const { data: transactionData, error, loading, retry } = useNexidusApi<ITransaction>({
         path: '/api/transactions',
-        params: params as { [key in string]: string }
+        params: params as { [key in string]: string },
+        enabled: true
     });
+    const { globalFilters, setGlobalFilters, } = useNexidusPage<ITransaction>();
 
-    console.log(data, meta)
+    const data: ITransaction[] = transactionData ?? [];
     // #endregion
-
+    
     const stats = getStats<ITransaction>(data, 'amount')
     const [activeView, setActiveView] = useState<DataViewType>('table');
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -65,14 +69,28 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 accessorKey: 'id',
                 header: t('Transaction ID'),
                 cell: ({ row: { original } }) => (
-                    <View className='mx-auto w-fit'>
-                        <Text># {original.id}</Text>
+                    <View className='ml-2 w-fit'>
+                        <Text className='text-left mr-2 cursor-pointer' style={{
+                            color: theme.primary,
+                            textDecoration: 'underline',
+                            textWrap: 'nowrap',
+                            textOverflow: 'ellipses',
+                        }}>
+                            {original.id}
+                        </Text>
                     </View>
                 )
             },
             {
                 accessorKey: 'date',
                 header: t('Date'),
+                cell: ({ row: { original } }) => (
+                    <View className='w-24'>
+                        <Text>
+                            {formatDate(original.date)}
+                        </Text>
+                    </View>
+                )
             },
             {
                 accessorKey: 'amount',
@@ -104,43 +122,28 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 cell: ({ row: { original } }) => original.currency.toUpperCase(),
             },
             {
-                accessorKey: 'paymentType',
-                header: t('Payment Type'),
-                options: getStaticFilterOptions('paymentType'),
-                cell: renderPaymentType({ t, theme })
-            },
-            {
                 accessorKey: 'externalRef',
                 header: t('External Reference'),
                 options: [],
                 cell: ({ row: { original } }) => original.externalRef ?? t('N/A'),
             },
             {
+                accessorKey: 'paymentType',
+                header: t('Payment Type'),
+                options: getStaticFilterOptions('paymentType'),
+                cell: renderPaymentType({ t, theme })
+            },
+            {
                 accessorKey: 'cardNetwork',
                 header: t('Network'),
                 options: getStaticFilterOptions('cardNetwork'),
-                cell: ({ row: { original } }) => (
-                    <View className='flex flex-row items-center'>
-                        <FintechIcon name={original.cardNetwork as FintechType} />
-                        <Text className='ml-2 opacity-50 text-sm'>({original.cardNetwork as string})</Text>
-                    </View>
-                ),
-            },
-            {
-                accessorKey: 'sender',
-                header: t('Sender'),
-                cell: ({ row: { original } }) => original.sender ?? t('Unknown'),
-            },
-            {
-                accessorKey: 'receiver',
-                header: t('Receiver'),
-                cell: ({ row: { original } }) => original.receiver ?? t('Unknown'),
+                cell: renderFintechIcon({ t, theme })
             },
             {
                 accessorKey: 'transactionFee',
                 header: t('Transaction Fee'),
                 // @ts-ignore
-                cell: ({ row: { original } }) => `$${original.transactionFee.toFixed(2)}`,
+                cell: ({ row: { original } }) => `$${original.transactionFee?.toFixed(2)}`,
             },
             {
                 accessorKey: 'merchantId',
@@ -181,7 +184,6 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                 <GlobalFilters
                     value={globalFilters}
                     onChange={(arg) => {
-                        console.log("GlobalFilters.onChange", arg)
                         setGlobalFilters((prev) => ({
                             ...prev,
                             ...arg
@@ -212,15 +214,20 @@ export const Transactions: React.FC<TransactionsProps> = () => {
 
                 <View className='my-4'>
                     <Async loading={loading} error={error} onRetry={retry}>
+                        {/* Table */}
                         {activeView === 'table' ? (
                             <Card>
                                 <Table
                                     data={data}
                                     columns={columns}
+                                    onClickRow={(row: ITransaction) => {
+                                        navigate(`/transactions/${row.id}`)
+                                    }}
                                 />
                             </Card>
                         ) : null}
 
+                        {/* Charts */}
                         {activeView === 'charts' ? (
                             <View className='flex flex-col w-full'>
                                 <View className='mb-4 w-full'>
@@ -233,6 +240,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
                             </View>
                         ) : null}
 
+                        {/* Custom Charts */}
                         {activeView === 'custom' ? (
                             <View className='flex flex-col w-full'>
                                 <View>

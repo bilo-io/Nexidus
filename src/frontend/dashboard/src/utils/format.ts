@@ -5,6 +5,12 @@ export const numberWithDelimiter = (x: number | string, delimiter = ' ') => {
     return x;
 };
 
+export const formatDate = (date: string) => {
+    // const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    // return new Date(date).toLocaleDateTimeString();
+    return new Date(date).toLocaleDateString();
+};
+
 export const formatNumber = (
     value: number,
     decimals = 2,

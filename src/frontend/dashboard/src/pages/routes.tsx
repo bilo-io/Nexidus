@@ -1,10 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from 'react';
+import AIScripts from './ai';
+import AIGenerator from './ai/generator';
 
 const Dashboard = lazy(() => import('./Dashboard'));
 
 // Transactions
 const Transactions = lazy(() => import('./transactions'));
+const TransactionDetails = lazy(() => import('./transactions/[id]'));
 const TransactionsOOB = lazy(() => import('./transactions/oob'));
 
 // Rates
@@ -50,9 +53,14 @@ const NotFound = lazy(() => import('./NotFound'));
 export const routes = [
     { path: '/', element: <Dashboard /> },
 
+    // AI
+    { path: '/ai', element: <AIScripts /> },
+    { path: '/ai/generate', element: <AIGenerator /> },
+
     // Transactions
     { path: '/transactions', element: <Transactions /> },
-    { path: '/transactions/all', element: <Transactions /> }, // Assuming this route
+    { path: '/transactions/all', element: <Transactions /> },
+    { path: '/transactions/:id', element: <TransactionDetails /> },
     { path: '/transactions/oob', element: <TransactionsOOB /> }, // Assuming this route
 
     { path: '/rates', element: <Rates /> },

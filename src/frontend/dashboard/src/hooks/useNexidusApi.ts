@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 interface FetchOptions {
     path: string;
     params?: Record<string, string | number | boolean>;
+    enabled?: boolean;
 }
 
 interface ApiResponse<T> {
@@ -22,17 +23,20 @@ const API_BASE_URL = window.location.origin === 'http://localhost:8080'
     ? 'http://localhost:8001'
     : 'https://nexidus-api.vercel.app';
 
-export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
-    const [data, setData] = useState<T[]>([]);
+export const useNexidusApi = <T,>({ path, params = {}, enabled = true }: FetchOptions) => {
     const [meta, setMeta] = useState<ApiResponse<T>['meta'] | null>(null);
+
+    const [data, setData] = useState<T[]>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchData = useCallback(async () => {
+        if (!enabled) return;
+
         setLoading(true);
         setError(null);
 
-        // await sleep(2000);
+        await sleep(1000);
 
         try {
             // Convert params object to query string
@@ -44,7 +48,6 @@ export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
             ).toString();
 
             const url = queryString ? `${API_BASE_URL}${path}?${queryString}` : `${API_BASE_URL}${path}`;
-            console.log({ url });
 
             const response = await fetch(url);
 
@@ -54,14 +57,15 @@ export const useNexidusApi = <T,>({ path, params = {} }: FetchOptions) => {
 
             const result: ApiResponse<T> = await response.json();
 
-            setData(result.data);
+            setData((Array.isArray(result.data) ? result.data : result) as T[]);
             setMeta(result.meta);
+            
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch data');
         } finally {
             setLoading(false);
         }
-    }, [path, JSON.stringify(params)]); // Stringify params to avoid unnecessary re-renders
+    }, [path, JSON.stringify(params), enabled]); // Stringify params to avoid unnecessary re-renders
 
     useEffect(() => {
         fetchData();

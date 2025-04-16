@@ -31,3 +31,18 @@ export function downloadCSV<T>(data: T[], filename: string = "data.csv"): void {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 }
+
+export const getValidExtension = (ext: string) => {
+    switch (ext) {
+        case 'javascript':
+            return 'js';
+        case 'json':
+            return 'json';
+        case 'python':
+            return 'py';
+        case 'sql':
+            return 'sql';
+        default:
+            return 'txt';
+    }
+}

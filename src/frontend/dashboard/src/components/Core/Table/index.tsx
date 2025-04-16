@@ -15,8 +15,8 @@ import Input from '../Forms/Input'
 import { paginationOptions } from '../../../utils/constants'
 import Dropdown from '../Dropdown'
 
-export const Table = ({ data, columns, onClickRow }: {
-    data: any[],
+export const Table = <T,>({ data, columns, onClickRow }: {
+    data: T[],
     columns: ColumnDef<any>[],
     onClickRow?: (row: any) => void
 }) => {
@@ -68,7 +68,7 @@ export const Table = ({ data, columns, onClickRow }: {
                 </thead>
                 <tbody className='overflow-hidden overflow-y-auto' style={{ maxHeight: 'calc(50vh - 20rem)' }}>
                     {table.getRowModel().rows.map(row => (
-                        <tr key={row.id} className='h-6' onClick={() => onClickRow?.(row.original)}>
+                        <tr key={row.id} className='h-6 hover:bg-white' onClick={() => onClickRow?.(row.original)}>
                             {row.getVisibleCells().map(cell => (
                                 <td key={cell.id}>
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

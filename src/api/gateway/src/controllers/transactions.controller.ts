@@ -8,7 +8,8 @@ import {
 import { IController } from './_controller';
 import { FilterFunction } from 'utils/filters';
 
-import { transactions as allTransactions  } from '../_data/transactions'
+import { transactions as allTransactions  } from '../_data/transactionsV2'
+
 import { ITransaction } from 'models/finance';
 
 const path = '/api'
@@ -20,6 +21,7 @@ const filtersConfig: Record<string, FilterFunction<ITransaction>> = {
         (item.externalRef?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
         (item.sender?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
         (item.receiver?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
+        (item.payerId?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
         (item.paymentType?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
         (item.type?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
         (item.authStatus?.toLowerCase().includes(query.toLowerCase()) ?? false) ||
@@ -68,7 +70,7 @@ export class TransactionsController implements IController<ITransaction> {
     @Filter(filtersConfig)
     @Paginate()
     @Status([400, 404, 500])
-    listTransactions(req: Request, res: Response): void {
+    list(req: Request, res: Response): void {
         if (req.body.paginatedItems?.length === 0) {
             res.status(404)
             return;

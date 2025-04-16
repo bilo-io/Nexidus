@@ -1,0 +1,103 @@
+import { ICard } from '../models/finance';
+
+import { v4 as uuidv4 } from 'uuid';
+
+import { payers } from './payers';
+
+export const cards: ICard[] = [
+    {
+        id: uuidv4(),
+        PAN: "4111111111111111",
+        name: "John Doe",
+        expiry: "12/25",
+        network: "Visa",
+        type: "Credit",
+        payerId: payers[0].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
+    },
+    {
+        id: uuidv4(),
+        PAN: "5105105105105100",
+        name: "Jane Smith",
+        expiry: "06/24",
+        network: "Mastercard",
+        type: "Debit",
+        payerId: payers[1].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
+    },
+    {
+        id: uuidv4(),
+        PAN: "371449635398431",
+        name: "Bob Johnson",
+        expiry: "09/26",
+        network: "American Express",
+        type: "Credit",
+        payerId: payers[2].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
+    },
+    {
+        id: uuidv4(),
+        PAN: "6011514433546201",
+        name: "Alice Williams",
+        expiry: "05/27",
+        network: "Discover",
+        type: "Credit",
+        payerId: payers[3].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
+    },
+    {
+        id: uuidv4(),
+        PAN: "4111111111111112",
+        name: "Alice Williams",
+        expiry: "11/28",
+        network: "Visa",
+        type: "Debit",
+        payerId: payers[3].id,
+        createdAt: '',
+        updatedAt: '',
+        clientId: '',
+        redactedCardNumber: '',
+        cardHolderName: '',
+        cardUsageType: '',
+        first6: '',
+        last4: '',
+        expiryYear: 0,
+        expiryMonth: 0
+    }
+];
