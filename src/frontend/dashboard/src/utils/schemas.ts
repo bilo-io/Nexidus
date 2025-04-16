@@ -131,7 +131,7 @@ interface ICardTransaction {
     authCode?: string;
     pareq?: string;
     consentRequestId?: string; // uuid v4
-    nonce: string;
+    nonce: string; // uuid v4
     webhookStatus?: string;
     inDispute: boolean;
     externalReference?: string;
@@ -340,7 +340,7 @@ interface IGooglePayTransaction {
     consentRequestId?: string; // uuid v4
     webhookStatus?: string;
     externalReference?: string;
-    nonce: string;
+    nonce: string; // uuid v4
     originalTransactionId?: string; // uuid v4
     internalStatusReason?: string;
     partnerTransactionId?: string; // uuid v4
@@ -394,17 +394,17 @@ export interface ISamsungPayTransaction {
   consentRequestId?: string; // uuid v4
   webhookStatus?: string;
   externalReference?: string;
-  nonce: string;
+  nonce: string; // uuid v4
   originalTransactionId?: string; // uuid v4
   internalStatusReason?: string;
   partnerTransactionId?: string; // uuid v4
   tokenPrimaryAccountNumber?: string;
   tokenExpirationDate?: string;
-  currencyCode?: string;
+  currencyCode?: string;  // ZAR
   eciIndicator?: string;
   cryptogram?: string;
-  cardLast4?: string;
-  cardNetwork?: string;
+  cardLast4?: string; // last 4 digits of the card number
+  cardNetwork?: string; // 'Mastercard', 'Visa', etc.
   completedAt?: string; // ISO timestamp with time zone
   retrievalReferenceNumber?: string;
   stitchIntermediaryAccount?: string;
@@ -430,6 +430,35 @@ export interface ISamsungPayTransaction {
   acquirer?: string;
   mid?: string;
   cardId?: string; // uuid v4
+}
+    `,
+    paymentRequest: `
+export interface IPaymentRequest {
+  id: string; // uuid, primary key, unique, default: public.gen_random_uuid()
+  quantity: number; // numeric
+  currency: string; // 'ZAR'
+  userReference: string; // text
+  beneficiaryReference: string; // text
+  bankBeneficiaries: any; // jsonb (use a more specific type if available)
+  createdAt: string; // timestamp without time zone, default: now()
+  updatedAt?: string | null; // timestamp without time zone, nullable, default: now()
+  clientId: string; // text
+  paymentReference?: string | null; // text, nullable
+  paymentRequestPayerConstraint?: string | null; // uuid, nullable
+  cancellationReason?: string | null; // text, nullable
+  status: string; // text, default: 'PENDING'
+  externalReference?: string | null; // text, nullable
+  authorizationRequestId?: string | null; // uuid, nullable
+  expireAt?: string | null; // timestamp with time zone, nullable
+  merchant?: string | null; // text, nullable
+  failureReason?: string | null; // text, nullable
+  restrictPayerBankId?: string | null; // text, nullable
+  channel?: string | null; // text, nullable, default: 'bank'
+  eftDisabled?: boolean | null; // boolean, nullable
+  isSelfContainedPayment: boolean; // boolean, default: false
+  payerName?: string | null; // text, nullable
+  merchantId?: string | null; // uuid, nullable
+  fraudOutcome?: string | null; // text, nullable
 }
     `
 }
