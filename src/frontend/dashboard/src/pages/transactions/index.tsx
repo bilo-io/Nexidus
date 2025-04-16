@@ -15,7 +15,6 @@ import { useTheme } from '../../context/ThemeContext';
 import { Card } from '../../components/Core';
 import AppTopBar from '../../components/App/TopBar';
 import { getStats } from '../../utils/stats';
-import FintechIcon, { FintechType } from '../../components/Core/FintechIcon';
 import { toSentenceCase } from '../../utils/casing';
 import { useAppUrl } from '../../hooks/useAppUrl';
 import { getFilterOptionsArray, useFilterOptions } from '../../hooks/useFilterOptions';
@@ -32,8 +31,6 @@ import {
 import CustomCharts from '../../components/Core/CustomCharts';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../../utils/format';
-import { TFunction } from 'i18next';
-import { ITheme } from '../../themes';
 
 type TransactionsProps = object
 
@@ -49,7 +46,7 @@ export const Transactions: React.FC<TransactionsProps> = () => {
         ...(params as object)
     })
 
-    const { data: transactionData, error, loading, retry } = useNexidusApi<ITransaction[]>({
+    const { data: transactionData, error, loading, retry } = useNexidusApi<ITransaction>({
         path: '/api/transactions',
         params: params as { [key in string]: string },
         enabled: true

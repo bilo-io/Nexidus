@@ -1,5 +1,4 @@
 import React from 'react'; import { KeyValueView } from '../../components/Core/KeyValueView/KeyValueView';
-import { t } from 'i18next';
 import { useParams } from 'react-router-dom';
 import AppTopBar from '../../components/App/TopBar';
 import { Async, View } from '../../components/Core';
@@ -55,7 +54,7 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = () => {
                 <View className='w-2/3'>
                     <Async loading={transactionLoading} error={transactionError} onRetry={transactionsRetry}>
                         <KeyValueView
-                            data={transactionData as ITransaction}
+                            data={transactionData as ITransaction[]}
                             heading='Transaction Details'
                             viewType={'table'}
                         />
@@ -72,7 +71,7 @@ export const TransactionDetails: React.FC<TransactionDetailsProps> = () => {
                     </Async>
                     <Async loading={payerLoading} error={payerError} onRetry={payerRetry}>
                         <KeyValueView
-                            data={payerData as IPayer}
+                            data={payerData as unknown as IPayer}
                             heading='Payer Details'
                             viewType={'table'}
                         />
